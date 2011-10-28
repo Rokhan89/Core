@@ -13,9 +13,10 @@
 
     <target name="substitution">
         <property name="guard" value="= License =" />
-        <loadfile property="origlicensetext" srcFile="license.txt" />
-        <echo file="target/license.txt"
-              message="${guard}${line.separator}${line.separator}${origlicensetext}${line.separator}${guard}" />
+        <loadfile property="origlicensetext" srcFile="header.txt" />
+    	<loadfile property="authortext" srcFile="author.txt" />
+        <echo file="${target.dir}/license.txt"
+              message="${line.separator}${origlicensetext}${line.separator} *     ${authortext}${line.separator} *" />
         <loadfile property="licensetext" srcFile="target/license.txt" />
         <replaceregexp match="${guard}(.*${guard})?" replace="${licensetext}" flags="ims">
             <fileset dir="src" includes="**/*" />
@@ -23,7 +24,7 @@
     </target>
 
     <!-- Compile application -->
-    <target name="compile">
+    <target name="compile" depends="substitution">
         <mkdir dir="${build.dir}" />
         <delete dir="${classes.dir}" />
         <mkdir dir="${classes.dir}" />
@@ -103,6 +104,7 @@
         <delete dir="${build.dir}" />
         <delete dir="${docs.dir}" />
         <delete dir="${reports.dir}" />
+    	<delete dir="${target.dir}" />
     </target>
 
     <!-- Collective task -->
