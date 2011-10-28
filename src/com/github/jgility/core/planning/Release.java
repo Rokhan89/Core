@@ -1,0 +1,107 @@
+/*
+ * 
+ * Copyright (c) 2011 by Jgility Development Group
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Karsten Schulz
+ *
+ */
+package com.github.jgility.core.planning;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.lang3.ObjectUtils;
+
+/**
+ * Implementiert eine konkrete Klasse für die Release-Plannung
+ * 
+ * @author Karsten Schulz <lennylinux.ks@googlemail.com>
+ */
+public class Release
+    extends AbstractPlan
+{
+
+    private Set<IPlan> subPlanSet;
+
+    /**
+     * Instanziiert ein Objekt von der Klasse {@link Release} mit dem heutigen Datum und dem
+     * Release-Ende in 14-Tagen.
+     */
+    public Release()
+    {
+        super();
+    }
+
+    /**
+     * Instanziiert ein Objekt von der Klasse {@link Release} mit übergebenen Start- und End-Werten
+     * 
+     * @param start Wann das Release anfängt
+     * @param end Wann das Release endet
+     */
+    public Release( Calendar start, Calendar end )
+    {
+        super( start, end );
+    }
+
+    /**
+     * Fügt ein neuen {@link IPlan} der Unterstruktur des {@link Release} hinzu
+     * 
+     * @param plan neuer {@link IPlan} zum hinzufügen
+     */
+    public void addPlan( IPlan plan )
+        throws IllegalArgumentException
+    {
+        if ( ObjectUtils.equals( null, plan ) || ObjectUtils.equals( this, plan ) )
+        {
+            throw new IllegalArgumentException( "Plan-object has a bad reference: " + plan );
+        }
+
+        if ( checkPlanRange( plan ) )
+        {
+            subPlanSet.add( plan );
+        }
+
+        throw new IllegalArgumentException( "Start or end-time is invalid" );
+
+    }
+
+    private boolean checkPlanRange( IPlan plan )
+    {
+        if ( plan.getStart().before( getStart() ) || plan.getEnd().after( getEnd() ) )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Entfernt ein {@link IPlan} aus der Unterstruktur
+     * 
+     * @param plan bestehender {@link IPlan} zum entfernen aus der {@link List}
+     */
+    public boolean removePlan( IPlan plan )
+    {
+        return subPlanSet.remove( plan );
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.planning.IPlan#getPlanningStruct()
+     */
+    @Override
+    public List<IPlan> getPlanningStruct()
+    {
+        final List<IPlan> subPlanList = new ArrayList<IPlan>( subPlanSet );
+        return Collections.unmodifiableList( subPlanList );
+    }
+
+}
