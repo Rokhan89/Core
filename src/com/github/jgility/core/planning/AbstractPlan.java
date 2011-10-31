@@ -69,7 +69,7 @@ public abstract class AbstractPlan
         }
         if ( end.after( start ) )
         {
-            this.start = start;
+            this.start = (Calendar) start.clone();
         }
 
         throw new IllegalArgumentException( "Start-time have to before end-time: " );
@@ -99,7 +99,7 @@ public abstract class AbstractPlan
         }
         if ( start.before( end ) )
         {
-            this.end = end;
+            this.end = (Calendar) end.clone();
         }
 
         throw new IllegalArgumentException( "End-time have to after start-time: " );
