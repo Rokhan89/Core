@@ -98,4 +98,15 @@ public class Backlog<T>
 
         requirements.addAll( requirementList );
     }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "Backlog [requirements=" + requirements + "]";
+    }
+
 }

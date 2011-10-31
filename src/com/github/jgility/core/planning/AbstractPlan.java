@@ -15,6 +15,9 @@ package com.github.jgility.core.planning;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Abstrakte Klasse und implementiert die Grundfunktionalitäten einer planbaren Datenstruktur.
  * 
@@ -145,6 +148,47 @@ public abstract class AbstractPlan
     {
         Calendar currentDate = new GregorianCalendar();
         return start.before( currentDate );
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append( start );
+        builder.append( end );
+        return builder.toHashCode();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj instanceof AbstractPlan )
+        {
+            AbstractPlan plan = (AbstractPlan) obj;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append( start, plan.getStart() );
+            builder.append( end, plan.getEnd() );
+            return builder.isEquals();
+        }
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "AbstractPlan [start=" + start + ", end=" + end + "]";
     }
 
 }

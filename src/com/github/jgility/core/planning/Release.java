@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Implementiert eine konkrete Klasse für die Release-Plannung
@@ -102,6 +104,41 @@ public class Release
     {
         final List<IPlan> subPlanList = new ArrayList<IPlan>( subPlanSet );
         return Collections.unmodifiableList( subPlanList );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append( super.hashCode() );
+        builder.append( subPlanSet );
+        return builder.toHashCode();
+    }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj instanceof Release )
+        {
+            Release plan = (Release) obj;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append( subPlanSet, plan.subPlanSet );
+
+            return builder.isEquals() && super.equals( obj );
+        }
+
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "Release [start=" + getStart() + "end=" + getEnd() + "subPlanSet=" + subPlanSet
+            + "]";
     }
 
 }
