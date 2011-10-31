@@ -15,6 +15,7 @@ package com.github.jgility.core.planning;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +32,7 @@ public class Release
     extends AbstractPlan
 {
 
-    private Set<IPlan> subPlanSet;
+    private final Set<IPlan> subPlanSet;
 
     /**
      * Instanziiert ein Objekt von der Klasse {@link Release} mit dem heutigen Datum und dem
@@ -40,6 +41,7 @@ public class Release
     public Release()
     {
         super();
+        subPlanSet = new HashSet<IPlan>();
     }
 
     /**
@@ -51,6 +53,7 @@ public class Release
     public Release( Calendar start, Calendar end )
     {
         super( start, end );
+        subPlanSet = new HashSet<IPlan>();
     }
 
     /**
