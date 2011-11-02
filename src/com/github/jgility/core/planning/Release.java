@@ -73,19 +73,16 @@ public class Release
         {
             subPlanSet.add( plan );
         }
-
-        throw new IllegalArgumentException( "Start or end-time is invalid" );
+        else
+        {
+            throw new IllegalArgumentException( "Start or end-time is invalid" );
+        }
 
     }
 
     private boolean checkPlanRange( IPlan plan )
     {
-        if ( plan.getStart().before( getStart() ) || plan.getEnd().after( getEnd() ) )
-        {
-            return false;
-        }
-
-        return true;
+        return ( !getStart().after( plan.getStart() ) && !getEnd().before( plan.getEnd() ) );
     }
 
     /**
@@ -143,5 +140,4 @@ public class Release
         return "Release [start=" + getStart() + "end=" + getEnd() + "subPlanSet=" + subPlanSet
             + "]";
     }
-
 }
