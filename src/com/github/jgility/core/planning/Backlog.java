@@ -36,7 +36,7 @@ public class Backlog<T>
      */
     public Backlog()
     {
-        requirements = new ArrayList<T>();
+        requirements = new ArrayList<>();
     }
 
     /**

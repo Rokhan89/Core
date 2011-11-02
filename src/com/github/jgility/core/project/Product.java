@@ -21,7 +21,7 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 import com.github.jgility.core.planning.Backlog;
-
+import com.github.jgility.core.requirement.IProductRequirement;
 
 /**
  * Klasse, welche das Produkt im Sinne der agilen Softwareentwicklung repräsentiert. Beinhaltet
@@ -40,7 +40,7 @@ public class Product
 
     private Person productOwner;
 
-    private Backlog productBacklog;
+    private Backlog<IProductRequirement> productBacklog;
 
     /**
      * Parameterloser Konstruktor um ein leeres {@link Product} zu instanziieren.<br>
@@ -72,8 +72,8 @@ public class Product
         setName( name );
         setDescription( description );
         setProductOwner( productOwner );
-        productBacklog = new Backlog();
-        projects = new HashSet<Project>();
+        productBacklog = new Backlog<>();
+        projects = new HashSet<>();
     }
 
     /**
@@ -132,7 +132,7 @@ public class Product
      */
     public List<Project> getProjects()
     {
-        final List<Project> projectList = new ArrayList<Project>( projects );
+        final List<Project> projectList = new ArrayList<>( projects );
         return Collections.unmodifiableList( projectList );
     }
 
@@ -249,7 +249,7 @@ public class Product
      * 
      * @return der ProductBacklog als {@link Backlog}
      */
-    public Backlog getProductBacklog()
+    public Backlog<IProductRequirement> getProductBacklog()
     {
         return productBacklog;
     }
@@ -262,7 +262,7 @@ public class Product
      *             wurde oder das übergebende {@link Backlog} <code>null</code> beinhaltet
      * @see #removeProductBacklog()
      */
-    public void setProductBacklog( Backlog productBacklog )
+    public void setProductBacklog( Backlog<IProductRequirement> productBacklog )
         throws IllegalArgumentException
     {
         if ( null != this.productBacklog )

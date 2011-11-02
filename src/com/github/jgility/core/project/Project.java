@@ -66,8 +66,8 @@ public class Project
         super();
         setName( name );
         setDescription( description );
-        members = new HashSet<Person>();
-        projectPlan = new HashSet<IPlan>();
+        members = new HashSet<>();
+        projectPlan = new HashSet<>();
     }
 
     /**
@@ -127,7 +127,7 @@ public class Project
      */
     public List<Person> getMembers()
     {
-        final List<Person> personList = new ArrayList<Person>( members );
+        final List<Person> personList = new ArrayList<>( members );
         return Collections.unmodifiableList( personList );
     }
 
@@ -202,7 +202,7 @@ public class Project
      */
     public List<IPlan> getProjectPlan()
     {
-        final List<IPlan> planList = new ArrayList<IPlan>( projectPlan );
+        final List<IPlan> planList = new ArrayList<>( projectPlan );
         return Collections.unmodifiableList( planList );
     }
 

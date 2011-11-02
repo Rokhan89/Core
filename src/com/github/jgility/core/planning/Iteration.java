@@ -39,7 +39,7 @@ public class Iteration
     public Iteration()
     {
         super();
-        iterationBacklog = new Backlog<IIterationRequirement>();
+        iterationBacklog = new Backlog<>();
     }
 
     /**
@@ -53,7 +53,7 @@ public class Iteration
     public Iteration( Calendar start, Calendar end )
     {
         super( start, end );
-        iterationBacklog = new Backlog<IIterationRequirement>();
+        iterationBacklog = new Backlog<>();
     }
 
     /**

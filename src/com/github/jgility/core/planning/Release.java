@@ -41,7 +41,7 @@ public class Release
     public Release()
     {
         super();
-        subPlanSet = new HashSet<IPlan>();
+        subPlanSet = new HashSet<>();
     }
 
     /**
@@ -53,7 +53,7 @@ public class Release
     public Release( Calendar start, Calendar end )
     {
         super( start, end );
-        subPlanSet = new HashSet<IPlan>();
+        subPlanSet = new HashSet<>();
     }
 
     /**
@@ -105,7 +105,7 @@ public class Release
     @Override
     public List<IPlan> getPlanningStruct()
     {
-        final List<IPlan> subPlanList = new ArrayList<IPlan>( subPlanSet );
+        final List<IPlan> subPlanList = new ArrayList<>( subPlanSet );
         return Collections.unmodifiableList( subPlanList );
     }
 
