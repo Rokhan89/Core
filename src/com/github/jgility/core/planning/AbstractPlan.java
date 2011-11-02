@@ -51,11 +51,20 @@ public abstract class AbstractPlan
      * 
      * @param start Start-Datum/Uhrzeit als {@link Calendar}
      * @param end End-Datum/Uhrzeit als {@link Calendar}
+     * @throws IllegalArgumentException wird geworfen, wenn das Ende-Datum vor dem Start-Datum liegt
      */
     public AbstractPlan( Calendar start, Calendar end )
+        throws IllegalArgumentException
     {
-        this.start = (Calendar) start.clone();
-        this.end = (Calendar) end.clone();
+        if ( end.after( start ) )
+        {
+            this.start = (Calendar) start.clone();
+            this.end = (Calendar) end.clone();
+        }
+        else
+        {
+            throw new IllegalArgumentException( "End-time is before start-time" );
+        }
     }
 
     /*
