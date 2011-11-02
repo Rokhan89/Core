@@ -306,7 +306,7 @@ public class ProductStory
     public void setEstimated( float estimated )
         throws IllegalArgumentException
     {
-        if ( 0.0f < estimated )
+        if ( 0.0f <= estimated )
         {
             this.estimated = estimated;
         }
