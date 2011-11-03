@@ -47,9 +47,12 @@ public class IterationStory
      * @param productStory referenzierende {@link ProductStory} (nur Inhalt wird kopiert)
      * @param implementState Start-Implementierung
      */
-    public IterationStory( ProductStory productStory, ImplementState implementState )
+    public IterationStory( IProductRequirement productRequirement, ImplementState implementState )
     {
-        super( productStory, implementState );
+        super( productRequirement, implementState );
+        dependencies = new ArrayList<>();
+        tasks = new ArrayList<>();
+    }
         dependencies = new ArrayList<>();
         tasks = new ArrayList<>();
     }

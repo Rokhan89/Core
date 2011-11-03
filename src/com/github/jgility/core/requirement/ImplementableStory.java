@@ -46,7 +46,7 @@ public class ImplementableStory
      * @param productStory {@link ProductStory}
      * @param implementState {@link ImplementState}
      */
-    public ImplementableStory( ProductStory productStory, ImplementState implementState )
+    public ImplementableStory( IProductRequirement productStory, ImplementState implementState )
     {
         this( productStory.getID(), productStory.getTitle(), productStory.getDescription(),
               productStory.getEstimated(), productStory.getPriority(), productStory.getRequester(),
