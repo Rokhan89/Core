@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -26,6 +30,7 @@ import org.apache.commons.lang3.ObjectUtils;
  * @author Karsten Schulz
  * @version 1.0
  */
+@XmlRootElement
 public class Backlog<T>
 {
 
@@ -79,6 +84,8 @@ public class Backlog<T>
      * 
      * @return unveränderte {@link List} mit allen Anforderungen
      */
+    @XmlElementWrapper
+    @XmlAnyElement
     public List<T> getRequirementList()
     {
         return Collections.unmodifiableList( requirements );

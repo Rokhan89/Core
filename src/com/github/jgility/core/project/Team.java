@@ -16,17 +16,29 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
 public class Team
 {
-
     private final String name;
 
     private final List<Person> members;
+
+    /**
+     * Instanziiert ein Team ohne namen
+     */
+    public Team()
+    {
+        this( "" );
+    }
 
     /**
      * Instanziiert ein Objekt der Klasse Team auf Basis des Team-Namens
@@ -90,6 +102,8 @@ public class Team
      * 
      * @return unveränderliche {@link List} mit {@link Person}
      */
+    @XmlElementWrapper
+    @XmlAnyElement
     public List<Person> getMembers()
     {
         return Collections.unmodifiableList( members );

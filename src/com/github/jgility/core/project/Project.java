@@ -17,6 +17,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +29,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.planning.IPlan;
+import com.github.jgility.core.planning.Release;
 
 /**
  * Klasse, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
@@ -32,6 +38,8 @@ import com.github.jgility.core.planning.IPlan;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlSeeAlso( Release.class )
 public class Project
 {
     private String name;
@@ -125,6 +133,8 @@ public class Project
      * 
      * @return {@link List} von {@link Person}
      */
+    @XmlElementWrapper
+    @XmlAnyElement
     public List<Person> getMembers()
     {
         final List<Person> personList = new ArrayList<>( members );
@@ -200,6 +210,8 @@ public class Project
      * 
      * @return {@link List} von {@link IPlan}
      */
+    @XmlElementWrapper
+    @XmlAnyElement
     public List<IPlan> getProjectPlan()
     {
         final List<IPlan> planList = new ArrayList<>( projectPlan );

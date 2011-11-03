@@ -15,20 +15,27 @@ package com.github.jgility.core.planning;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.requirement.IIterationRequirement;
+import com.github.jgility.core.requirement.IterationStory;
 
 /**
  * Implementiert eine konkreten {@link AbstractPlan} für die Iterations-Plannung
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlSeeAlso( IterationStory.class )
 public class Iteration
     extends AbstractPlan
 {
-
+    @XmlElement
     private final Backlog<IIterationRequirement> iterationBacklog;
 
     /**

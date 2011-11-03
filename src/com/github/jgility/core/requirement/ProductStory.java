@@ -14,6 +14,9 @@ package com.github.jgility.core.requirement;
 
 import java.util.Calendar;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -24,6 +27,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlType( propOrder = { "ID", "title", "description", "createDate", "estimated", "priority",
+    "requester", "requirementKind" } )
 public class ProductStory
     implements IProductRequirement
 {
@@ -34,7 +40,7 @@ public class ProductStory
 
     private String description;
 
-    private final Calendar createDate;
+    private Calendar createDate;
 
     private float estimated;
 
@@ -57,7 +63,7 @@ public class ProductStory
      */
     public ProductStory()
     {
-        this( 0, "Default", "Default", 0, Priority.MINOR, "Nobody", RequirementKind.USER_STORY );
+        this( 1, "Default", "Default", 0, Priority.MINOR, "Nobody", RequirementKind.USER_STORY );
     }
 
     /**
@@ -313,6 +319,20 @@ public class ProductStory
         else
         {
             throw new IllegalArgumentException( "A negativ estimate is not allowed!" );
+        }
+    }
+
+    @Override
+    public void setCreateDate( Calendar createDate )
+        throws IllegalArgumentException
+    {
+        if ( null != createDate )
+        {
+            this.createDate = createDate;
+        }
+        else
+        {
+            throw new IllegalArgumentException( "Null-object is not allowed" );
         }
     }
 

@@ -16,12 +16,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
 public class IterationStory
     extends ImplementableStory
     implements IIterationRequirement
@@ -116,6 +121,8 @@ public class IterationStory
      * (non-Javadoc)
      * @see com.github.jgility.core.requirement.IIterationRequirement#getDependencies()
      */
+    @XmlElementWrapper
+    @XmlAnyElement
     @Override
     public List<IRequirement> getDependencies()
     {
@@ -170,6 +177,8 @@ public class IterationStory
      * (non-Javadoc)
      * @see com.github.jgility.core.requirement.IIterationRequirement#getTaskList()
      */
+    @XmlElementWrapper
+    @XmlAnyElement
     @Override
     public List<IImplementableRequirement> getTaskList()
     {

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +32,7 @@ import com.github.jgility.core.requirement.IProductRequirement;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
 public class Product
 {
     private String name;
