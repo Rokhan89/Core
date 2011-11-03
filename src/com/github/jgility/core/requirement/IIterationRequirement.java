@@ -20,7 +20,7 @@ import java.util.List;
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
 public interface IIterationRequirement
-    extends IImplementableRequirement
+    extends IImplementableRequirement, IProductRequirement
 {
 
     /**
