@@ -53,6 +53,25 @@ public class IterationStory
         dependencies = new ArrayList<>();
         tasks = new ArrayList<>();
     }
+
+    /**
+     * Instanziiert ein Objekt der Klasse {@link IterationStory} auf Basis der Parameterliste
+     * 
+     * @param id Ein-eindeutige Anforderungsnummer
+     * @param title Titel der Anforderung
+     * @param description Beschreibung der Anforderung
+     * @param estimated Schätzung der Anforderung
+     * @param priority Priorität der Anforderung
+     * @param requester Anforderungssteller
+     * @param requirementKind Anforderungsart
+     * @throws IllegalArgumentException wird geworfen, wenn die Gültigkeitsprüfung fehlschlägt
+     */
+    public IterationStory( int id, String title, String description, float estimated,
+                           Priority priority, String requester, RequirementKind requirementKind )
+        throws IllegalArgumentException
+    {
+        super( id, title, description, estimated, priority, requester, requirementKind,
+               ImplementState.PENDING );
         dependencies = new ArrayList<>();
         tasks = new ArrayList<>();
     }
