@@ -21,6 +21,8 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.requirement.IProductRequirement;
@@ -287,6 +289,55 @@ public class Product
     public void removeProductBacklog()
     {
         productBacklog = null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append( name );
+        builder.append( description );
+        builder.append( productBacklog );
+        builder.append( productOwner );
+        builder.append( projects );
+
+        return builder.toHashCode();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj instanceof Product )
+        {
+            Product product = (Product) obj;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append( description, product.description );
+            builder.append( name, product.name );
+            builder.append( productBacklog, product.productBacklog );
+            builder.append( productOwner, product.productOwner );
+            builder.append( projects, product.projects );
+            return builder.isEquals();
+        }
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "Product [name=" + name + ", description=" + description + ", projects=" + projects
+            + ", productOwner=" + productOwner + ", productBacklog=" + productBacklog + "]";
     }
 
 }
