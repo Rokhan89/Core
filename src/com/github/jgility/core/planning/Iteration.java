@@ -69,7 +69,7 @@ public class Iteration
     @Override
     public List<IPlan> getPlanningStruct()
     {
-        return null;
+        throw new UnsupportedOperationException( "iteration hasn't subplans" );
     }
 
     @Override
