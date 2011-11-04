@@ -107,7 +107,7 @@ public class ProductStory
     {
         if ( 0 == this.id )
         {
-            if ( 0 < id )
+            if ( 0 <= id )
             {
                 this.id = id;
             }
