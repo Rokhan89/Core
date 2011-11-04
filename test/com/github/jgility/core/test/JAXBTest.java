@@ -20,7 +20,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.jgility.core.planning.Backlog;
-import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.Iteration;
 import com.github.jgility.core.planning.Release;
 import com.github.jgility.core.project.Person;
