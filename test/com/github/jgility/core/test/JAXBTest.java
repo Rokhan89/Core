@@ -1,16 +1,18 @@
 package com.github.jgility.core.test;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 
 import junit.framework.Assert;
 
@@ -18,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.jgility.core.planning.Backlog;
+import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.Iteration;
 import com.github.jgility.core.planning.Release;
 import com.github.jgility.core.project.Person;
@@ -26,7 +29,9 @@ import com.github.jgility.core.project.Project;
 import com.github.jgility.core.requirement.IIterationRequirement;
 import com.github.jgility.core.requirement.IProductRequirement;
 import com.github.jgility.core.requirement.IterationStory;
+import com.github.jgility.core.requirement.Priority;
 import com.github.jgility.core.requirement.ProductStory;
+import com.github.jgility.core.requirement.RequirementKind;
 
 public class JAXBTest
 {
@@ -40,14 +45,9 @@ public class JAXBTest
         throws Exception
     {
         product = new Product();
-        person = new Person();
+        person = new Person( "Max", "Mustermann", "max@mustermann.de" );
         product.removeProductOwner();
         product.setProductOwner( person );
-    }
-
-    @Test
-    public void testWrite()
-    {
         Project project = new Project();
         product.addProject( project );
         Calendar start = new GregorianCalendar( 2012, 3, 1 );
@@ -58,33 +58,24 @@ public class JAXBTest
         release.addPlan( iteration );
 
         Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
-        productBacklog.addRequirement( new ProductStory() );
+        productBacklog.addRequirement( new ProductStory( 2, "Test", "Beschreibung", 3.0f,
+                                                         Priority.BLOCKER, "Requester",
+                                                         RequirementKind.BUG ) );
 
         Backlog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
         iterationBacklog.addRequirement( new IterationStory() );
+    }
 
+    @Test
+    public void testWrite()
+    {
         JAXBContext context;
-        try
+        try (final FileWriter w = new FileWriter( "database.xml" ))
         {
             context = JAXBContext.newInstance( Product.class );
             Marshaller m = context.createMarshaller();
             m.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );
-            Writer w = null;
-            try
-            {
-                w = new FileWriter( "database.xml" );
-                m.marshal( product, w );
-            }
-            finally
-            {
-                try
-                {
-                    w.close();
-                }
-                catch ( Exception e )
-                {
-                }
-            }
+            m.marshal( product, w );
         }
         catch ( final JAXBException | IOException e )
         {
@@ -95,11 +86,14 @@ public class JAXBTest
     @Test
     public void testRead()
     {
-        try
+        try (final FileReader f = new FileReader( "database.xml" ))
         {
             JAXBContext context = JAXBContext.newInstance( Product.class );
             Unmarshaller um = context.createUnmarshaller();
-            product = (Product) um.unmarshal( new FileReader( "database.xml" ) );
+            JAXBElement<Product> element =
+                um.unmarshal( new StreamSource( new File( "database.xml" ) ), Product.class );
+
+            product = element.getValue();
         }
         catch ( final JAXBException | IOException e )
         {
