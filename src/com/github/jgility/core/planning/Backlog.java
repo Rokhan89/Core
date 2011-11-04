@@ -85,7 +85,7 @@ public class Backlog<T>
      * @return unveränderte {@link List} mit allen Anforderungen
      */
     @XmlElementWrapper
-    @XmlAnyElement
+    @XmlAnyElement( lax = true )
     public List<T> getRequirementList()
     {
         return Collections.unmodifiableList( requirements );

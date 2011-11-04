@@ -134,7 +134,7 @@ public class Project
      * @return {@link List} von {@link Person}
      */
     @XmlElementWrapper
-    @XmlAnyElement
+    @XmlAnyElement( lax = true )
     public List<Person> getMembers()
     {
         final List<Person> personList = new ArrayList<>( members );
@@ -211,7 +211,7 @@ public class Project
      * @return {@link List} von {@link IPlan}
      */
     @XmlElementWrapper
-    @XmlAnyElement
+    @XmlAnyElement( lax = true )
     public List<IPlan> getProjectPlan()
     {
         final List<IPlan> planList = new ArrayList<>( projectPlan );

@@ -103,7 +103,7 @@ public class Team
      * @return unveränderliche {@link List} mit {@link Person}
      */
     @XmlElementWrapper
-    @XmlAnyElement
+    @XmlAnyElement( lax = true )
     public List<Person> getMembers()
     {
         return Collections.unmodifiableList( members );

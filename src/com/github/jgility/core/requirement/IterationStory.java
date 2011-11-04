@@ -122,7 +122,7 @@ public class IterationStory
      * @see com.github.jgility.core.requirement.IIterationRequirement#getDependencies()
      */
     @XmlElementWrapper
-    @XmlAnyElement
+    @XmlAnyElement( lax = true )
     @Override
     public List<IRequirement> getDependencies()
     {
@@ -178,7 +178,7 @@ public class IterationStory
      * @see com.github.jgility.core.requirement.IIterationRequirement#getTaskList()
      */
     @XmlElementWrapper
-    @XmlAnyElement
+    @XmlAnyElement( lax = true )
     @Override
     public List<IImplementableRequirement> getTaskList()
     {

@@ -107,7 +107,7 @@ public class Release
      * @see com.github.jgility.core.planning.IPlan#getPlanningStruct()
      */
     @XmlElementWrapper
-    @XmlAnyElement
+    @XmlAnyElement( lax = true )
     @Override
     public List<IPlan> getPlanningStruct()
     {
