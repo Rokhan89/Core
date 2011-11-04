@@ -15,6 +15,7 @@ package com.github.jgility.core.planning;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -63,7 +64,7 @@ public abstract class AbstractPlan
         }
         else
         {
-            throw new IllegalArgumentException( "End-time is before start-time" );
+            throw new IllegalArgumentException( "end-time is before start-time" );
         }
     }
 
@@ -75,16 +76,16 @@ public abstract class AbstractPlan
     public void setStart( Calendar start )
         throws IllegalArgumentException
     {
-        if ( start == null )
+        if ( ObjectUtils.notEqual( null, start ) )
         {
-            throw new IllegalArgumentException( "Null-Object as start-time is not allowed" );
+            throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
         }
         if ( end.after( start ) )
         {
             this.start = (Calendar) start.clone();
         }
 
-        throw new IllegalArgumentException( "Start-time have to before end-time: " );
+        throw new IllegalArgumentException( "start-time have to before end-time" );
     }
 
     /*
@@ -105,16 +106,16 @@ public abstract class AbstractPlan
     public void setEnd( Calendar end )
         throws IllegalArgumentException
     {
-        if ( end == null )
+        if ( ObjectUtils.notEqual( null, end ) )
         {
-            throw new IllegalArgumentException( "Null-Object as start-time is not allowed" );
+            throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
         }
         if ( start.before( end ) )
         {
             this.end = (Calendar) end.clone();
         }
 
-        throw new IllegalArgumentException( "End-time have to after start-time: " );
+        throw new IllegalArgumentException( "end-time have to after start-time: " );
     }
 
     /*

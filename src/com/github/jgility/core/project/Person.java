@@ -17,10 +17,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.validator.EmailValidator;
 
-
 /**
- * Klasse, welche ein Nutzer bzw. eine Person im Sinne der agilen Softwareentwicklung repräsentiert. Findet Verwendung
- * als Teammitglied des {@link Project} oder ProductOwner als Besitzer des {@link Product}.
+ * Klasse, welche ein Nutzer bzw. eine Person im Sinne der agilen Softwareentwicklung repräsentiert.
+ * Findet Verwendung als Teammitglied des {@link Project} oder ProductOwner als Besitzer des
+ * {@link Product}.
  * 
  * @since 21.10.2011
  * @author Karsten Schulz
@@ -79,7 +79,8 @@ public class Person
         }
         else
         {
-            throw new IllegalArgumentException( "The firstname have to a capital first letter: " + firstname );
+            throw new IllegalArgumentException( "firstname has to be a capital first letter: "
+                + firstname );
         }
     }
 
@@ -100,7 +101,8 @@ public class Person
         }
         else
         {
-            throw new IllegalArgumentException( "The surname have to a capital first lettter: " + surname );
+            throw new IllegalArgumentException( "surname has to be a capital first lettter: "
+                + surname );
         }
     }
 
@@ -117,7 +119,8 @@ public class Person
      * 
      * @param eMail E-Mail-Adresse <br>
      *            muss dem Standard entsprechen. Zum Beispiel: <code>example@mail.com</code>
-     * @throws IllegalArgumentException wird geworfen, wenn Parameter keine valide E-Mail-Adresse ist
+     * @throws IllegalArgumentException wird geworfen, wenn Parameter keine valide E-Mail-Adresse
+     *             ist
      */
     public void setEMail( String eMail )
         throws IllegalArgumentException
@@ -129,7 +132,7 @@ public class Person
         }
         else
         {
-            throw new IllegalArgumentException( "The e-mail adress is not valid: " + eMail );
+            throw new IllegalArgumentException( "e-mail adress is invalid: " + eMail );
         }
     }
 

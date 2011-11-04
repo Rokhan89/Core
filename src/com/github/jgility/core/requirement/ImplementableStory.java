@@ -12,6 +12,7 @@
  */
 package com.github.jgility.core.requirement;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -89,13 +90,13 @@ public class ImplementableStory
     public void setImplementState( ImplementState implementState )
         throws IllegalArgumentException
     {
-        if ( null != implementState )
+        if ( ObjectUtils.notEqual( null, implementState ) )
         {
             this.implementState = implementState;
         }
         else
         {
-            throw new IllegalArgumentException( "Implementstate have to not null!" );
+            throw new IllegalArgumentException( "implementstate has to be not null!" );
         }
     }
 
@@ -109,9 +110,13 @@ public class ImplementableStory
     public void setAssignee( Team assignee )
         throws IllegalArgumentException
     {
-        if ( null != assignee )
+        if ( ObjectUtils.notEqual( null, assignee ) )
         {
             team = assignee;
+        }
+        else
+        {
+            throw new IllegalArgumentException( "team has to be not null!" );
         }
     }
 

@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -96,7 +98,7 @@ public class Project
         }
         else
         {
-            throw new IllegalArgumentException( "A empty name for projects is not allowed" );
+            throw new IllegalArgumentException( "empty name for projects is not allowed" );
         }
     }
 
@@ -141,13 +143,13 @@ public class Project
     public void setMembers( List<Person> members )
         throws IllegalArgumentException
     {
-        if ( null != members && !members.isEmpty() )
+        if ( CollectionUtils.isNotEmpty( members ) )
         {
             this.members.addAll( members );
         }
         else
         {
-            throw new IllegalArgumentException( "An empty list of person is not allowed to add" );
+            throw new IllegalArgumentException( "empty list of person is not allowed to add" );
         }
     }
 
@@ -161,13 +163,13 @@ public class Project
     public void addMember( Person newMember )
         throws IllegalArgumentException
     {
-        if ( null != newMember )
+        if ( ObjectUtils.notEqual( null, newMember ) )
         {
             members.add( newMember );
         }
         else
         {
-            throw new IllegalArgumentException( "An empty person is not allowed to add" );
+            throw new IllegalArgumentException( "empty person is not allowed to add" );
         }
     }
 
@@ -180,7 +182,7 @@ public class Project
      */
     public boolean removeMember( Person removeMember )
     {
-        if ( null != removeMember )
+        if ( ObjectUtils.notEqual( null, removeMember ) )
         {
             return members.remove( removeMember );
         }
@@ -216,13 +218,13 @@ public class Project
     public void setProjectPlan( List<IPlan> projectPlan )
         throws IllegalArgumentException
     {
-        if ( null != projectPlan && !projectPlan.isEmpty() )
+        if ( CollectionUtils.isNotEmpty( projectPlan ) )
         {
             this.projectPlan.addAll( projectPlan );
         }
         else
         {
-            throw new IllegalArgumentException( "An empty list of IPlan is not allowed" );
+            throw new IllegalArgumentException( "empty list of IPlan is not allowed" );
         }
     }
 
@@ -236,13 +238,13 @@ public class Project
     public void addProjectPlan( IPlan newPlan )
         throws IllegalArgumentException
     {
-        if ( null != newPlan )
+        if ( ObjectUtils.notEqual( null, newPlan ) )
         {
             this.projectPlan.add( newPlan );
         }
         else
         {
-            throw new IllegalArgumentException( "An empty new IPlan is not allowed" );
+            throw new IllegalArgumentException( "empty new IPlan is not allowed" );
         }
     }
 
@@ -255,7 +257,7 @@ public class Project
      */
     public boolean removeProjectPlan( IPlan removePlan )
     {
-        if ( null != removePlan )
+        if ( ObjectUtils.notEqual( null, removePlan ) )
         {
             return projectPlan.remove( removePlan );
         }

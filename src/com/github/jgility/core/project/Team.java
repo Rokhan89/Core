@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
  * 
@@ -59,13 +61,13 @@ public class Team
     public void addMember( Person person )
         throws IllegalArgumentException
     {
-        if ( null != person )
+        if ( ObjectUtils.notEqual( null, person ) )
         {
             members.add( person );
         }
         else
         {
-            throw new IllegalArgumentException( "Null-person is not allowed!" );
+            throw new IllegalArgumentException( "null-person is not allowed!" );
         }
     }
 
@@ -77,7 +79,7 @@ public class Team
      */
     public boolean removeMember( Person person )
     {
-        if ( null != person )
+        if ( ObjectUtils.notEqual( null, person ) )
         {
             return members.remove( person );
         }

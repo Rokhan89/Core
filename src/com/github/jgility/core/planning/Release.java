@@ -66,7 +66,7 @@ public class Release
     {
         if ( ObjectUtils.equals( null, plan ) || ObjectUtils.equals( this, plan ) )
         {
-            throw new IllegalArgumentException( "Plan-object has a bad reference: " + plan );
+            throw new IllegalArgumentException( "plan-object has a wrong reference: " + plan );
         }
 
         if ( checkPlanRange( plan ) )
@@ -75,7 +75,7 @@ public class Release
         }
         else
         {
-            throw new IllegalArgumentException( "Start or end-time is invalid" );
+            throw new IllegalArgumentException( "start or end-time is invalid" );
         }
 
     }

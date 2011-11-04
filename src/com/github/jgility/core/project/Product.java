@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.github.jgility.core.planning.Backlog;
@@ -101,7 +103,7 @@ public class Product
         }
         else
         {
-            throw new IllegalArgumentException( "A empty name for products is not allowed" );
+            throw new IllegalArgumentException( "empty name for products is not allowed" );
         }
     }
 
@@ -146,13 +148,13 @@ public class Product
     public void setProjects( List<Project> projects )
         throws IllegalArgumentException
     {
-        if ( null != projects && !projects.isEmpty() )
+        if ( CollectionUtils.isNotEmpty( projects ) )
         {
             this.projects.addAll( projects );
         }
         else
         {
-            throw new IllegalArgumentException( "A empty list of projects is not allowed to add" );
+            throw new IllegalArgumentException( "empty list of projects is not allowed to add" );
         }
     }
 
@@ -166,13 +168,13 @@ public class Product
     public void addProject( Project newProject )
         throws IllegalArgumentException
     {
-        if ( null != newProject )
+        if ( ObjectUtils.notEqual( null, newProject ) )
         {
             this.projects.add( newProject );
         }
         else
         {
-            throw new IllegalArgumentException( "Added project is null" );
+            throw new IllegalArgumentException( "null-object as project is not allowed" );
         }
     }
 
@@ -185,7 +187,7 @@ public class Product
      */
     public boolean removeProject( Project removeProject )
     {
-        if ( null != removeProject )
+        if ( ObjectUtils.notEqual( null, removeProject ) )
         {
             return projects.remove( removeProject );
         }
@@ -221,18 +223,18 @@ public class Product
     public void setProductOwner( Person productOwner )
         throws IllegalArgumentException
     {
-        if ( null != this.productOwner )
+        if ( ObjectUtils.notEqual( null, this.productOwner ) )
         {
-            throw new IllegalArgumentException( "The productowner is already initialize: "
+            throw new IllegalArgumentException( "productowner is already initialize: "
                 + this.productBacklog );
         }
-        if ( null != productOwner )
+        if ( ObjectUtils.notEqual( null, productOwner ) )
         {
             this.productOwner = productOwner;
         }
         else
         {
-            throw new IllegalArgumentException( "Null person is not allowed as productowner" );
+            throw new IllegalArgumentException( "null person is not allowed as productowner" );
         }
     }
 
@@ -265,17 +267,17 @@ public class Product
     public void setProductBacklog( Backlog<IProductRequirement> productBacklog )
         throws IllegalArgumentException
     {
-        if ( null != this.productBacklog )
+        if ( ObjectUtils.notEqual( null, this.productBacklog ) )
         {
-            throw new IllegalArgumentException( "The productbacklog is already initialize" );
+            throw new IllegalArgumentException( "productbacklog is already initialize" );
         }
-        else if ( null != productBacklog )
+        else if ( ObjectUtils.notEqual( null, productBacklog ) )
         {
             this.productBacklog = productBacklog;
         }
         else
         {
-            throw new IllegalArgumentException( "Null backlog is not allowed as productbacklog" );
+            throw new IllegalArgumentException( "null backlog is not allowed as productbacklog" );
         }
     }
 
