@@ -82,7 +82,9 @@ public class Release
 
     private boolean checkPlanRange( IPlan plan )
     {
-        return ( !getStart().after( plan.getStart() ) && !getEnd().before( plan.getEnd() ) );
+        final boolean checkStart = getStart().after( plan.getStart() );
+        final boolean checkEnd = getEnd().before( plan.getEnd() );
+        return ( !checkStart && !checkEnd );
     }
 
     /**
