@@ -41,7 +41,7 @@ public class Release
     public Release()
     {
         super();
-        subPlanSet = new HashSet<IPlan>();
+        subPlanSet = new HashSet<>();
     }
 
     /**
@@ -53,7 +53,7 @@ public class Release
     public Release( Calendar start, Calendar end )
     {
         super( start, end );
-        subPlanSet = new HashSet<IPlan>();
+        subPlanSet = new HashSet<>();
     }
 
     /**
@@ -73,19 +73,16 @@ public class Release
         {
             subPlanSet.add( plan );
         }
-
-        throw new IllegalArgumentException( "Start or end-time is invalid" );
+        else
+        {
+            throw new IllegalArgumentException( "Start or end-time is invalid" );
+        }
 
     }
 
     private boolean checkPlanRange( IPlan plan )
     {
-        if ( plan.getStart().before( getStart() ) || plan.getEnd().after( getEnd() ) )
-        {
-            return false;
-        }
-
-        return true;
+        return ( !getStart().after( plan.getStart() ) && !getEnd().before( plan.getEnd() ) );
     }
 
     /**
@@ -105,7 +102,7 @@ public class Release
     @Override
     public List<IPlan> getPlanningStruct()
     {
-        final List<IPlan> subPlanList = new ArrayList<IPlan>( subPlanSet );
+        final List<IPlan> subPlanList = new ArrayList<>( subPlanSet );
         return Collections.unmodifiableList( subPlanList );
     }
 
@@ -143,5 +140,4 @@ public class Release
         return "Release [start=" + getStart() + "end=" + getEnd() + "subPlanSet=" + subPlanSet
             + "]";
     }
-
 }

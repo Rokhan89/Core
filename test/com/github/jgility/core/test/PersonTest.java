@@ -2,12 +2,16 @@ package com.github.jgility.core.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.github.jgility.core.project.Person;
 
 public class PersonTest
 {
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testPersonTrue()
@@ -19,9 +23,10 @@ public class PersonTest
     }
 
     @SuppressWarnings( "unused" )
-    @Test( expected = IllegalArgumentException.class )
+    @Test
     public void TestPersonFalseException()
     {
+        exception.expect( IllegalArgumentException.class );
         new Person( "max", "mustermann", "max@mustermann.de" );
     }
 
@@ -33,10 +38,11 @@ public class PersonTest
         assertEquals( "Max", person.getFirstname() );
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test
     public void testSetFirstnameException()
     {
         Person person = new Person();
+        exception.expect( IllegalArgumentException.class );
         person.setFirstname( "" );
     }
 
@@ -46,12 +52,8 @@ public class PersonTest
         Person person = new Person();
         person.setSurname( "Mustermann" );
         assertEquals( "Mustermann", person.getSurname() );
-    }
-
-    @Test( expected = IllegalArgumentException.class )
-    public void testSetSurnameException()
-    {
-        Person person = new Person();
+        person = new Person();
+        exception.expect( IllegalArgumentException.class );
         person.setSurname( "mustermann" );
     }
 
@@ -63,10 +65,11 @@ public class PersonTest
         assertEquals( "example@mail.com", person.getEMail() );
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test
     public void testSetEMailException()
     {
         Person person = new Person();
+        exception.expect( IllegalArgumentException.class );
         person.setEMail( "blablabla" );
     }
 

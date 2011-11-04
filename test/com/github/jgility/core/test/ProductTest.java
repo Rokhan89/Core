@@ -1,4 +1,5 @@
 package com.github.jgility.core.test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Product;
 import com.github.jgility.core.project.Project;
-
+import com.github.jgility.core.requirement.IProductRequirement;
 
 public class ProductTest
 {
@@ -57,7 +58,7 @@ public class ProductTest
     @Test
     public void testSetProjectsGetProjects()
     {
-        List<Project> projectList = new ArrayList<Project>();
+        List<Project> projectList = new ArrayList<>();
         projectList.add( new Project( "Test", "Tetsbeschreibung" ) );
         projectList.add( new Project( "Projekt", "Komische Beschreibung" ) );
         projectList.add( new Project( "Max's Projekt", "Projektbeschreibung" ) );
@@ -139,7 +140,7 @@ public class ProductTest
     @Test
     public void testSetProductBacklog()
     {
-        Backlog productBacklog = new Backlog();
+        Backlog<IProductRequirement> productBacklog = new Backlog<>();
         exception.expect( IllegalArgumentException.class );
         product.setProductBacklog( productBacklog );
     }
@@ -147,7 +148,7 @@ public class ProductTest
     @Test
     public void testRemoveProductBacklog()
     {
-        Backlog productBacklog = new Backlog();
+        Backlog<IProductRequirement> productBacklog = new Backlog<>();
         product.removeProductBacklog();
         product.setProductBacklog( productBacklog );
         Assert.assertSame( productBacklog, product.getProductBacklog() );
