@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,10 +37,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @XmlRootElement
 @XmlSeeAlso( Iteration.class )
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Release
     extends AbstractPlan
 {
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final Set<IPlan> subPlanSet;
 
     /**
@@ -106,8 +111,6 @@ public class Release
      * (non-Javadoc)
      * @see com.github.jgility.core.planning.IPlan#getPlanningStruct()
      */
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
     @Override
     public List<IPlan> getPlanningStruct()
     {

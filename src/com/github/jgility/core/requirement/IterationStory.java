@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,13 +29,18 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
 @XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD )
 public class IterationStory
     extends ImplementableStory
     implements IIterationRequirement
 {
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final List<IRequirement> dependencies;
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final List<IImplementableRequirement> tasks;
 
     /**
@@ -121,8 +128,6 @@ public class IterationStory
      * (non-Javadoc)
      * @see com.github.jgility.core.requirement.IIterationRequirement#getDependencies()
      */
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
     @Override
     public List<IRequirement> getDependencies()
     {
@@ -177,8 +182,6 @@ public class IterationStory
      * (non-Javadoc)
      * @see com.github.jgility.core.requirement.IIterationRequirement#getTaskList()
      */
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
     @Override
     public List<IImplementableRequirement> getTaskList()
     {

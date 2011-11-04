@@ -14,6 +14,8 @@ package com.github.jgility.core.requirement;
 
 import java.util.Calendar;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -28,8 +30,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
 @XmlRootElement
-@XmlType( propOrder = { "ID", "title", "description", "createDate", "estimated", "priority",
+@XmlType( propOrder = { "id", "title", "description", "createDate", "estimated", "priority",
     "requester", "requirementKind" } )
+@XmlAccessorType( XmlAccessType.FIELD )
 public class ProductStory
     implements IProductRequirement
 {

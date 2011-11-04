@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,10 +28,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
 @XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Team
 {
     private final String name;
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final List<Person> members;
 
     /**
@@ -102,8 +107,6 @@ public class Team
      * 
      * @return unveränderliche {@link List} mit {@link Person}
      */
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
     public List<Person> getMembers()
     {
         return Collections.unmodifiableList( members );

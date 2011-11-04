@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,9 +33,12 @@ import org.apache.commons.lang3.ObjectUtils;
  * @version 1.0
  */
 @XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Backlog<T>
 {
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final List<T> requirements;
 
     /**
@@ -84,8 +89,6 @@ public class Backlog<T>
      * 
      * @return unveränderte {@link List} mit allen Anforderungen
      */
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
     public List<T> getRequirementList()
     {
         return Collections.unmodifiableList( requirements );

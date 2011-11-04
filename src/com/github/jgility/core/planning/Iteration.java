@@ -15,6 +15,8 @@ package com.github.jgility.core.planning;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -32,6 +34,7 @@ import com.github.jgility.core.requirement.IterationStory;
  */
 @XmlRootElement
 @XmlSeeAlso( IterationStory.class )
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Iteration
     extends AbstractPlan
 {
