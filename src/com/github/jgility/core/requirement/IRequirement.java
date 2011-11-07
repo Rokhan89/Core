@@ -80,6 +80,13 @@ public interface IRequirement
     Calendar getCreateDate();
 
     /**
+     * Setzt das Erstelldatum der Anforderung
+     * 
+     * @param createDate als {@link Calendar}
+     */
+    void setCreateDate( Calendar createDate );
+
+    /**
      * Gibt die ausgewählte Priorität zurück
      * 
      * @return Priorität als {@link Priority}

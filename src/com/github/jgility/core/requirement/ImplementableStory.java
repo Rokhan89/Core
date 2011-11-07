@@ -12,6 +12,10 @@
  */
 package com.github.jgility.core.requirement;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -22,6 +26,8 @@ import com.github.jgility.core.project.Team;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD )
 public class ImplementableStory
     extends ProductStory
     implements IImplementableRequirement

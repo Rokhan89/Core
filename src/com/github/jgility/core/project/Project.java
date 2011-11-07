@@ -19,11 +19,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.planning.IPlan;
+import com.github.jgility.core.planning.Release;
 
 /**
  * Klasse, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
@@ -32,14 +40,21 @@ import com.github.jgility.core.planning.IPlan;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlSeeAlso( Release.class )
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Project
 {
     private String name;
 
     private String description;
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final Set<Person> members;
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final Set<IPlan> projectPlan;
 
     /**

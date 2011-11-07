@@ -14,9 +14,11 @@ package com.github.jgility.core.project;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,13 +32,15 @@ import com.github.jgility.core.requirement.IProductRequirement;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Product
 {
     private String name;
 
     private String description;
 
-    private final Set<Project> projects;
+    private final List<Project> projects;
 
     private Person productOwner;
 
@@ -73,7 +77,7 @@ public class Product
         setDescription( description );
         setProductOwner( productOwner );
         productBacklog = new Backlog<>();
-        projects = new HashSet<>();
+        projects = new ArrayList<>();
     }
 
     /**
@@ -285,6 +289,17 @@ public class Product
     public void removeProductBacklog()
     {
         productBacklog = null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "Product [name=" + name + ", description=" + description + ", projects=" + projects
+            + ", productOwner=" + productOwner + ", productBacklog=" + productBacklog + "]";
     }
 
 }

@@ -15,6 +15,11 @@ package com.github.jgility.core.planning;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -23,10 +28,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlType( propOrder = { "start", "end" } )
+@XmlAccessorType( XmlAccessType.FIELD )
 public abstract class AbstractPlan
     implements IPlan
 {
-
     private Calendar start;
 
     private Calendar end;

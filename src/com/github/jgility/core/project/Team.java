@@ -16,17 +16,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Team
 {
-
     private final String name;
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final List<Person> members;
+
+    /**
+     * Instanziiert ein Team ohne namen
+     */
+    public Team()
+    {
+        this( "" );
+    }
 
     /**
      * Instanziiert ein Objekt der Klasse Team auf Basis des Team-Namens
