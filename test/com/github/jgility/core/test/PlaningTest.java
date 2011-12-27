@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.Iteration;
 import com.github.jgility.core.planning.Release;
 import com.github.jgility.core.project.Person;
@@ -36,7 +35,7 @@ public class PlaningTest
     {
         Calendar start = new GregorianCalendar( 2012, 3, 1 );
         Calendar end1 = new GregorianCalendar( 2012, 3, 15 );
-        Calendar start1 = new GregorianCalendar( 2012, 3, 16 );
+        Calendar start1 = new GregorianCalendar( 2012, 3, 15 );
         Calendar end = new GregorianCalendar( 2012, 4, 1 );
 
         Release release = new Release( start, end );
@@ -58,36 +57,6 @@ public class PlaningTest
         }
 
         project.addProjectPlan( release );
-    }
-
-    private void checkCalendar( Calendar calendar, Calendar otherCalendar )
-    {
-        Assert.assertEquals( calendar.get( Calendar.YEAR ), otherCalendar.get( Calendar.YEAR ) );
-        Assert.assertEquals( calendar.get( Calendar.MONTH ), otherCalendar.get( Calendar.MONTH ) );
-        Assert.assertEquals( calendar.get( Calendar.DAY_OF_MONTH ),
-                             otherCalendar.get( Calendar.DAY_OF_MONTH ) );
-    }
-
-    @Test
-    public void testChangeReleasePlaning()
-    {
-        testIterationReleasePlaning();
-        Calendar start = new GregorianCalendar( 2012, 3, 10 );
-        Calendar end = new GregorianCalendar( 2012, 4, 5 );
-
-        IPlan release = project.getProjectPlan().get( 0 ); // Release
-        release.setStart( start );
-
-        IPlan iteration = release.getPlanningStruct().get( 0 );
-        checkCalendar( start, iteration.getStart() );
-
-        // iteration = release.getPlanningStruct().get( 1 );
-        // checkCalendar( end, iteration.getEnd() );
-
-        for ( IPlan plan : release.getPlanningStruct() )
-        {
-            System.out.println( plan );
-        }
     }
 
 }

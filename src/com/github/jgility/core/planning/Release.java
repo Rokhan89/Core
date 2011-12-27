@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -69,9 +70,20 @@ public class Release
             throw new IllegalArgumentException( "plan-object has a wrong reference: " + plan );
         }
 
-        if ( checkPlanRange( plan ) )
+        if ( CollectionUtils.isEmpty( subPlanList ) )
         {
             subPlanList.add( plan );
+        }
+        else if ( checkPlanRange( plan ) )
+        {
+            if ( checkSubPlan( plan, subPlanList.get( subPlanList.size() - 1 ) ) )
+            {
+                subPlanList.add( plan );
+            }
+            else
+            {
+                throw new IllegalArgumentException( "plan-object has a occupied start or end-time" );
+            }
         }
         else
         {
@@ -87,6 +99,16 @@ public class Release
         return ( !checkStart && !checkEnd );
     }
 
+    private boolean checkSubPlan( IPlan plan, IPlan subplan )
+    {
+        Calendar start = plan.getStart();
+        Calendar end = subplan.getEnd();
+        start.set( Calendar.HOUR, 0 );
+        start.set( Calendar.MINUTE, 1 );
+        end.set( Calendar.HOUR, 0 );
+        end.set( Calendar.MINUTE, 0 );
+        return start.after( end );
+    }
     /**
      * Entfernt ein {@link IPlan} aus der Unterstruktur
      * 
