@@ -12,6 +12,7 @@
  */
 package com.github.jgility.core.planning;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -103,8 +104,9 @@ public class Iteration
     @Override
     public String toString()
     {
-        return "Iteration [start=" + getStart() + "end=" + getEnd() + "iterationBacklog="
-            + iterationBacklog + "]";
+        SimpleDateFormat sfd = new SimpleDateFormat( "dd.MM.yyyy" );
+        return "Iteration [start=" + sfd.format( getStart().getTime() ) + " end="
+            + sfd.format( getEnd().getTime() ) + " iterationBacklog=" + iterationBacklog + "]";
     }
 
 }

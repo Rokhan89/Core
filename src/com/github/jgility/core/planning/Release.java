@@ -12,6 +12,7 @@
  */
 package com.github.jgility.core.planning;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -139,7 +140,8 @@ public class Release
     @Override
     public String toString()
     {
-        return "Release [start=" + getStart() + "end=" + getEnd() + "subPlanSet=" + subPlanSet
-            + "]";
+        SimpleDateFormat sfd = new SimpleDateFormat( "dd.MM.yyyy" );
+        return "Release [start=" + sfd.format( getStart().getTime() ) + " end="
+            + sfd.format( getEnd().getTime() ) + " subPlanSet=" + subPlanList + "]";
     }
 }
