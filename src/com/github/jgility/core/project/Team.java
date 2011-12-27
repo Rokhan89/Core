@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
@@ -26,7 +27,7 @@ import org.apache.commons.lang3.ObjectUtils;
 public class Team
 {
 
-    private final String name;
+    private String name;
 
     private final List<Person> members;
 
@@ -49,6 +50,24 @@ public class Team
     public String getName()
     {
         return this.name;
+    }
+
+    /**
+     * Setzt den Namen des Teams<br>
+     * Parameter <code>name</code> darf nicht <code>null</code> oder <code>""</code> beinhalten
+     * 
+     * @param name als {@link String}
+     */
+    public void setName( String name )
+    {
+        if ( StringUtils.isNotBlank( name ) )
+        {
+            this.name = name;
+        }
+        else
+        {
+            throw new IllegalArgumentException( "an empty-String is not allowed" );
+        }
     }
 
     /**
