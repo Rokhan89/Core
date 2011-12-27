@@ -40,7 +40,7 @@ public class Project
 
     private String description;
 
-    private final Set<Person> members;
+    private Team team;
 
     private final Set<IPlan> projectPlan;
 
@@ -68,7 +68,7 @@ public class Project
         super();
         setName( name );
         setDescription( description );
-        members = new HashSet<>();
+        team = new Team( name );
         projectPlan = new HashSet<>();
     }
 
@@ -127,10 +127,28 @@ public class Project
      * 
      * @return {@link List} von {@link Person}
      */
-    public List<Person> getMembers()
+    public Team getTeam()
     {
-        final List<Person> personList = new ArrayList<>( members );
-        return Collections.unmodifiableList( personList );
+        return this.team;
+    }
+
+    /**
+     * Bestimmt das Team des Projekts. Prüft ob das Team nicht <code>null</code> ist und
+     * Mitgliederzahl größer als 0
+     * 
+     * @param team als zu bearbeitenden Projektgruppe
+     * @throws IllegalArgumentException wenn der Übergabeparameter nicht den Vorgaben entspricht
+     */
+    public void setTeam( Team team )
+    {
+        if ( null != team && 0 < team.getMembers().size() )
+        {
+            this.team = team;
+        }
+        else
+        {
+            throw new IllegalArgumentException( "empty team is not allowed to set" );
+        }
     }
 
     /**
@@ -145,7 +163,10 @@ public class Project
     {
         if ( CollectionUtils.isNotEmpty( members ) )
         {
-            this.members.addAll( members );
+            for ( Person member : members )
+            {
+                this.team.addMember( member );
+            }
         }
         else
         {
@@ -165,7 +186,7 @@ public class Project
     {
         if ( ObjectUtils.notEqual( null, newMember ) )
         {
-            members.add( newMember );
+            team.addMember( newMember );
         }
         else
         {
@@ -184,7 +205,7 @@ public class Project
     {
         if ( ObjectUtils.notEqual( null, removeMember ) )
         {
-            return members.remove( removeMember );
+            return team.removeMember( removeMember );
         }
         return false;
     }
@@ -194,7 +215,7 @@ public class Project
      */
     public void clearMembers()
     {
-        members.clear();
+        team.clearMembers();
     }
 
     /**
@@ -278,7 +299,7 @@ public class Project
         HashCodeBuilder builder = new HashCodeBuilder();
         builder.append( name );
         builder.append( description );
-        builder.append( members );
+        builder.append( team );
         builder.append( projectPlan );
         return builder.toHashCode();
     }
@@ -292,7 +313,7 @@ public class Project
             EqualsBuilder builder = new EqualsBuilder();
             builder.append( name, project.getName() );
             builder.append( description, project.getDescription() );
-            builder.append( members, project.getMembers() );
+            builder.append( team, project.getTeam() );
             builder.append( projectPlan, project.getProjectPlan() );
             return builder.isEquals();
         }
@@ -302,7 +323,7 @@ public class Project
     @Override
     public String toString()
     {
-        return "Project [name=" + name + ", description=" + description + ", members=" + members
+        return "Project [name=" + name + ", description=" + description + ", members=" + team
             + ", projectPlan=" + projectPlan + "]";
     }
 
