@@ -76,16 +76,19 @@ public abstract class AbstractPlan
     public void setStart( Calendar start )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, start ) )
+        if ( ObjectUtils.equals( null, start ) )
         {
             throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
         }
+
         if ( end.after( start ) )
         {
             this.start = (Calendar) start.clone();
         }
-
-        throw new IllegalArgumentException( "start-time have to before end-time" );
+        else
+        {
+            throw new IllegalArgumentException( "start-time have to before end-time" );
+        }
     }
 
     /*
@@ -106,16 +109,19 @@ public abstract class AbstractPlan
     public void setEnd( Calendar end )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, end ) )
+        if ( ObjectUtils.equals( null, end ) )
         {
             throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
         }
+
         if ( start.before( end ) )
         {
             this.end = (Calendar) end.clone();
         }
-
-        throw new IllegalArgumentException( "end-time have to after start-time: " );
+        else
+        {
+            throw new IllegalArgumentException( "start-time have to before end-time" );
+        }
     }
 
     /*
