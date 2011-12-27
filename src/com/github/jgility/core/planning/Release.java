@@ -16,9 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -33,7 +32,7 @@ public class Release
     extends AbstractPlan
 {
 
-    private final Set<IPlan> subPlanSet;
+    private final List<IPlan> subPlanList;
 
     /**
      * Instanziiert ein Objekt von der Klasse {@link Release} mit dem heutigen Datum und dem
@@ -42,7 +41,7 @@ public class Release
     public Release()
     {
         super();
-        subPlanSet = new HashSet<>();
+        subPlanList = new ArrayList<>();
     }
 
     /**
@@ -54,7 +53,7 @@ public class Release
     public Release( Calendar start, Calendar end )
     {
         super( start, end );
-        subPlanSet = new HashSet<>();
+        subPlanList = new ArrayList<>();
     }
 
     /**
@@ -72,7 +71,7 @@ public class Release
 
         if ( checkPlanRange( plan ) )
         {
-            subPlanSet.add( plan );
+            subPlanList.add( plan );
         }
         else
         {
@@ -95,7 +94,7 @@ public class Release
      */
     public boolean removePlan( IPlan plan )
     {
-        return subPlanSet.remove( plan );
+        return subPlanList.remove( plan );
     }
 
     /*
@@ -105,7 +104,6 @@ public class Release
     @Override
     public List<IPlan> getPlanningStruct()
     {
-        final List<IPlan> subPlanList = new ArrayList<>( subPlanSet );
         return Collections.unmodifiableList( subPlanList );
     }
 
@@ -114,7 +112,7 @@ public class Release
     {
         HashCodeBuilder builder = new HashCodeBuilder();
         builder.append( super.hashCode() );
-        builder.append( subPlanSet );
+        builder.append( subPlanList );
         return builder.toHashCode();
     }
 
@@ -125,7 +123,7 @@ public class Release
         {
             Release plan = (Release) obj;
             EqualsBuilder builder = new EqualsBuilder();
-            builder.append( subPlanSet, plan.subPlanSet );
+            builder.append( subPlanList, plan.subPlanList );
 
             return builder.isEquals() && super.equals( obj );
         }
