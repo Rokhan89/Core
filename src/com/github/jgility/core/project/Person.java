@@ -85,7 +85,7 @@ public class Person
         }
         else
         {
-            throw new IllegalArgumentException( "The firstname have to a capital first letter: "
+            throw new IllegalArgumentException( "firstname has to be a capital first letter: "
                 + firstname );
         }
     }
@@ -107,7 +107,7 @@ public class Person
         }
         else
         {
-            throw new IllegalArgumentException( "The surname have to a capital first lettter: "
+            throw new IllegalArgumentException( "surname has to be a capital first lettter: "
                 + surname );
         }
     }
@@ -138,7 +138,7 @@ public class Person
         }
         else
         {
-            throw new IllegalArgumentException( "The e-mail adress is not valid: " + eMail );
+            throw new IllegalArgumentException( "e-mail adress is invalid: " + eMail );
         }
     }
 

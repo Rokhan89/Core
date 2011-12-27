@@ -1,18 +1,14 @@
 package com.github.jgility.core.test;
 
 import static org.junit.Assert.assertEquals;
+import junit.framework.Assert;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.github.jgility.core.project.Person;
 
 public class PersonTest
 {
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test
     public void testPersonTrue()
     {
@@ -26,8 +22,15 @@ public class PersonTest
     @Test
     public void TestPersonFalseException()
     {
-        exception.expect( IllegalArgumentException.class );
-        new Person( "max", "mustermann", "max@mustermann.de" );
+        try
+        {
+            new Person( "max", "mustermann", "max@mustermann.de" );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+
+        }
     }
 
     @Test
@@ -42,8 +45,16 @@ public class PersonTest
     public void testSetFirstnameException()
     {
         Person person = new Person();
-        exception.expect( IllegalArgumentException.class );
-        person.setFirstname( "" );
+
+        try
+        {
+            person.setFirstname( "" );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+
+        }
     }
 
     @Test
@@ -53,8 +64,15 @@ public class PersonTest
         person.setSurname( "Mustermann" );
         assertEquals( "Mustermann", person.getSurname() );
         person = new Person();
-        exception.expect( IllegalArgumentException.class );
-        person.setSurname( "mustermann" );
+        try
+        {
+            person.setSurname( "mustermann" );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+
+        }
     }
 
     @Test
@@ -69,8 +87,15 @@ public class PersonTest
     public void testSetEMailException()
     {
         Person person = new Person();
-        exception.expect( IllegalArgumentException.class );
-        person.setEMail( "blablabla" );
+        try
+        {
+            person.setEMail( "blablabla" );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+
+        }
     }
 
 }

@@ -24,6 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Abstrakte Klasse zum erstellen von Backlogs im Sinne der agilen Softwareentwicklung
@@ -60,7 +62,7 @@ public class Backlog<T>
     {
         if ( ObjectUtils.equals( null, requirement ) )
         {
-            throw new IllegalArgumentException( "Null-object is not allowed to add" );
+            throw new IllegalArgumentException( "null-object is not allowed to add" );
         }
 
         requirements.add( requirement );
@@ -78,7 +80,7 @@ public class Backlog<T>
     {
         if ( ObjectUtils.equals( null, requirement ) )
         {
-            throw new IllegalArgumentException( "Null-object is not allowed to add" );
+            throw new IllegalArgumentException( "null-object is not allowed to add" );
         }
 
         return requirements.remove( requirement );
@@ -103,7 +105,7 @@ public class Backlog<T>
     {
         if ( CollectionUtils.isEmpty( requirementList ) )
         {
-            throw new IllegalArgumentException( "Empty requirement list is not allowed" );
+            throw new IllegalArgumentException( "empty requirement list is not allowed" );
         }
 
         requirements.addAll( requirementList );
@@ -117,6 +119,37 @@ public class Backlog<T>
     public String toString()
     {
         return "Backlog [requirements=" + requirements + "]";
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append( requirements );
+        return builder.toHashCode();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj instanceof Backlog )
+        {
+            Backlog<T> backlog = (Backlog<T>) obj;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append( requirements, backlog.requirements );
+            return builder.isEquals();
+        }
+
+        return false;
     }
 
 }

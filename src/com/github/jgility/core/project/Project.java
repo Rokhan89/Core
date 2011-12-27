@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -40,21 +42,14 @@ import com.github.jgility.core.planning.Release;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
-@XmlRootElement
-@XmlSeeAlso( Release.class )
-@XmlAccessorType( XmlAccessType.FIELD )
 public class Project
 {
     private String name;
 
     private String description;
 
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
-    private final Set<Person> members;
+    private Team team;
 
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
     private final Set<IPlan> projectPlan;
 
     /**
@@ -81,7 +76,7 @@ public class Project
         super();
         setName( name );
         setDescription( description );
-        members = new HashSet<>();
+        team = new Team( name );
         projectPlan = new HashSet<>();
     }
 
@@ -111,7 +106,7 @@ public class Project
         }
         else
         {
-            throw new IllegalArgumentException( "A empty name for projects is not allowed" );
+            throw new IllegalArgumentException( "empty name for projects is not allowed" );
         }
     }
 
@@ -140,10 +135,28 @@ public class Project
      * 
      * @return {@link List} von {@link Person}
      */
-    public List<Person> getMembers()
+    public Team getTeam()
     {
-        final List<Person> personList = new ArrayList<>( members );
-        return Collections.unmodifiableList( personList );
+        return this.team;
+    }
+
+    /**
+     * Bestimmt das Team des Projekts. Prüft ob das Team nicht <code>null</code> ist und
+     * Mitgliederzahl größer als 0
+     * 
+     * @param team als zu bearbeitenden Projektgruppe
+     * @throws IllegalArgumentException wenn der Übergabeparameter nicht den Vorgaben entspricht
+     */
+    public void setTeam( Team team )
+    {
+        if ( null != team && 0 < team.getMembers().size() )
+        {
+            this.team = team;
+        }
+        else
+        {
+            throw new IllegalArgumentException( "empty team is not allowed to set" );
+        }
     }
 
     /**
@@ -156,13 +169,16 @@ public class Project
     public void setMembers( List<Person> members )
         throws IllegalArgumentException
     {
-        if ( null != members && !members.isEmpty() )
+        if ( CollectionUtils.isNotEmpty( members ) )
         {
-            this.members.addAll( members );
+            for ( Person member : members )
+            {
+                this.team.addMember( member );
+            }
         }
         else
         {
-            throw new IllegalArgumentException( "An empty list of person is not allowed to add" );
+            throw new IllegalArgumentException( "empty list of person is not allowed to add" );
         }
     }
 
@@ -176,13 +192,13 @@ public class Project
     public void addMember( Person newMember )
         throws IllegalArgumentException
     {
-        if ( null != newMember )
+        if ( ObjectUtils.notEqual( null, newMember ) )
         {
-            members.add( newMember );
+            team.addMember( newMember );
         }
         else
         {
-            throw new IllegalArgumentException( "An empty person is not allowed to add" );
+            throw new IllegalArgumentException( "empty person is not allowed to add" );
         }
     }
 
@@ -195,9 +211,9 @@ public class Project
      */
     public boolean removeMember( Person removeMember )
     {
-        if ( null != removeMember )
+        if ( ObjectUtils.notEqual( null, removeMember ) )
         {
-            return members.remove( removeMember );
+            return team.removeMember( removeMember );
         }
         return false;
     }
@@ -207,7 +223,7 @@ public class Project
      */
     public void clearMembers()
     {
-        members.clear();
+        team.clearMembers();
     }
 
     /**
@@ -231,13 +247,13 @@ public class Project
     public void setProjectPlan( List<IPlan> projectPlan )
         throws IllegalArgumentException
     {
-        if ( null != projectPlan && !projectPlan.isEmpty() )
+        if ( CollectionUtils.isNotEmpty( projectPlan ) )
         {
             this.projectPlan.addAll( projectPlan );
         }
         else
         {
-            throw new IllegalArgumentException( "An empty list of IPlan is not allowed" );
+            throw new IllegalArgumentException( "empty list of IPlan is not allowed" );
         }
     }
 
@@ -251,13 +267,13 @@ public class Project
     public void addProjectPlan( IPlan newPlan )
         throws IllegalArgumentException
     {
-        if ( null != newPlan )
+        if ( ObjectUtils.notEqual( null, newPlan ) )
         {
             this.projectPlan.add( newPlan );
         }
         else
         {
-            throw new IllegalArgumentException( "An empty new IPlan is not allowed" );
+            throw new IllegalArgumentException( "empty new IPlan is not allowed" );
         }
     }
 
@@ -270,7 +286,7 @@ public class Project
      */
     public boolean removeProjectPlan( IPlan removePlan )
     {
-        if ( null != removePlan )
+        if ( ObjectUtils.notEqual( null, removePlan ) )
         {
             return projectPlan.remove( removePlan );
         }
@@ -291,7 +307,7 @@ public class Project
         HashCodeBuilder builder = new HashCodeBuilder();
         builder.append( name );
         builder.append( description );
-        builder.append( members );
+        builder.append( team );
         builder.append( projectPlan );
         return builder.toHashCode();
     }
@@ -305,7 +321,7 @@ public class Project
             EqualsBuilder builder = new EqualsBuilder();
             builder.append( name, project.getName() );
             builder.append( description, project.getDescription() );
-            builder.append( members, project.getMembers() );
+            builder.append( team, project.getTeam() );
             builder.append( projectPlan, project.getProjectPlan() );
             return builder.isEquals();
         }
@@ -315,7 +331,7 @@ public class Project
     @Override
     public String toString()
     {
-        return "Project [name=" + name + ", description=" + description + ", members=" + members
+        return "Project [name=" + name + ", description=" + description + ", members=" + team
             + ", projectPlan=" + projectPlan + "]";
     }
 

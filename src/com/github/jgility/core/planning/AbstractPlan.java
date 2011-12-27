@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -34,6 +35,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public abstract class AbstractPlan
     implements IPlan
 {
+
     private Calendar start;
 
     private Calendar end;
@@ -70,7 +72,7 @@ public abstract class AbstractPlan
         }
         else
         {
-            throw new IllegalArgumentException( "End-time is before start-time" );
+            throw new IllegalArgumentException( "end-time is before start-time" );
         }
     }
 
@@ -82,16 +84,19 @@ public abstract class AbstractPlan
     public void setStart( Calendar start )
         throws IllegalArgumentException
     {
-        if ( start == null )
+        if ( ObjectUtils.equals( null, start ) )
         {
-            throw new IllegalArgumentException( "Null-Object as start-time is not allowed" );
+            throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
         }
+
         if ( end.after( start ) )
         {
             this.start = (Calendar) start.clone();
         }
-
-        throw new IllegalArgumentException( "Start-time have to before end-time: " );
+        else
+        {
+            throw new IllegalArgumentException( "start-time have to before end-time" );
+        }
     }
 
     /*
@@ -112,16 +117,19 @@ public abstract class AbstractPlan
     public void setEnd( Calendar end )
         throws IllegalArgumentException
     {
-        if ( end == null )
+        if ( ObjectUtils.equals( null, end ) )
         {
-            throw new IllegalArgumentException( "Null-Object as start-time is not allowed" );
+            throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
         }
+
         if ( start.before( end ) )
         {
             this.end = (Calendar) end.clone();
         }
-
-        throw new IllegalArgumentException( "End-time have to after start-time: " );
+        else
+        {
+            throw new IllegalArgumentException( "start-time have to before end-time" );
+        }
     }
 
     /*

@@ -7,9 +7,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.planning.IPlan;
@@ -28,9 +26,6 @@ import com.github.jgility.core.requirement.RequirementKind;
 
 public class RequirementTest
 {
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     private Product product;
 
@@ -73,8 +68,14 @@ public class RequirementTest
 
         Assert.assertEquals( counter, 3 );
 
-        exception.expect( IllegalArgumentException.class );
-        story.setID( 4 );
+        try
+        {
+            story.setID( 4 );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test
@@ -93,8 +94,14 @@ public class RequirementTest
             Assert.assertEquals( plan, iteration );
         }
 
-        exception.expect( IllegalArgumentException.class );
-        release.addPlan( release );
+        try
+        {
+            release.addPlan( release );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test

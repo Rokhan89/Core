@@ -20,7 +20,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.requirement.IProductRequirement;
@@ -40,7 +44,7 @@ public class Product
 
     private String description;
 
-    private final List<Project> projects;
+    private final Set<Project> projects;
 
     private Person productOwner;
 
@@ -77,7 +81,7 @@ public class Product
         setDescription( description );
         setProductOwner( productOwner );
         productBacklog = new Backlog<>();
-        projects = new ArrayList<>();
+        projects = new HashSet<>();
     }
 
     /**
@@ -105,7 +109,7 @@ public class Product
         }
         else
         {
-            throw new IllegalArgumentException( "A empty name for products is not allowed" );
+            throw new IllegalArgumentException( "empty name for products is not allowed" );
         }
     }
 
@@ -150,13 +154,13 @@ public class Product
     public void setProjects( List<Project> projects )
         throws IllegalArgumentException
     {
-        if ( null != projects && !projects.isEmpty() )
+        if ( CollectionUtils.isNotEmpty( projects ) )
         {
             this.projects.addAll( projects );
         }
         else
         {
-            throw new IllegalArgumentException( "A empty list of projects is not allowed to add" );
+            throw new IllegalArgumentException( "empty list of projects is not allowed to add" );
         }
     }
 
@@ -170,13 +174,13 @@ public class Product
     public void addProject( Project newProject )
         throws IllegalArgumentException
     {
-        if ( null != newProject )
+        if ( ObjectUtils.notEqual( null, newProject ) )
         {
             this.projects.add( newProject );
         }
         else
         {
-            throw new IllegalArgumentException( "Added project is null" );
+            throw new IllegalArgumentException( "null-object as project is not allowed" );
         }
     }
 
@@ -189,7 +193,7 @@ public class Product
      */
     public boolean removeProject( Project removeProject )
     {
-        if ( null != removeProject )
+        if ( ObjectUtils.notEqual( null, removeProject ) )
         {
             return projects.remove( removeProject );
         }
@@ -225,18 +229,18 @@ public class Product
     public void setProductOwner( Person productOwner )
         throws IllegalArgumentException
     {
-        if ( null != this.productOwner )
+        if ( ObjectUtils.notEqual( null, this.productOwner ) )
         {
-            throw new IllegalArgumentException( "The productowner is already initialize: "
+            throw new IllegalArgumentException( "productowner is already initialize: "
                 + this.productBacklog );
         }
-        if ( null != productOwner )
+        if ( ObjectUtils.notEqual( null, productOwner ) )
         {
             this.productOwner = productOwner;
         }
         else
         {
-            throw new IllegalArgumentException( "Null person is not allowed as productowner" );
+            throw new IllegalArgumentException( "null person is not allowed as productowner" );
         }
     }
 
@@ -269,17 +273,17 @@ public class Product
     public void setProductBacklog( Backlog<IProductRequirement> productBacklog )
         throws IllegalArgumentException
     {
-        if ( null != this.productBacklog )
+        if ( ObjectUtils.notEqual( null, this.productBacklog ) )
         {
-            throw new IllegalArgumentException( "The productbacklog is already initialize" );
+            throw new IllegalArgumentException( "productbacklog is already initialize" );
         }
-        else if ( null != productBacklog )
+        else if ( ObjectUtils.notEqual( null, productBacklog ) )
         {
             this.productBacklog = productBacklog;
         }
         else
         {
-            throw new IllegalArgumentException( "Null backlog is not allowed as productbacklog" );
+            throw new IllegalArgumentException( "null backlog is not allowed as productbacklog" );
         }
     }
 
@@ -289,6 +293,44 @@ public class Product
     public void removeProductBacklog()
     {
         productBacklog = null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append( name );
+        builder.append( description );
+        builder.append( productBacklog );
+        builder.append( productOwner );
+        builder.append( projects );
+
+        return builder.toHashCode();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj instanceof Product )
+        {
+            Product product = (Product) obj;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append( description, product.description );
+            builder.append( name, product.name );
+            builder.append( productBacklog, product.productBacklog );
+            builder.append( productOwner, product.productOwner );
+            builder.append( projects, product.projects );
+            return builder.isEquals();
+        }
+        return false;
     }
 
     /*
