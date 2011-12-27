@@ -115,4 +115,12 @@ public class Team
     {
         return Collections.unmodifiableList( members );
     }
+
+    /**
+     * Entfernt alle Elemente (<code>Person</code>) aus dem Team
+     */
+    public void clearMembers()
+    {
+        members.clear();
+    }
 }
