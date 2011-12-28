@@ -12,12 +12,11 @@
  */
 package com.github.jgility.core.planning;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -26,6 +25,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -44,7 +44,7 @@ public class Release
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
-    private final Set<IPlan> subPlanSet;
+    private final List<IPlan> subPlanList;
 
     /**
      * Instanziiert ein Objekt von der Klasse {@link Release} mit dem heutigen Datum und dem
@@ -53,7 +53,7 @@ public class Release
     public Release()
     {
         super();
-        subPlanSet = new HashSet<>();
+        subPlanList = new ArrayList<>();
     }
 
     /**
@@ -65,7 +65,7 @@ public class Release
     public Release( Calendar start, Calendar end )
     {
         super( start, end );
-        subPlanSet = new HashSet<>();
+        subPlanList = new ArrayList<>();
     }
 
     /**
@@ -78,25 +78,48 @@ public class Release
     {
         if ( ObjectUtils.equals( null, plan ) || ObjectUtils.equals( this, plan ) )
         {
-            throw new IllegalArgumentException( "Plan-object has a bad reference: " + plan );
+            throw new IllegalArgumentException( "plan-object has a wrong reference: " + plan );
         }
 
-        if ( checkPlanRange( plan ) )
+        if ( CollectionUtils.isEmpty( subPlanList ) )
         {
-            subPlanSet.add( plan );
+            subPlanList.add( plan );
+        }
+        else if ( checkPlanRange( plan ) )
+        {
+            if ( checkSubPlan( plan, subPlanList.get( subPlanList.size() - 1 ) ) )
+            {
+                subPlanList.add( plan );
+            }
+            else
+            {
+                throw new IllegalArgumentException( "plan-object has a occupied start or end-time" );
+            }
         }
         else
         {
-            throw new IllegalArgumentException( "Start or end-time is invalid" );
+            throw new IllegalArgumentException( "start or end-time is invalid" );
         }
 
     }
 
     private boolean checkPlanRange( IPlan plan )
     {
-        return ( !getStart().after( plan.getStart() ) && !getEnd().before( plan.getEnd() ) );
+        final boolean checkStart = getStart().after( plan.getStart() );
+        final boolean checkEnd = getEnd().before( plan.getEnd() );
+        return ( !checkStart && !checkEnd );
     }
 
+    private boolean checkSubPlan( IPlan plan, IPlan subplan )
+    {
+        Calendar start = plan.getStart();
+        Calendar end = subplan.getEnd();
+        start.set( Calendar.HOUR, 0 );
+        start.set( Calendar.MINUTE, 1 );
+        end.set( Calendar.HOUR, 0 );
+        end.set( Calendar.MINUTE, 0 );
+        return start.after( end );
+    }
     /**
      * Entfernt ein {@link IPlan} aus der Unterstruktur
      * 
@@ -104,7 +127,7 @@ public class Release
      */
     public boolean removePlan( IPlan plan )
     {
-        return subPlanSet.remove( plan );
+        return subPlanList.remove( plan );
     }
 
     /*
@@ -114,7 +137,6 @@ public class Release
     @Override
     public List<IPlan> getPlanningStruct()
     {
-        final List<IPlan> subPlanList = new ArrayList<>( subPlanSet );
         return Collections.unmodifiableList( subPlanList );
     }
 
@@ -123,7 +145,7 @@ public class Release
     {
         HashCodeBuilder builder = new HashCodeBuilder();
         builder.append( super.hashCode() );
-        builder.append( subPlanSet );
+        builder.append( subPlanList );
         return builder.toHashCode();
     }
 
@@ -134,7 +156,7 @@ public class Release
         {
             Release plan = (Release) obj;
             EqualsBuilder builder = new EqualsBuilder();
-            builder.append( subPlanSet, plan.subPlanSet );
+            builder.append( subPlanList, plan.subPlanList );
 
             return builder.isEquals() && super.equals( obj );
         }
@@ -149,7 +171,8 @@ public class Release
     @Override
     public String toString()
     {
-        return "Release [start=" + getStart() + "end=" + getEnd() + "subPlanSet=" + subPlanSet
-            + "]";
+        SimpleDateFormat sfd = new SimpleDateFormat( "dd.MM.yyyy" );
+        return "Release [start=" + sfd.format( getStart().getTime() ) + " end="
+            + sfd.format( getEnd().getTime() ) + " subPlanSet=" + subPlanList + "]";
     }
 }

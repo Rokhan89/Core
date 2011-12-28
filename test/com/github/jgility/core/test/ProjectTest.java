@@ -5,18 +5,14 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Project;
+import com.github.jgility.core.project.Team;
 
 public class ProjectTest
 {
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     private Project project;
 
@@ -45,8 +41,14 @@ public class ProjectTest
     @Test
     public void testProjectFailsException()
     {
-        exception.expect( IllegalArgumentException.class );
-        new Project( "", "Dies ist eine Test Beschreibung" );
+        try
+        {
+            new Project( "", "Dies ist eine Test Beschreibung" );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test
@@ -59,10 +61,23 @@ public class ProjectTest
         project.setName( "test projekt" );
         Assert.assertEquals( "test projekt", project.getName() );
 
-        exception.expect( IllegalArgumentException.class );
-        project.setName( "" );
-        exception.expect( IllegalArgumentException.class );
-        project.setName( null );
+        try
+        {
+            project.setName( "" );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+
+        }
+        try
+        {
+            project.setName( null );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test
@@ -79,17 +94,24 @@ public class ProjectTest
     @Test
     public void testAddAndRemoveMember()
     {
-        exception.expect( IllegalArgumentException.class );
-        project.addMember( null );
-        List<Person> members = project.getMembers();
-        Assert.assertEquals( 3, members.size() );
-        for ( Person member : members )
+        try
+        {
+            project.addMember( null );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
+
+        Team members = project.getTeam();
+        Assert.assertEquals( 3, members.getMembers().size() );
+        for ( Person member : members.getMembers() )
         {
             Assert.assertNotNull( member );
             Assert.assertTrue( project.removeMember( member ) );
         }
-        Assert.assertTrue( project.getMembers().isEmpty() );
-        Assert.assertEquals( 3, members.size() );
+        Assert.assertTrue( project.getTeam().getMembers().isEmpty() );
+        Assert.assertEquals( 3, members.getMembers().size() );
     }
 
     @Test
@@ -105,10 +127,10 @@ public class ProjectTest
 
         project.setMembers( personList );
 
-        List<Person> members = project.getMembers();
+        Team members = project.getTeam();
         Assert.assertNotSame( personList, members );
-        Assert.assertEquals( 3, members.size() );
-        for ( Person member : members )
+        Assert.assertEquals( 3, members.getMembers().size() );
+        for ( Person member : members.getMembers() )
         {
             Assert.assertNotNull( member );
         }
@@ -117,15 +139,15 @@ public class ProjectTest
     @Test
     public void testGetMembers()
     {
-        List<Person> members = project.getMembers();
-        Assert.assertEquals( 3, members.size() );
-        for ( Person member : members )
+        Team members = project.getTeam();
+        Assert.assertEquals( 3, members.getMembers().size() );
+        for ( Person member : members.getMembers() )
         {
             Assert.assertNotNull( member );
             Assert.assertTrue( project.removeMember( member ) );
         }
-        Assert.assertTrue( project.getMembers().isEmpty() );
-        Assert.assertEquals( 3, members.size() );
+        Assert.assertTrue( project.getTeam().getMembers().isEmpty() );
+        Assert.assertEquals( 3, members.getMembers().size() );
     }
 
     @Test
@@ -133,21 +155,33 @@ public class ProjectTest
     {
         List<Person> personList = new ArrayList<>();
 
-        exception.expect( IllegalArgumentException.class );
-        project.setMembers( personList );
+        try
+        {
+            project.setMembers( personList );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test
     public void testSetMembersFailsException2()
     {
-        exception.expect( IllegalArgumentException.class );
-        project.setMembers( null );
+        try
+        {
+            project.setMembers( null );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test
     public void testClearMember()
     {
         project.clearMembers();
-        Assert.assertTrue( project.getMembers().isEmpty() );
+        Assert.assertTrue( project.getTeam().getMembers().isEmpty() );
     }
 }

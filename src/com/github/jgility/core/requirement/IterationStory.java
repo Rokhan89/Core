@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -98,13 +99,13 @@ public class IterationStory
     public void addDependency( IRequirement requirement )
         throws IllegalArgumentException
     {
-        if ( null != requirement )
+        if ( ObjectUtils.notEqual( null, requirement ) )
         {
             dependencies.add( requirement );
         }
         else
         {
-            throw new IllegalArgumentException( "Null-Requirement as dependencie is not allowed!" );
+            throw new IllegalArgumentException( "null requirement as dependencie is not allowed!" );
         }
     }
 
@@ -117,7 +118,7 @@ public class IterationStory
     @Override
     public boolean removeDependency( IRequirement requirement )
     {
-        if ( null != requirement )
+        if ( ObjectUtils.notEqual( null, requirement ) )
         {
             return dependencies.remove( requirement );
         }
@@ -144,7 +145,7 @@ public class IterationStory
     public void addTask( IImplementableRequirement task )
         throws IllegalArgumentException
     {
-        if ( null != task )
+        if ( ObjectUtils.notEqual( null, task ) )
         {
             if ( task.getRequirementKind() == RequirementKind.TASK )
             {
@@ -152,13 +153,13 @@ public class IterationStory
             }
             else
             {
-                throw new IllegalArgumentException( "IImplementableRequirement have to be TASK: "
+                throw new IllegalArgumentException( "implementable requirement has to be TASK: "
                     + task.getRequirementKind() );
             }
         }
         else
         {
-            throw new IllegalArgumentException( "Null-object is not allowed!" );
+            throw new IllegalArgumentException( "null-object is not allowed!" );
         }
     }
 
@@ -171,7 +172,7 @@ public class IterationStory
     @Override
     public boolean removeTask( IImplementableRequirement task )
     {
-        if ( null != task )
+        if ( ObjectUtils.notEqual( null, task ) )
         {
             return tasks.remove( task );
         }

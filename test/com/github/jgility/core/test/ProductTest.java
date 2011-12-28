@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.project.Person;
@@ -34,18 +32,28 @@ public class ProductTest
         Assert.assertNotNull( product.getProductOwner() );
     }
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test
     public void testSetName()
     {
         product.setName( "Test" );
         Assert.assertEquals( "Test", product.getName() );
-        exception.expect( IllegalArgumentException.class );
-        product.setName( "" );
-        exception.expect( IllegalArgumentException.class );
-        product.setName( null );
+        try
+        {
+            product.setName( "" );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
+
+        try
+        {
+            product.setName( null );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test
@@ -66,8 +74,14 @@ public class ProductTest
 
         Assert.assertEquals( 3, product.getProjects().size() );
 
-        exception.expect( IllegalArgumentException.class );
-        product.setProjects( null );
+        try
+        {
+            product.setProjects( null );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
 
         Assert.assertEquals( 3, product.getProjects().size() );
 
@@ -86,8 +100,14 @@ public class ProductTest
 
         Assert.assertEquals( 3, product.getProjects().size() );
 
-        exception.expect( IllegalArgumentException.class );
-        product.addProject( null );
+        try
+        {
+            product.addProject( null );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
 
         Assert.assertEquals( 3, product.getProjects().size() );
     }
@@ -119,8 +139,14 @@ public class ProductTest
     @Test
     public void testSetProductOwner()
     {
-        exception.expect( IllegalArgumentException.class );
-        product.setProductOwner( new Person() );
+        try
+        {
+            product.setProductOwner( new Person() );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test
@@ -141,8 +167,14 @@ public class ProductTest
     public void testSetProductBacklog()
     {
         Backlog<IProductRequirement> productBacklog = new Backlog<>();
-        exception.expect( IllegalArgumentException.class );
-        product.setProductBacklog( productBacklog );
+        try
+        {
+            product.setProductBacklog( productBacklog );
+            Assert.fail( "no exception was threw" );
+        }
+        catch ( IllegalArgumentException iae )
+        {
+        }
     }
 
     @Test

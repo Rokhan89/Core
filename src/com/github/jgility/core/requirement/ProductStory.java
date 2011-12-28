@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -43,7 +44,7 @@ public class ProductStory
 
     private String description;
 
-    private Calendar createDate;
+    private final Calendar createDate;
 
     private float estimated;
 
@@ -66,7 +67,7 @@ public class ProductStory
      */
     public ProductStory()
     {
-        this( 1, "Default", "Default", 0, Priority.MINOR, "Nobody", RequirementKind.USER_STORY );
+        this( 0, "Default", "Default", 0, Priority.MINOR, "Nobody", RequirementKind.USER_STORY );
     }
 
     /**
@@ -115,18 +116,18 @@ public class ProductStory
     {
         if ( 0 == this.id )
         {
-            if ( 0 < id )
+            if ( 0 <= id )
             {
                 this.id = id;
             }
             else
             {
-                throw new IllegalArgumentException( "A neative id is not allowed" );
+                throw new IllegalArgumentException( "neative id is not allowed" );
             }
         }
         else
         {
-            throw new IllegalArgumentException( "The change of initialize requirements-id is "
+            throw new IllegalArgumentException( "change of initialize requirements-id is "
                 + "not allowed" );
         }
     }
@@ -155,7 +156,7 @@ public class ProductStory
         }
         else
         {
-            throw new IllegalArgumentException( "Title have to not blank!" );
+            throw new IllegalArgumentException( "title has to be not blank!" );
         }
 
     }
@@ -178,13 +179,13 @@ public class ProductStory
     public void setDescription( String description )
         throws IllegalArgumentException
     {
-        if ( null != description )
+        if ( ObjectUtils.notEqual( null, description ) )
         {
             this.description = description;
         }
         else
         {
-            throw new IllegalArgumentException( "Description have to not null!" );
+            throw new IllegalArgumentException( "description has to be not null!" );
         }
 
     }
@@ -219,13 +220,13 @@ public class ProductStory
     public void setPriority( Priority priority )
         throws IllegalArgumentException
     {
-        if ( null != priority )
+        if ( ObjectUtils.notEqual( null, priority ) )
         {
             this.priority = priority;
         }
         else
         {
-            throw new IllegalArgumentException( "Priority have to not null!" );
+            throw new IllegalArgumentException( "priority has to be not null!" );
         }
     }
 
@@ -253,7 +254,7 @@ public class ProductStory
         }
         else
         {
-            throw new IllegalArgumentException( "Requester have to not blank!" );
+            throw new IllegalArgumentException( "requester has to be not blank!" );
         }
     }
 
@@ -277,13 +278,13 @@ public class ProductStory
     public void setRequirementKind( RequirementKind requirementKind )
         throws IllegalArgumentException
     {
-        if ( null != requirementKind )
+        if ( ObjectUtils.notEqual( null, requirementKind ) )
         {
             this.requirementKind = requirementKind;
         }
         else
         {
-            throw new IllegalArgumentException( "RequirementKind have to not null!" );
+            throw new IllegalArgumentException( "kind of requirement has to be not null!" );
         }
     }
 
@@ -321,21 +322,7 @@ public class ProductStory
         }
         else
         {
-            throw new IllegalArgumentException( "A negativ estimate is not allowed!" );
-        }
-    }
-
-    @Override
-    public void setCreateDate( Calendar createDate )
-        throws IllegalArgumentException
-    {
-        if ( null != createDate )
-        {
-            this.createDate = createDate;
-        }
-        else
-        {
-            throw new IllegalArgumentException( "Null-object is not allowed" );
+            throw new IllegalArgumentException( "negativ estimate is not allowed!" );
         }
     }
 

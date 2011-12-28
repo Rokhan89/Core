@@ -22,28 +22,20 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
-@XmlRootElement
-@XmlAccessorType( XmlAccessType.FIELD )
 public class Team
 {
-    private final String name;
 
-    @XmlElementWrapper
-    @XmlAnyElement( lax = true )
+    private String name;
+
     private final List<Person> members;
-
-    /**
-     * Instanziiert ein Team ohne namen
-     */
-    public Team()
-    {
-        this( "" );
-    }
 
     /**
      * Instanziiert ein Objekt der Klasse Team auf Basis des Team-Namens
@@ -67,6 +59,24 @@ public class Team
     }
 
     /**
+     * Setzt den Namen des Teams<br>
+     * Parameter <code>name</code> darf nicht <code>null</code> oder <code>""</code> beinhalten
+     * 
+     * @param name als {@link String}
+     */
+    public void setName( String name )
+    {
+        if ( StringUtils.isNotBlank( name ) )
+        {
+            this.name = name;
+        }
+        else
+        {
+            throw new IllegalArgumentException( "an empty-String is not allowed" );
+        }
+    }
+
+    /**
      * Fügt eine neues Teammitglied als {@link Person} dem bestehendem Team hinzu
      * 
      * @param person neues Mitglied des Teams als {@link Person}
@@ -76,13 +86,13 @@ public class Team
     public void addMember( Person person )
         throws IllegalArgumentException
     {
-        if ( null != person )
+        if ( ObjectUtils.notEqual( null, person ) )
         {
             members.add( person );
         }
         else
         {
-            throw new IllegalArgumentException( "Null-person is not allowed!" );
+            throw new IllegalArgumentException( "null-person is not allowed!" );
         }
     }
 
@@ -94,7 +104,7 @@ public class Team
      */
     public boolean removeMember( Person person )
     {
-        if ( null != person )
+        if ( ObjectUtils.notEqual( null, person ) )
         {
             return members.remove( person );
         }
@@ -110,5 +120,13 @@ public class Team
     public List<Person> getMembers()
     {
         return Collections.unmodifiableList( members );
+    }
+
+    /**
+     * Entfernt alle Elemente (<code>Person</code>) aus dem Team
+     */
+    public void clearMembers()
+    {
+        members.clear();
     }
 }
