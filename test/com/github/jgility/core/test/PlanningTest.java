@@ -41,22 +41,13 @@ public class PlanningTest
         Release release = new Release( start, end );
 
         Iteration iteration = new Iteration( start, end1 );
-        release.addPlan( iteration );
+        release.addIteration( iteration );
         iteration = new Iteration( start1, end );
-        release.addPlan( iteration );
+        release.addIteration( iteration );
 
-        Assert.assertTrue( release.getPlanningStruct().size() == 2 );
+        Assert.assertTrue( release.size() == 2 );
 
-        try
-        {
-            release.addPlan( release );
-            Assert.fail( "no exception was threw" );
-        }
-        catch ( IllegalArgumentException iae )
-        {
-        }
-
-        project.addProjectPlan( release );
+        project.addReleasePlan( release );
     }
 
     @Test
