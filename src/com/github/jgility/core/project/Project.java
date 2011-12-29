@@ -42,6 +42,9 @@ import com.github.jgility.core.planning.Release;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlSeeAlso( Release.class )
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Project
 {
     private String name;
@@ -50,6 +53,8 @@ public class Project
 
     private Team team;
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final Set<IPlan> projectPlan;
 
     /**
