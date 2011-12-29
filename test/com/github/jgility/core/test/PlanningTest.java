@@ -13,7 +13,7 @@ import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Product;
 import com.github.jgility.core.project.Project;
 
-public class PlaningTest
+public class PlanningTest
 {
 
     private Product product;
@@ -57,6 +57,12 @@ public class PlaningTest
         }
 
         project.addProjectPlan( release );
+    }
+
+    @Test
+    public void testDateChangeAlgorithm()
+    {
+        testIterationReleasePlaning();
     }
 
 }
