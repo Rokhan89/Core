@@ -30,12 +30,25 @@ import org.apache.commons.lang3.StringUtils;
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD )
 public class Team
 {
 
     private String name;
 
+    @XmlElementWrapper
+    @XmlAnyElement( lax = true )
     private final List<Person> members;
+
+    /**
+     * Instanziiert ein Objekt der Klasse {@link Team} mit Standardwerten<br>
+     * Leere Liste mit Mitgliedern und als Team-Namen (Default)
+     */
+    public Team()
+    {
+        this( "Default" );
+    }
 
     /**
      * Instanziiert ein Objekt der Klasse Team auf Basis des Team-Namens
