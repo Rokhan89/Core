@@ -15,6 +15,7 @@ package com.github.jgility.core.planning;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,11 +41,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @XmlAccessorType( XmlAccessType.FIELD )
 public class Release
     extends AbstractPlan
+    implements IRelease
 {
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
-    private final List<IPlan> subPlanList;
+    private final List<IIteration> iterationList;
 
     /**
      * Instanziiert ein Objekt von der Klasse {@link Release} mit dem heutigen Datum und dem
@@ -53,7 +55,7 @@ public class Release
     public Release()
     {
         super();
-        subPlanList = new ArrayList<>();
+        iterationList = new ArrayList<>();
     }
 
     /**
@@ -65,31 +67,32 @@ public class Release
     public Release( Calendar start, Calendar end )
     {
         super( start, end );
-        subPlanList = new ArrayList<>();
+        iterationList = new ArrayList<>();
     }
 
-    /**
-     * Fügt ein neuen {@link IPlan} der Unterstruktur des {@link Release} hinzu
-     * 
-     * @param plan neuer {@link IPlan} zum hinzufügen
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.planning.IRelease#addPlan(com.github.jgility.core.planning.IPlan)
      */
-    public void addPlan( IPlan plan )
+    @Override
+    public void addIteration( IIteration iteration )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.equals( null, plan ) || ObjectUtils.equals( this, plan ) )
+        if ( ObjectUtils.equals( null, iteration ) || ObjectUtils.equals( this, iteration ) )
         {
-            throw new IllegalArgumentException( "plan-object has a wrong reference: " + plan );
+            throw new IllegalArgumentException( "plan-object has a wrong reference: " + iteration );
         }
 
-        if ( CollectionUtils.isEmpty( subPlanList ) )
+        if ( CollectionUtils.isEmpty( iterationList ) )
         {
-            subPlanList.add( plan );
+            iterationList.add( iteration );
         }
-        else if ( checkPlanRange( plan ) )
+        else if ( checkPlanRange( iteration ) )
         {
-            if ( checkSubPlan( plan, subPlanList.get( subPlanList.size() - 1 ) ) )
+            if ( checkSubPlan( iteration, iterationList.get( iterationList.size() - 1 ) ) )
             {
-                subPlanList.add( plan );
+                iterationList.add( iteration );
             }
             else
             {
@@ -120,24 +123,49 @@ public class Release
         end.set( Calendar.MINUTE, 0 );
         return start.after( end );
     }
-    /**
-     * Entfernt ein {@link IPlan} aus der Unterstruktur
-     * 
-     * @param plan bestehender {@link IPlan} zum entfernen aus der {@link List}
-     */
-    public boolean removePlan( IPlan plan )
-    {
-        return subPlanList.remove( plan );
-    }
 
     /*
      * (non-Javadoc)
-     * @see com.github.jgility.core.planning.IPlan#getPlanningStruct()
+     * @see
+     * com.github.jgility.core.planning.IRelease#removePlan(com.github.jgility.core.planning.IPlan)
      */
     @Override
-    public List<IPlan> getPlanningStruct()
+    public boolean removePlan( IIteration iteration )
     {
-        return Collections.unmodifiableList( subPlanList );
+        return iterationList.remove( iteration );
+    }
+
+    @Override
+    public void addAllIterations( Collection<? extends IIteration> iterationCollection )
+        throws IllegalArgumentException
+    {
+        if ( CollectionUtils.isNotEmpty( iterationCollection ) )
+        {
+            this.iterationList.addAll( iterationCollection );
+        }
+        else
+        {
+            throw new IllegalArgumentException( "empty collection of iteration is not "
+                + "allowed to add" );
+        }
+    }
+
+    @Override
+    public List<IIteration> getIterationList()
+    {
+        return Collections.unmodifiableList( iterationList );
+    }
+
+    @Override
+    public int size()
+    {
+        return iterationList.size();
+    }
+
+    @Override
+    public IIteration getIteration( int index )
+    {
+        return iterationList.get( index );
     }
 
     @Override
@@ -145,7 +173,7 @@ public class Release
     {
         HashCodeBuilder builder = new HashCodeBuilder();
         builder.append( super.hashCode() );
-        builder.append( subPlanList );
+        builder.append( iterationList );
         return builder.toHashCode();
     }
 
@@ -156,7 +184,7 @@ public class Release
         {
             Release plan = (Release) obj;
             EqualsBuilder builder = new EqualsBuilder();
-            builder.append( subPlanList, plan.subPlanList );
+            builder.append( iterationList, plan.iterationList );
 
             return builder.isEquals() && super.equals( obj );
         }
@@ -173,6 +201,6 @@ public class Release
     {
         SimpleDateFormat sfd = new SimpleDateFormat( "dd.MM.yyyy" );
         return "Release [start=" + sfd.format( getStart().getTime() ) + " end="
-            + sfd.format( getEnd().getTime() ) + " subPlanSet=" + subPlanList + "]";
+            + sfd.format( getEnd().getTime() ) + " subPlanSet=" + iterationList + "]";
     }
 }
