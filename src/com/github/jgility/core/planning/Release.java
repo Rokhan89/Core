@@ -31,6 +31,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.util.CalendarUtils;
+
 /**
  * Implementiert eine konkrete Klasse für die Release-Plannung
  * 
@@ -117,11 +119,7 @@ public class Release
     {
         Calendar start = plan.getStart();
         Calendar end = subplan.getEnd();
-        start.set( Calendar.HOUR, 0 );
-        start.set( Calendar.MINUTE, 1 );
-        end.set( Calendar.HOUR, 0 );
-        end.set( Calendar.MINUTE, 0 );
-        return start.after( end );
+        return CalendarUtils.checkDate( start, end );
     }
 
     /*
