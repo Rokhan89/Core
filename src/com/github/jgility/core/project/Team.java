@@ -132,7 +132,7 @@ public class Team
      */
     public List<Person> getMembers()
     {
-        return Collections.unmodifiableList( members );
+        return Collections.unmodifiableList( new ArrayList<>( members ) );
     }
 
     /**
