@@ -52,6 +52,15 @@ public interface IPlan
     Calendar getEnd();
 
     /**
+     * Setzt den Start und Endzeitpunkt des Plans
+     * 
+     * @param start Startzeitpunkt
+     * @param end Endzeitpunkt
+     */
+    void changeStartEnd( Calendar start, Calendar end )
+        throws IllegalArgumentException;
+
+    /**
      * Gibt die Differenz von Start und Ende in Form eines {@link Long}-Wertes zurück
      * 
      * @return

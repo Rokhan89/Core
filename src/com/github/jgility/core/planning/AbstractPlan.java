@@ -24,6 +24,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.util.CalendarUtils;
+
 /**
  * Abstrakte Klasse und implementiert die Grundfunktionalitäten einer planbaren Datenstruktur.
  * 
@@ -65,15 +67,7 @@ public abstract class AbstractPlan
     public AbstractPlan( Calendar start, Calendar end )
         throws IllegalArgumentException
     {
-        if ( end.after( start ) )
-        {
-            this.start = (Calendar) start.clone();
-            this.end = (Calendar) end.clone();
-        }
-        else
-        {
-            throw new IllegalArgumentException( "end-time is before start-time" );
-        }
+        changeStartEnd( start, end );
     }
 
     /*
@@ -140,6 +134,27 @@ public abstract class AbstractPlan
     public Calendar getEnd()
     {
         return (Calendar) end.clone();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.planning.IPlan#changeStartEnd(java.util.Calendar,java.util.Calendar)
+     */
+    @Override
+    public void changeStartEnd( Calendar newStart, Calendar newEnd )
+        throws IllegalArgumentException
+    {
+        if ( CalendarUtils.checkDate( newStart, newEnd ) )
+        {
+            this.start = newStart;
+            this.end = newEnd;
+        }
+        else
+        {
+            throw new IllegalArgumentException( "start-time has to be before end-time" );
+        }
+
     }
 
     /*
