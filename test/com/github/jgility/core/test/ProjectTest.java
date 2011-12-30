@@ -3,6 +3,7 @@ package com.github.jgility.core.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -103,15 +104,15 @@ public class ProjectTest
         {
         }
 
-        Team members = project.getTeam();
-        Assert.assertEquals( 3, members.getMembers().size() );
-        for ( Person member : members.getMembers() )
+        List<Person> members = project.getTeam().getMembers();
+        Assert.assertEquals( 3, members.size() );
+        for ( Person member : members )
         {
             Assert.assertNotNull( member );
             Assert.assertTrue( project.removeMember( member ) );
         }
-        Assert.assertTrue( project.getTeam().getMembers().isEmpty() );
-        Assert.assertEquals( 3, members.getMembers().size() );
+        Assert.assertTrue( CollectionUtils.isEmpty( project.getTeam().getMembers() ) );
+        Assert.assertEquals( 3, members.size() );
     }
 
     @Test
@@ -129,7 +130,7 @@ public class ProjectTest
 
         Team members = project.getTeam();
         Assert.assertNotSame( personList, members );
-        Assert.assertEquals( 3, members.getMembers().size() );
+        Assert.assertEquals( 6, members.getMembers().size() );
         for ( Person member : members.getMembers() )
         {
             Assert.assertNotNull( member );
@@ -139,15 +140,15 @@ public class ProjectTest
     @Test
     public void testGetMembers()
     {
-        Team members = project.getTeam();
-        Assert.assertEquals( 3, members.getMembers().size() );
-        for ( Person member : members.getMembers() )
+        List<Person> members = project.getTeam().getMembers();
+        Assert.assertEquals( 3, members.size() );
+        for ( Person member : members )
         {
             Assert.assertNotNull( member );
             Assert.assertTrue( project.removeMember( member ) );
         }
         Assert.assertTrue( project.getTeam().getMembers().isEmpty() );
-        Assert.assertEquals( 3, members.getMembers().size() );
+        Assert.assertEquals( 3, members.size() );
     }
 
     @Test
