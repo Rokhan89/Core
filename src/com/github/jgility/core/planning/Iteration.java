@@ -14,7 +14,6 @@ package com.github.jgility.core.planning;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -38,6 +37,7 @@ import com.github.jgility.core.requirement.IterationStory;
 @XmlAccessorType( XmlAccessType.FIELD )
 public class Iteration
     extends AbstractPlan
+    implements IIteration
 {
     @XmlElement
     private final Backlog<IIterationRequirement> iterationBacklog;
@@ -67,20 +67,14 @@ public class Iteration
         iterationBacklog = new Backlog<>();
     }
 
-    /**
-     * Gibt die Referenz zum {@link Backlog} welche {@link IIterationRequirement} beinhaltet
-     * 
-     * @return Referenz auf das {@link Backlog} um dies zu ändern
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.planning.IIteration#getIterationBacklog()
      */
+    @Override
     public Backlog<IIterationRequirement> getIterationBacklog()
     {
         return iterationBacklog;
-    }
-
-    @Override
-    public List<IPlan> getPlanningStruct()
-    {
-        throw new UnsupportedOperationException( "iteration hasn't subplans" );
     }
 
     @Override

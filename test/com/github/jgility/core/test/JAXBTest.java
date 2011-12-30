@@ -52,9 +52,9 @@ public class JAXBTest
         Calendar start = new GregorianCalendar( 2012, 3, 1 );
         Calendar end = new GregorianCalendar( 2012, 7, 1 );
         Release release = new Release( start, end );
-        project.addProjectPlan( release );
+        project.addReleasePlan( release );
         Iteration iteration = new Iteration( start, end );
-        release.addPlan( iteration );
+        release.addIteration( iteration );
 
         Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
         productBacklog.addRequirement( new ProductStory( 2, "Test", "Beschreibung", 3.0f,

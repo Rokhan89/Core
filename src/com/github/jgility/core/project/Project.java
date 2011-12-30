@@ -33,7 +33,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.planning.IPlan;
-import com.github.jgility.core.planning.Release;
+import com.github.jgility.core.planning.IRelease;
 
 /**
  * Klasse, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
@@ -55,7 +55,7 @@ public class Project
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
-    private final Set<IPlan> projectPlan;
+    private final List<IRelease> releasePlan;
 
     /**
      * Parameterloser Konstruktor um ein leeres {@link Project} zu instanziieren.<br>
@@ -82,7 +82,7 @@ public class Project
         setName( name );
         setDescription( description );
         team = new Team( name );
-        projectPlan = new HashSet<>();
+        releasePlan = new ArrayList<>();
     }
 
     /**
@@ -234,27 +234,26 @@ public class Project
     /**
      * Gibt eine {@link List} des Projektplans zurück
      * 
-     * @return {@link List} von {@link IPlan}
+     * @return {@link List} von {@link IRelease}
      */
-    public List<IPlan> getProjectPlan()
+    public List<IRelease> getReleasePlan()
     {
-        final List<IPlan> planList = new ArrayList<>( projectPlan );
-        return Collections.unmodifiableList( planList );
+        return Collections.unmodifiableList( releasePlan );
     }
 
     /**
      * Setzt die {@link List} des Projektplans
      * 
-     * @param projectPlan {@link List} von {@link IPlan}
-     * @throws IllegalArgumentException wird geworfen, wenn die {@link List} von {@link IPlan} leer
-     *             oder <code>null</code>
+     * @param projectPlan {@link List} von {@link IRelease}
+     * @throws IllegalArgumentException wird geworfen, wenn die {@link List} von {@link IRelease}
+     *             leer oder <code>null</code>
      */
-    public void setProjectPlan( List<IPlan> projectPlan )
+    public void setReleasePlan( List<IRelease> projectPlan )
         throws IllegalArgumentException
     {
         if ( CollectionUtils.isNotEmpty( projectPlan ) )
         {
-            this.projectPlan.addAll( projectPlan );
+            this.releasePlan.addAll( projectPlan );
         }
         else
         {
@@ -269,12 +268,12 @@ public class Project
      * @throws IllegalArgumentException wird geworfen, wenn der {@link IPlan} den Wert
      *             <code>null</code> beinhaltet
      */
-    public void addProjectPlan( IPlan newPlan )
+    public void addReleasePlan( IRelease newPlan )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, newPlan ) )
         {
-            this.projectPlan.add( newPlan );
+            this.releasePlan.add( newPlan );
         }
         else
         {
@@ -289,11 +288,11 @@ public class Project
      * @return <code>true</code> wenn der übergebende {@link IPlan} erfolgreich aus der {@link List}
      *         entfernt wurde
      */
-    public boolean removeProjectPlan( IPlan removePlan )
+    public boolean removeReleasePlan( IRelease removePlan )
     {
         if ( ObjectUtils.notEqual( null, removePlan ) )
         {
-            return projectPlan.remove( removePlan );
+            return releasePlan.remove( removePlan );
         }
         return false;
     }
@@ -301,9 +300,9 @@ public class Project
     /**
      * Entfernt alle geplanten {@link IPlan}-Referenzen aus dem {@link Project}
      */
-    public void clearProjectPlan()
+    public void clearReleasePlan()
     {
-        projectPlan.clear();
+        releasePlan.clear();
     }
 
     @Override
@@ -313,7 +312,7 @@ public class Project
         builder.append( name );
         builder.append( description );
         builder.append( team );
-        builder.append( projectPlan );
+        builder.append( releasePlan );
         return builder.toHashCode();
     }
 
@@ -327,7 +326,7 @@ public class Project
             builder.append( name, project.getName() );
             builder.append( description, project.getDescription() );
             builder.append( team, project.getTeam() );
-            builder.append( projectPlan, project.getProjectPlan() );
+            builder.append( releasePlan, project.getReleasePlan() );
             return builder.isEquals();
         }
         return false;
@@ -337,7 +336,7 @@ public class Project
     public String toString()
     {
         return "Project [name=" + name + ", description=" + description + ", members=" + team
-            + ", projectPlan=" + projectPlan + "]";
+            + ", projectPlan=" + releasePlan + "]";
     }
 
 }

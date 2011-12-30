@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.jgility.core.planning.Backlog;
+import com.github.jgility.core.planning.IIteration;
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.Iteration;
 import com.github.jgility.core.planning.Release;
@@ -87,27 +88,18 @@ public class RequirementTest
         Release release = new Release( start, end );
 
         Iteration iteration = new Iteration( start, end );
-        release.addPlan( iteration );
+        release.addIteration( iteration );
 
-        for ( IPlan plan : release.getPlanningStruct() )
+        for ( IPlan plan : release.getIterationList() )
         {
             Assert.assertEquals( plan, iteration );
-        }
-
-        try
-        {
-            release.addPlan( release );
-            Assert.fail( "no exception was threw" );
-        }
-        catch ( IllegalArgumentException iae )
-        {
         }
     }
 
     @Test
     public void testProductBacklogToIterationBacklog()
     {
-        Iteration iteration = new Iteration();
+        IIteration iteration = new Iteration();
         Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
         Backlog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
 
@@ -127,7 +119,7 @@ public class RequirementTest
     @Test
     public void testIterationStoryToProductBacklog()
     {
-        Iteration iteration = new Iteration();
+        IIteration iteration = new Iteration();
         Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
         Backlog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
 

@@ -13,7 +13,7 @@ import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Product;
 import com.github.jgility.core.project.Project;
 
-public class PlaningTest
+public class PlanningTest
 {
 
     private Product product;
@@ -41,22 +41,19 @@ public class PlaningTest
         Release release = new Release( start, end );
 
         Iteration iteration = new Iteration( start, end1 );
-        release.addPlan( iteration );
+        release.addIteration( iteration );
         iteration = new Iteration( start1, end );
-        release.addPlan( iteration );
+        release.addIteration( iteration );
 
-        Assert.assertTrue( release.getPlanningStruct().size() == 2 );
+        Assert.assertTrue( release.size() == 2 );
 
-        try
-        {
-            release.addPlan( release );
-            Assert.fail( "no exception was threw" );
-        }
-        catch ( IllegalArgumentException iae )
-        {
-        }
+        project.addReleasePlan( release );
+    }
 
-        project.addProjectPlan( release );
+    @Test
+    public void testDateChangeAlgorithm()
+    {
+        testIterationReleasePlaning();
     }
 
 }

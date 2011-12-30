@@ -13,7 +13,6 @@
 package com.github.jgility.core.planning;
 
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Interface für die Vorschrift einer Plannungs-Klasse. Dient als Schnittstelle zwischen dem Package
@@ -72,11 +71,4 @@ public interface IPlan
      * @return
      */
     boolean isStarted();
-
-    /**
-     * Gibt die weitere Plannungsstruktur zurück
-     * 
-     * @return
-     */
-    List<IPlan> getPlanningStruct();
 }
