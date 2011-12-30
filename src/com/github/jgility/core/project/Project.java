@@ -15,9 +15,7 @@ package com.github.jgility.core.project;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -34,6 +32,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.IRelease;
+import com.github.jgility.core.planning.Release;
 
 /**
  * Klasse, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
