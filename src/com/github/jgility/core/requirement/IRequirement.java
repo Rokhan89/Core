@@ -34,8 +34,8 @@ public interface IRequirement
      * Setzt die ein-eindeutige Nummer der Anforderung
      * 
      * @param id Anforderungsnummer als int
-     * @throws IllegalArgumentException wenn der Bereich im negativen Bereich liegt oder eine Nummer
-     *             bereits vergeben wurde
+     * @throws IllegalArgumentException wenn der Bereich im negativen Bereich liegt oder eine Nummer bereits vergeben
+     *             wurde
      */
     void setID( int id )
         throws IllegalArgumentException;
@@ -78,13 +78,6 @@ public interface IRequirement
      * @return Erstell-Datum als {@link Calendar}
      */
     Calendar getCreateDate();
-
-    /**
-     * Setzt das Erstelldatum der Anforderung
-     * 
-     * @param createDate als {@link Calendar}
-     */
-    void setCreateDate( Calendar createDate );
 
     /**
      * Gibt die ausgewählte Priorität zurück
