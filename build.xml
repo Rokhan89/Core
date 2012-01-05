@@ -47,6 +47,7 @@
 		<copy todir="${jar.class.path.dir}">
 			<fileset dir="${lib.dir}" />
 		</copy>
+		<copy file="${licensetext}" todir="${jar.dir}"></copy>
 		<!-- ManifestClassPath Ant Task -->
 		<manifestclasspath property="manifest.class.path" jarfile="{$jar.file}">
 			<classpath refid="class.path" />
