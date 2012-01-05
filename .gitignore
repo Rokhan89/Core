@@ -1,4 +1,8 @@
+build/
+reports/
 bin/
+target/
+author.txt
 .project
 .settings/
 *~
