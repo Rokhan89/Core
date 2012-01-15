@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JgilityCore
+Bundle-SymbolicName: com.github.jgility.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: com.github.jgility.core.planning,
+ com.github.jgility.core.project,
+ com.github.jgility.core.requirement
