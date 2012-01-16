@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.project;
@@ -29,10 +30,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.ModelObject;
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.planning.IBacklog;
 import com.github.jgility.core.requirement.IProductRequirement;
-import com.github.jgility.core.xml.AbstractXmlProduct;
 
 /**
  * Klasse, welche das Produkt im Sinne der agilen Softwareentwicklung repräsentiert. Beinhaltet
@@ -43,8 +44,9 @@ import com.github.jgility.core.xml.AbstractXmlProduct;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Product
-    extends AbstractXmlProduct
+public class Product 
+    extends ModelObject
+    implements IProduct
 {
     @XmlElement
     private String name;
@@ -115,7 +117,9 @@ public class Product
     {
         if ( StringUtils.isNotBlank( name ) )
         {
+            String formerName = this.name;
             this.name = name;
+            changes.firePropertyChange( "name", formerName, this.name );
         }
         else
         {
@@ -140,7 +144,9 @@ public class Product
     @Override
     public void setDescription( String description )
     {
+        String formerDescription = this.description;
         this.description = description;
+        changes.firePropertyChange( "description", formerDescription, this.description );
     }
 
     /*
@@ -164,7 +170,10 @@ public class Product
     {
         if ( CollectionUtils.isNotEmpty( projects ) )
         {
+            Set<IProject> formerProjects = this.projects;
             this.projects.addAll( projects );
+            changes.firePropertyChange( "projects", formerProjects, this.projects );
+            
         }
         else
         {
@@ -202,7 +211,11 @@ public class Product
     {
         if ( ObjectUtils.notEqual( null, removeProject ) )
         {
-            return projects.remove( removeProject );
+            boolean result;
+            Set<IProject> formerProjects = this.projects;
+            result = this.projects.remove( removeProject );
+            changes.firePropertyChange( "projects", formerProjects, this.projects );
+            return result;
         }
         return false;
     }
@@ -214,7 +227,9 @@ public class Product
     @Override
     public void clearProject()
     {
+        Set<IProject> formerProjects = projects;
         projects.clear();
+        changes.firePropertyChange( "projects", formerProjects, projects );
     }
 
     /*
@@ -244,7 +259,9 @@ public class Product
         }
         if ( ObjectUtils.notEqual( null, productOwner ) )
         {
+            IPerson formerProductOwner = this.productOwner;
             this.productOwner = productOwner;
+            changes.firePropertyChange( "productOwner", formerProductOwner, this.productOwner );
         }
         else
         {
@@ -259,7 +276,9 @@ public class Product
     @Override
     public void removeProductOwner()
     {
+        IPerson formerProductOwner = this.productOwner;
         productOwner = null;
+        changes.firePropertyChange( "productOwner", formerProductOwner, this.productOwner );
     }
 
     /*
@@ -288,7 +307,9 @@ public class Product
         }
         else if ( ObjectUtils.notEqual( null, productBacklog ) )
         {
+            IBacklog<IProductRequirement> formerProductBacklog = this.productBacklog;
             this.productBacklog = productBacklog;
+            changes.firePropertyChange( "productBacklog", formerProductBacklog, this.productBacklog );
         }
         else
         {
@@ -303,7 +324,9 @@ public class Product
     @Override
     public void removeProductBacklog()
     {
+        IBacklog<IProductRequirement> formerProductbacklog = this.productBacklog;
         productBacklog = null;
+        changes.firePropertyChange( "productBacklog", formerProductbacklog, this.productBacklog );
     }
 
     /*

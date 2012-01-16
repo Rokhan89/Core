@@ -101,7 +101,9 @@ public class IterationStory
     {
         if ( ObjectUtils.notEqual( null, requirement ) )
         {
+            List<IRequirement> formerDependencies = this.dependencies;
             dependencies.add( requirement );
+            changes.firePropertyChange( "dependencies", formerDependencies, this.dependencies );
         }
         else
         {
@@ -120,7 +122,11 @@ public class IterationStory
     {
         if ( ObjectUtils.notEqual( null, requirement ) )
         {
-            return dependencies.remove( requirement );
+            boolean result;
+            List<IRequirement> formerDependencies = this.dependencies;
+            result = dependencies.remove( requirement );
+            changes.firePropertyChange( "dependencies", formerDependencies, this.dependencies );
+            return result;
         }
         return false;
     }
@@ -149,7 +155,9 @@ public class IterationStory
         {
             if ( task.getRequirementKind() == RequirementKind.TASK )
             {
+                List<IImplementableRequirement> formerTasks = this.tasks;
                 tasks.add( task );
+                changes.firePropertyChange( "tasks", formerTasks, this.tasks );
             }
             else
             {
@@ -174,7 +182,11 @@ public class IterationStory
     {
         if ( ObjectUtils.notEqual( null, task ) )
         {
-            return tasks.remove( task );
+            boolean result;
+            List<IImplementableRequirement> formerTasks = this.tasks;
+            result = tasks.remove( task );
+            changes.firePropertyChange( "tasks", formerTasks, this.tasks );
+            return result;
         }
         return false;
     }

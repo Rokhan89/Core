@@ -86,13 +86,17 @@ public class Release
 
         if ( CollectionUtils.isEmpty( iterationList ) )
         {
+            List<IIteration> formerIterationList = iterationList;
             iterationList.add( iteration );
+            changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
         }
         else if ( checkPlanRange( iteration ) )
         {
             if ( checkSubPlan( iteration, iterationList.get( iterationList.size() - 1 ) ) )
             {
+                List<IIteration> formerIterationList = iterationList;
                 iterationList.add( iteration );
+                changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
             }
             else
             {
@@ -128,7 +132,11 @@ public class Release
     @Override
     public boolean removePlan( IIteration iteration )
     {
-        return iterationList.remove( iteration );
+        boolean result;
+        List<IIteration> formerIterationList = iterationList;
+        result = iterationList.remove( iteration );
+        changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
+        return result;
     }
 
     @Override
@@ -137,7 +145,9 @@ public class Release
     {
         if ( CollectionUtils.isNotEmpty( iterationCollection ) )
         {
+            List<IIteration> formerIterationList = iterationList;
             this.iterationList.addAll( iterationCollection );
+            changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
         }
         else
         {

@@ -25,8 +25,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.ModelObject;
 import com.github.jgility.core.util.CalendarUtils;
-import com.github.jgility.core.xml.AbstractXmlPlan;
 
 /**
  * Abstrakte Klasse und implementiert die Grundfunktionalitäten einer planbaren Datenstruktur.
@@ -37,7 +37,8 @@ import com.github.jgility.core.xml.AbstractXmlPlan;
 @XmlType( propOrder = { "start", "end" } )
 @XmlAccessorType( XmlAccessType.FIELD )
 public abstract class AbstractPlan
-    extends AbstractXmlPlan
+    extends ModelObject
+    implements IPlan
 {
     @XmlElement
     private Calendar start;
@@ -88,7 +89,9 @@ public abstract class AbstractPlan
 
         if ( end.after( start ) )
         {
+            Calendar formerStart = this.start;
             this.start = (Calendar) start.clone();
+            changes.firePropertyChange( "start", formerStart, this.start );
         }
         else
         {
@@ -121,7 +124,9 @@ public abstract class AbstractPlan
 
         if ( start.before( end ) )
         {
+            Calendar formerEnd = this.end;
             this.end = (Calendar) end.clone();
+            changes.firePropertyChange( "end", formerEnd, this.end );
         }
         else
         {
@@ -150,8 +155,13 @@ public abstract class AbstractPlan
     {
         if ( CalendarUtils.checkDate( newStart, newEnd ) )
         {
+            Calendar formerStart = this.start;
             this.start = newStart;
+            changes.firePropertyChange( "start", formerStart, this.start );
+            
+            Calendar formerEnd = this.end;
             this.end = newEnd;
+            changes.firePropertyChange( "end", formerEnd, this.start );
         }
         else
         {

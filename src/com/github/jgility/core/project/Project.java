@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.project;
@@ -31,10 +32,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.ModelObject;
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.IRelease;
 import com.github.jgility.core.planning.Release;
-import com.github.jgility.core.xml.AbstractXmlProject;
 
 /**
  * Klasse, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
@@ -110,7 +111,9 @@ public class Project
     {
         if ( StringUtils.isNotBlank( name ) )
         {
+            String formerName = this.name;
             this.name = name;
+            changes.firePropertyChange( "name", formerName, this.name );
         }
         else
         {
@@ -135,7 +138,9 @@ public class Project
     @Override
     public void setDescription( String description )
     {
+        String formerDescription = this.description;
         this.description = description;
+        changes.firePropertyChange( "description", formerDescription, this.description );
     }
 
     /*
@@ -157,7 +162,9 @@ public class Project
     {
         if ( null != team && 0 < team.getMembers().size() )
         {
+            ITeam formerTeam = this.team;
             this.team = team;
+            changes.firePropertyChange( "team", formerTeam, this.team );
         }
         else
         {
@@ -177,7 +184,9 @@ public class Project
         {
             for ( IPerson member : members )
             {
+                ITeam formerTeam = this.team;
                 this.team.addMember( member );
+                changes.firePropertyChange( "team", formerTeam, this.team );
             }
         }
         else
@@ -197,7 +206,9 @@ public class Project
     {
         if ( ObjectUtils.notEqual( null, newMember ) )
         {
+            ITeam formerTeam = this.team;
             team.addMember( newMember );
+            changes.firePropertyChange( "team", formerTeam, this.team );
         }
         else
         {
@@ -216,7 +227,11 @@ public class Project
     {
         if ( ObjectUtils.notEqual( null, removeMember ) )
         {
-            return team.removeMember( removeMember );
+            boolean result;
+            ITeam formerTeam = this.team;
+            result = team.removeMember( removeMember );
+            changes.firePropertyChange( "team", formerTeam, this.team );
+            return result;
         }
         return false;
     }
@@ -228,7 +243,9 @@ public class Project
     @Override
     public void clearMembers()
     {
+        ITeam formerTeam = this.team;
         team.clearMembers();
+        changes.firePropertyChange( "team", formerTeam, this.team );
     }
 
     /*
@@ -249,9 +266,12 @@ public class Project
     public void setReleasePlan( List<IRelease> projectPlan )
         throws IllegalArgumentException
     {
+        // TODO warum heißt die Variable projectPlan?
         if ( CollectionUtils.isNotEmpty( projectPlan ) )
         {
+            List<IRelease> formerReleasePlan = this.releasePlan;
             this.releasePlan.addAll( projectPlan );
+            changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
         }
         else
         {
@@ -271,7 +291,9 @@ public class Project
     {
         if ( ObjectUtils.notEqual( null, newPlan ) )
         {
+            List<IRelease> formerReleasePlan = this.releasePlan;
             this.releasePlan.add( newPlan );
+            changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
         }
         else
         {
@@ -290,7 +312,11 @@ public class Project
     {
         if ( ObjectUtils.notEqual( null, removePlan ) )
         {
-            return releasePlan.remove( removePlan );
+            boolean result;
+            List<IRelease> formerReleasePlan = this.releasePlan;
+            result = releasePlan.remove( removePlan );
+            changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
+            return result;
         }
         return false;
     }
@@ -302,7 +328,9 @@ public class Project
     @Override
     public void clearReleasePlan()
     {
+        List<IRelease> formerReleasePlan = this.releasePlan;
         releasePlan.clear();
+        changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
     }
 
     @Override

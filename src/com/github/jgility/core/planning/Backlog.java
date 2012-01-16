@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.planning;
@@ -27,7 +28,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.github.jgility.core.xml.AbstractXmlBacklog;
+import com.github.jgility.core.ModelObject;
 
 /**
  * Abstrakte Klasse zum erstellen von Backlogs im Sinne der agilen Softwareentwicklung
@@ -39,7 +40,8 @@ import com.github.jgility.core.xml.AbstractXmlBacklog;
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
 public class Backlog<T>
-    extends AbstractXmlBacklog<T>
+    extends ModelObject
+    implements IBacklog<T>
 {
 
     @XmlElementWrapper
@@ -67,7 +69,9 @@ public class Backlog<T>
             throw new IllegalArgumentException( "null-object is not allowed to add" );
         }
 
+        List<T> formerRequirements = this.requirements;
         requirements.add( requirement );
+        changes.firePropertyChange( "requirements", formerRequirements, this.requirements );
     }
 
     /*
@@ -83,7 +87,11 @@ public class Backlog<T>
             throw new IllegalArgumentException( "null-object is not allowed to add" );
         }
 
-        return requirements.remove( requirement );
+        boolean result;
+        List<T> formerRequirements = this.requirements;
+        result = requirements.remove( requirement );
+        changes.firePropertyChange( "requirements", formerRequirements, this.requirements );
+        return result;
     }
 
     /*
@@ -108,7 +116,9 @@ public class Backlog<T>
             throw new IllegalArgumentException( "empty requirement list is not allowed" );
         }
 
+        List<T> formerRequirements = this.requirements;
         requirements.addAll( requirementList );
+        changes.firePropertyChange( "requirements", formerRequirements, this.requirements );
     }
 
     /*

@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.project;
@@ -22,7 +23,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.validator.EmailValidator;
 
-import com.github.jgility.core.xml.AbstractXmlPerson;
+import com.github.jgility.core.ModelObject;
 
 /**
  * Klasse, welche ein Nutzer bzw. eine Person im Sinne der agilen Softwareentwicklung repräsentiert.
@@ -35,8 +36,9 @@ import com.github.jgility.core.xml.AbstractXmlPerson;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Person
-    extends AbstractXmlPerson
+public class Person 
+    extends ModelObject
+    implements IPerson
 {
     @XmlElement
     private String firstname;
@@ -85,7 +87,9 @@ public class Person
     {
         if ( checkCapitalFirstLetter( firstname ) )
         {
+            String formerFirstname = this.firstname;
             this.firstname = firstname;
+            changes.firePropertyChange( "firstname", formerFirstname, this.firstname);
         }
         else
         {
@@ -104,7 +108,9 @@ public class Person
     {
         if ( checkCapitalFirstLetter( surname ) )
         {
+            String formerSurname = this.surname;
             this.surname = surname;
+            changes.firePropertyChange( "surname", formerSurname, this.surname );
         }
         else
         {
@@ -132,7 +138,9 @@ public class Person
         EmailValidator emailValidator = EmailValidator.getInstance();
         if ( emailValidator.isValid( eMail ) )
         {
+            String formerEMail = this.eMail;
             this.eMail = eMail;
+            changes.firePropertyChange( "eMail", formerEMail, this.eMail);
         }
         else
         {

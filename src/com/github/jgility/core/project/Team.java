@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.github.jgility.core.xml.AbstractXmlTeam;
+import com.github.jgility.core.ModelObject;
 
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
@@ -35,8 +35,9 @@ import com.github.jgility.core.xml.AbstractXmlTeam;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Team
-    extends AbstractXmlTeam
+public class Team 
+    extends ModelObject
+    implements ITeam
 {
 
     @XmlElement
@@ -85,7 +86,9 @@ public class Team
     {
         if ( StringUtils.isNotBlank( name ) )
         {
+            String formerName = this.name;
             this.name = name;
+            changes.firePropertyChange( "name", formerName, this.name );
         }
         else
         {
@@ -103,7 +106,9 @@ public class Team
     {
         if ( ObjectUtils.notEqual( null, person ) )
         {
+            List<IPerson> formerMembers = this.members;
             members.add( person );
+            changes.firePropertyChange( "members", formerMembers, this.members );
         }
         else
         {
@@ -121,7 +126,11 @@ public class Team
     {
         if ( ObjectUtils.notEqual( null, person ) )
         {
-            return members.remove( person );
+            boolean result;
+            List<IPerson> formerMembers = this.members;
+            result = members.remove( person );
+            changes.firePropertyChange( "members", formerMembers, this.members );
+            return result;
         }
         return false;
     }
@@ -143,6 +152,8 @@ public class Team
     @Override
     public void clearMembers()
     {
+        List<IPerson> formerMembers = this.members;
         members.clear();
+        changes.firePropertyChange( "members", formerMembers, this.members );
     }
 }

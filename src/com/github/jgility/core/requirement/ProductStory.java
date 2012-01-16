@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.github.jgility.core.xml.AbstractXmlProductStroy;
+import com.github.jgility.core.ModelObject;
 
 /**
  * Konkrete Klasse für grobe Erfassung einer Anforderung. Implementiert das Marker-Interface
@@ -38,7 +38,8 @@ import com.github.jgility.core.xml.AbstractXmlProductStroy;
     "requester", "requirementKind" } )
 @XmlAccessorType( XmlAccessType.FIELD )
 public class ProductStory
-    extends AbstractXmlProductStroy
+    extends ModelObject
+    implements IProductRequirement
 {
     @XmlElement
     private int id;
@@ -128,7 +129,9 @@ public class ProductStory
         {
             if ( 0 <= id )
             {
+                int formerId = this.id;
                 this.id = id;
+                changes.firePropertyChange( "id", formerId, this.id );
             }
             else
             {
@@ -162,7 +165,9 @@ public class ProductStory
     {
         if ( StringUtils.isNotBlank( title ) )
         {
+            String formerTitle = this.title;
             this.title = title;
+            changes.firePropertyChange( "title", formerTitle, title );
         }
         else
         {
@@ -191,7 +196,9 @@ public class ProductStory
     {
         if ( ObjectUtils.notEqual( null, description ) )
         {
+            String formerDescription = this.description;
             this.description = description;
+            changes.firePropertyChange( "description", formerDescription, this.description );
         }
         else
         {
@@ -232,7 +239,9 @@ public class ProductStory
     {
         if ( ObjectUtils.notEqual( null, priority ) )
         {
+            Priority formerPriority = this.priority;
             this.priority = priority;
+            changes.firePropertyChange( "priority", formerPriority, this.priority );
         }
         else
         {
@@ -260,7 +269,9 @@ public class ProductStory
     {
         if ( StringUtils.isNotBlank( requester ) )
         {
+            String formerRequester = this.requester;
             this.requester = requester;
+            changes.firePropertyChange( "requester", formerRequester, this.requester );
         }
         else
         {
@@ -290,7 +301,9 @@ public class ProductStory
     {
         if ( ObjectUtils.notEqual( null, requirementKind ) )
         {
+            RequirementKind formerRequirementKind = this.requirementKind;
             this.requirementKind = requirementKind;
+            changes.firePropertyChange( "requirementKind", formerRequirementKind, this.requirementKind );
         }
         else
         {
@@ -328,6 +341,7 @@ public class ProductStory
     {
         if ( 0.0f <= estimated )
         {
+            // TODO propertyChangeEvent ProductStory.estimated
             this.estimated = estimated;
         }
         else

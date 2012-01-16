@@ -12,12 +12,8 @@
  */
 package com.github.jgility.core;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Implementiert grundlegende Funktionalitäten für Modellobjekte
@@ -28,21 +24,16 @@ public class ModelObject
     implements IModelObject
 {
     /**
-     * Identifier für Listener, welche Benachrichtigungen für alle Eigenschaften erwarten
+     * Verwaltet die PropertyChangeListener
      */
-    public final String ALL_PROPERTIES = "";
-    
-    /**
-     * Beinhaltet die Datenstruktur für die Listener
-     */
-    private Map<String, List<PropertyChangeListener>> listeners;
+    protected PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      * Initialisiert ModelObject und die Datenstruktur für die Listener
      */
     public ModelObject()
     {
-        this.listeners = new HashMap<>();
+        // empty
     }
 
     /*
@@ -53,7 +44,7 @@ public class ModelObject
     @Override
     public synchronized void addPropertyChangeListener( PropertyChangeListener listener )
     {
-        addPropertyChangeListener( ALL_PROPERTIES, listener );
+        changes.addPropertyChangeListener( listener );
     }
 
     /*
@@ -64,16 +55,7 @@ public class ModelObject
     @Override
     public synchronized void addPropertyChangeListener( String propertyName, PropertyChangeListener listener )
     {
-        if ( this.listeners.containsKey( propertyName ) )
-        {
-            this.listeners.get( propertyName ).add( listener );
-        }
-        else
-        {
-            List<PropertyChangeListener> list = new ArrayList<>();
-            list.add( listener );
-            this.listeners.put( propertyName, list );
-        }
+        changes.addPropertyChangeListener( propertyName, listener );
     }
 
     /*
@@ -84,7 +66,7 @@ public class ModelObject
     @Override
     public synchronized void removePropertyChangeListener( PropertyChangeListener listener )
     {
-        removePropertyChangeListener( ALL_PROPERTIES, listener );
+        changes.removePropertyChangeListener( listener );
     }
 
     /*
@@ -95,33 +77,13 @@ public class ModelObject
     @Override
     public synchronized void removePropertyChangeListener( String propertyName, PropertyChangeListener listener )
     {
-        if ( this.listeners.containsKey( propertyName ) && this.listeners.get( propertyName ).contains( listener ) )
-        {
-            this.listeners.get( propertyName ).remove( listener );
-        }
+        changes.removePropertyChangeListener( propertyName, listener );
     }
 
-    /**
-     * Feuert ein PropertyChangeEvent an die registrierten Listener
-     * 
-     * @param propertyName Name der Eigenschaft
-     * @param oldValue Alter Wert der Eigenschaft
-     * @param newValue Neuer Wert der Eigenschaft
-     */
-    protected synchronized void firePropertyChangeEvent( String propertyName, Object oldValue, Object newValue )
+    @Override
+    public boolean hasListeners( String propertyName )
     {
-        PropertyChangeEvent propertyChangeEvent = new PropertyChangeEvent( this, propertyName, oldValue, newValue );
-        String[] indices = { ALL_PROPERTIES, propertyName };
-        for ( String index : indices )
-        {
-            if ( this.listeners.containsKey( index ) )
-            {
-                for ( PropertyChangeListener listener : listeners.get( index ) )
-                {
-                    listener.propertyChange( propertyChangeEvent );
-                }
-            }
-        }
+        return changes.hasListeners( propertyName );
     }
 
 }

@@ -22,7 +22,7 @@ import java.beans.PropertyChangeListener;
 public interface IModelObject
 {
     /**
-     * Speichert einen PropertyChangeListener, welcher Benachrichtigungen über Änderungen 
+     * Registriert einen PropertyChangeListener, welcher Benachrichtigungen über Änderungen 
      * an allen Eigenschaften entgegennimmt. 
      * 
      * @param listener PropertyChangeListener, welcher die Benachrichtigungen entgegennimmt
@@ -30,7 +30,7 @@ public interface IModelObject
     void addPropertyChangeListener( PropertyChangeListener listener );
     
     /**
-     * Speichert einen PropertyChangeListener, welcher Benachrichtigungen über Änderungen 
+     * Registriert einen PropertyChangeListener, welcher Benachrichtigungen über Änderungen 
      * einer bestimmten Eigenschaft entgegennimmt. 
      * 
      * @param propertyName Name der Eigenschaft, deren Änderungen überwacht werden sollen
@@ -52,4 +52,11 @@ public interface IModelObject
      * @param listener PropertyChangeListener, welcher die Benachrichtigungen bisher entgegennahm
      */
     void removePropertyChangeListener( String propertyName, PropertyChangeListener listener );
+    
+    /**
+     * Gibt an, ob Listener registriert sind
+     * 
+     * @param propertyName Name der Eigenschaft, deren Änderungen überwacht werden
+     */
+    boolean hasListeners(String propertyName);
 }
