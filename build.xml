@@ -47,14 +47,22 @@
 		<copy todir="${jar.class.path.dir}">
 			<fileset dir="${lib.dir}" />
 		</copy>
+		<copy file="${license}" todir="${jar.dir}"></copy>
 		<!-- ManifestClassPath Ant Task -->
-		<manifestclasspath property="manifest.class.path" jarfile="{$jar.file}">
-			<classpath refid="class.path" />
-		</manifestclasspath>
-		<jar destfile="${jar.dir}/${ant.project.name}-${app.version}.jar" basedir="${classes.dir}">
-			<manifest>
-				<attribute name="Class-Path" value="${manifest.class.path}" />
-			</manifest>
+	    <manifest file="META-INF/MANIFEST.MF" mode="update">
+	        <attribute name="Built-By" value="${authortext}"/>
+	    	<attribute name="Bundle-Name" value="${ant.project.name}"/>
+	    	<attribute name="Bundle-RequiredExecutionEnvironment" value="${java.runtime.version}"/>
+	    	<attribute name="Bundle-Version" value="${app.version}"/>
+	    </manifest>
+		<jar destfile="${jar.dir}/${ant.project.name}-${app.version}.jar" 
+			basedir="${classes.dir}"
+			manifest="META-INF/MANIFEST.MF">
+			<fileset dir="${lib.dir}">
+			    <filename name="**/*.jar"/>
+			    <filename name="**/*sources.jar" negate="true"/>
+			    <filename name="**/*javadoc.jar" negate="true"/>
+			</fileset>
 		</jar>
 		<echo message="========== Done Building (JAR) ==========" />
 	</target>
