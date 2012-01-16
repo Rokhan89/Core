@@ -9,11 +9,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.jgility.core.planning.Backlog;
+import com.github.jgility.core.planning.IBacklog;
 import com.github.jgility.core.planning.IIteration;
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.Iteration;
 import com.github.jgility.core.planning.Release;
+import com.github.jgility.core.project.IPerson;
+import com.github.jgility.core.project.IProduct;
 import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Product;
 import com.github.jgility.core.project.Project;
@@ -28,7 +30,7 @@ import com.github.jgility.core.requirement.RequirementKind;
 public class RequirementTest
 {
 
-    private Product product;
+    private IProduct product;
 
     private Project project;
 
@@ -36,7 +38,7 @@ public class RequirementTest
     public void setUp()
         throws Exception
     {
-        Person person = new Person( "Max", "Mustermann", "max@mustermann.de" );
+        IPerson person = new Person( "Max", "Mustermann", "max@mustermann.de" );
         product = new Product( "Test Product", "Test Description", person );
         project = new Project( "Test Project", "Test Beschreiben" );
         product.addProject( project );
@@ -45,7 +47,7 @@ public class RequirementTest
     @Test
     public void testProductRequirement()
     {
-        Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
+        IBacklog<IProductRequirement> productBacklog = product.getProductBacklog();
         ProductStory story =
             new ProductStory( 1, "Test", "Test Beschreibung", 0.0f, Priority.MINOR, "Max",
                               RequirementKind.USER_STORY );
@@ -100,8 +102,8 @@ public class RequirementTest
     public void testProductBacklogToIterationBacklog()
     {
         IIteration iteration = new Iteration();
-        Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
-        Backlog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
+        IBacklog<IProductRequirement> productBacklog = product.getProductBacklog();
+        IBacklog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
 
         productBacklog.addRequirement( new ProductStory( 1, "Test", "Test Beschreibung", 0.0f,
                                                          Priority.MINOR, "Max",
@@ -120,8 +122,8 @@ public class RequirementTest
     public void testIterationStoryToProductBacklog()
     {
         IIteration iteration = new Iteration();
-        Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
-        Backlog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
+        IBacklog<IProductRequirement> productBacklog = product.getProductBacklog();
+        IBacklog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
 
         iterationBacklog.addRequirement( new IterationStory(
                                                              new ProductStory(

@@ -5,6 +5,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.github.jgility.core.project.IPerson;
 import com.github.jgility.core.project.Person;
 
 public class PersonTest
@@ -12,7 +13,7 @@ public class PersonTest
     @Test
     public void testPersonTrue()
     {
-        Person person = new Person( "Max", "Mustermann", "max@mustermann.de" );
+        IPerson person = new Person( "Max", "Mustermann", "max@mustermann.de" );
         assertEquals( "Max", person.getFirstname() );
         assertEquals( "Mustermann", person.getSurname() );
         assertEquals( "max@mustermann.de", person.getEMail() );
@@ -36,7 +37,7 @@ public class PersonTest
     @Test
     public void testSetFirstname()
     {
-        Person person = new Person();
+        IPerson person = new Person();
         person.setFirstname( "Max" );
         assertEquals( "Max", person.getFirstname() );
     }
@@ -44,7 +45,7 @@ public class PersonTest
     @Test
     public void testSetFirstnameException()
     {
-        Person person = new Person();
+        IPerson person = new Person();
 
         try
         {
@@ -60,7 +61,7 @@ public class PersonTest
     @Test
     public void testSetSurname()
     {
-        Person person = new Person();
+        IPerson person = new Person();
         person.setSurname( "Mustermann" );
         assertEquals( "Mustermann", person.getSurname() );
         person = new Person();
@@ -78,7 +79,7 @@ public class PersonTest
     @Test
     public void testSetEMail()
     {
-        Person person = new Person();
+        IPerson person = new Person();
         person.setEMail( "example@mail.com" );
         assertEquals( "example@mail.com", person.getEMail() );
     }
@@ -86,7 +87,7 @@ public class PersonTest
     @Test
     public void testSetEMailException()
     {
-        Person person = new Person();
+        IPerson person = new Person();
         try
         {
             person.setEMail( "blablabla" );

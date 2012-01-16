@@ -10,6 +10,8 @@ import org.junit.Test;
 import com.github.jgility.core.planning.IRelease;
 import com.github.jgility.core.planning.Iteration;
 import com.github.jgility.core.planning.Release;
+import com.github.jgility.core.project.IPerson;
+import com.github.jgility.core.project.IProduct;
 import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Product;
 import com.github.jgility.core.project.Project;
@@ -18,7 +20,7 @@ import com.github.jgility.core.util.ReleasePlanningUtils;
 public class PlanningTest
 {
 
-    private Product product;
+    private IProduct product;
 
     private Project project;
 
@@ -26,7 +28,7 @@ public class PlanningTest
     public void setUp()
         throws Exception
     {
-        Person person = new Person( "Max", "Mustermann", "max@mustermann.de" );
+        IPerson person = new Person( "Max", "Mustermann", "max@mustermann.de" );
         product = new Product( "Test Product", "Test Description", person );
         project = new Project( "Test Project", "Test Beschreiben" );
         product.addProject( project );

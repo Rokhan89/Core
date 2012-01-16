@@ -8,6 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.jgility.core.planning.Backlog;
+import com.github.jgility.core.planning.IBacklog;
+import com.github.jgility.core.project.IPerson;
+import com.github.jgility.core.project.IProduct;
+import com.github.jgility.core.project.IProject;
 import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Product;
 import com.github.jgility.core.project.Project;
@@ -15,12 +19,12 @@ import com.github.jgility.core.requirement.IProductRequirement;
 
 public class ProductTest
 {
-    private Product product;
+    private IProduct product;
 
     @Before
     public void setUp()
     {
-        Person productOwner = new Person( "Max", "Mustermann", "max@mustermann.de" );
+        IPerson productOwner = new Person( "Max", "Mustermann", "max@mustermann.de" );
         product = new Product( "Schnursenkel", "Schnursenkel Produkt Beschreibung", productOwner );
     }
 
@@ -66,7 +70,7 @@ public class ProductTest
     @Test
     public void testSetProjectsGetProjects()
     {
-        List<Project> projectList = new ArrayList<>();
+        List<IProject> projectList = new ArrayList<>();
         projectList.add( new Project( "Test", "Tetsbeschreibung" ) );
         projectList.add( new Project( "Projekt", "Komische Beschreibung" ) );
         projectList.add( new Project( "Max's Projekt", "Projektbeschreibung" ) );
@@ -85,7 +89,7 @@ public class ProductTest
 
         Assert.assertEquals( 3, product.getProjects().size() );
 
-        List<Project> projects = product.getProjects();
+        List<IProject> projects = product.getProjects();
         Assert.assertNotSame( projectList, projects );
         Assert.assertNotSame( projects, product.getProjects() );
 
@@ -118,7 +122,7 @@ public class ProductTest
         testAddProject();
 
         Assert.assertFalse( product.removeProject( null ) );
-        for ( Project project : product.getProjects() )
+        for ( IProject project : product.getProjects() )
         {
             Assert.assertTrue( product.removeProject( project ) );
         }
@@ -152,7 +156,7 @@ public class ProductTest
     @Test
     public void testRemoveProductOwner()
     {
-        Person productOwner = product.getProductOwner();
+        IPerson productOwner = product.getProductOwner();
         Assert.assertEquals( "Max", productOwner.getFirstname() );
 
         productOwner = new Person( "Test", "Tester", "test@tester.de" );
@@ -166,7 +170,7 @@ public class ProductTest
     @Test
     public void testSetProductBacklog()
     {
-        Backlog<IProductRequirement> productBacklog = new Backlog<>();
+        IBacklog<IProductRequirement> productBacklog = new Backlog<>();
         try
         {
             product.setProductBacklog( productBacklog );
@@ -180,7 +184,7 @@ public class ProductTest
     @Test
     public void testRemoveProductBacklog()
     {
-        Backlog<IProductRequirement> productBacklog = new Backlog<>();
+        IBacklog<IProductRequirement> productBacklog = new Backlog<>();
         product.removeProductBacklog();
         product.setProductBacklog( productBacklog );
         Assert.assertSame( productBacklog, product.getProductBacklog() );

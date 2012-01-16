@@ -36,7 +36,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Backlog<T>
+public class Backlog<T> implements IBacklog<T>
 {
 
     @XmlElementWrapper
@@ -51,12 +51,10 @@ public class Backlog<T>
         requirements = new ArrayList<>();
     }
 
-    /**
-     * Fügt eine Anforderung der {@link List} hinzu
-     * 
-     * @param requirement Hinzuzufügende Anforderung
-     * @throws IllegalArgumentException wenn der Übergabeparameter <code>null</code> ist
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.planning.IBacklog#addRequirement(T)
      */
+    @Override
     public void addRequirement( T requirement )
         throws IllegalArgumentException
     {
@@ -68,13 +66,10 @@ public class Backlog<T>
         requirements.add( requirement );
     }
 
-    /**
-     * Entfernt eine Anforderung aus der {@link List}
-     * 
-     * @param requirement zu löschende Anforderung
-     * @return <code>true</code> wenn Element in der Liste ist
-     * @throws IllegalArgumentException wenn der Übergabeparameter <code>null</code> enthält
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.planning.IBacklog#removeRequirement(T)
      */
+    @Override
     public boolean removeRequirement( T requirement )
         throws IllegalArgumentException
     {
@@ -86,21 +81,19 @@ public class Backlog<T>
         return requirements.remove( requirement );
     }
 
-    /**
-     * Gibt eine unveränderliche Liste Anforderung zurück
-     * 
-     * @return unveränderte {@link List} mit allen Anforderungen
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.planning.IBacklog#getRequirementList()
      */
+    @Override
     public List<T> getRequirementList()
     {
         return Collections.unmodifiableList( requirements );
     }
 
-    /**
-     * Fügt eine {@link List} von Anforderung der Liste hinzu
-     * 
-     * @param requirementList hinzuzufügende Liste mit Anforderungen
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.planning.IBacklog#addAllRequirement(java.util.List)
      */
+    @Override
     public void addAllRequirement( List<T> requirementList )
     {
         if ( CollectionUtils.isEmpty( requirementList ) )

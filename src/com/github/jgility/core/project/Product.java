@@ -29,6 +29,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.planning.Backlog;
+import com.github.jgility.core.planning.IBacklog;
 import com.github.jgility.core.requirement.IProductRequirement;
 
 /**
@@ -40,17 +41,17 @@ import com.github.jgility.core.requirement.IProductRequirement;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Product
+public class Product implements IProduct
 {
     private String name;
 
     private String description;
 
-    private final Set<Project> projects;
+    private final Set<IProject> projects;
 
-    private Person productOwner;
+    private IPerson productOwner;
 
-    private Backlog<IProductRequirement> productBacklog;
+    private IBacklog<IProductRequirement> productBacklog;
 
     /**
      * Parameterloser Konstruktor um ein leeres {@link Product} zu instanziieren.<br>
@@ -75,7 +76,7 @@ public class Product
      * @see #setName(String)
      * @see #setProductOwner(Person)
      */
-    public Product( String name, String description, Person productOwner )
+    public Product( String name, String description, IPerson productOwner )
         throws IllegalArgumentException
     {
         super();
@@ -86,23 +87,20 @@ public class Product
         projects = new HashSet<>();
     }
 
-    /**
-     * Gibt den Namen des {@link Product} zurück
-     * 
-     * @return Name des {@link Product}
-     */
-    public String getName()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#getName()
+	 */
+    @Override
+	public String getName()
     {
         return name;
     }
 
-    /**
-     * Setzt den Namen des {@link Product}
-     * 
-     * @param name Name des {@link Product}
-     * @throws IllegalArgumentException wird geworfen, wenn der Name leer ist
-     */
-    public void setName( String name )
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#setName(java.lang.String)
+	 */
+    @Override
+	public void setName( String name )
         throws IllegalArgumentException
     {
         if ( StringUtils.isNotBlank( name ) )
@@ -115,45 +113,39 @@ public class Product
         }
     }
 
-    /**
-     * Gibt die Beschreibung des {@link Product} zurück
-     * 
-     * @return die Beschreibung des {@link Product}
-     */
-    public String getDescription()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#getDescription()
+	 */
+    @Override
+	public String getDescription()
     {
         return description;
     }
 
-    /**
-     * Setzt die Beschreibung des {@link Product}
-     * 
-     * @param description Beschreibung des {@link Product}
-     */
-    public void setDescription( String description )
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#setDescription(java.lang.String)
+	 */
+    @Override
+	public void setDescription( String description )
     {
         this.description = description;
     }
 
-    /**
-     * Gibt eine nicht modifizierbare {@link List} mit {@link Project}-Referenzen zurück
-     * 
-     * @return eine {@link List} mit allen {@link Project}
-     */
-    public List<Project> getProjects()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#getProjects()
+	 */
+    @Override
+	public List<IProject> getProjects()
     {
-        final List<Project> projectList = new ArrayList<>( projects );
+        final List<IProject> projectList = new ArrayList<>( projects );
         return Collections.unmodifiableList( projectList );
     }
 
-    /**
-     * Fügt eine {@link List} von {@link Project} der bestehenden {@link List} hinzu
-     * 
-     * @param projects {@link List} mit {@link Project} welche hinzugefügt werden sollen
-     * @throws IllegalArgumentException wird geworfen, wenn die übergebene {@link List} mit
-     *             {@link Project} leer oder <code>null</code>
-     */
-    public void setProjects( List<Project> projects )
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#setProjects(java.util.List)
+	 */
+    @Override
+	public void setProjects( List<IProject> projects )
         throws IllegalArgumentException
     {
         if ( CollectionUtils.isNotEmpty( projects ) )
@@ -166,14 +158,11 @@ public class Product
         }
     }
 
-    /**
-     * Fügt ein neues {@link Project} der {@link List} hinzu
-     * 
-     * @param newProject neues {@link Project} zum Hinzufügen
-     * @throws IllegalArgumentException wird geworfen, wenn das {@link Project} den Wert
-     *             <code>null</code> beinhaltet
-     */
-    public void addProject( Project newProject )
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#addProject(com.github.jgility.core.project.Project)
+	 */
+    @Override
+	public void addProject( IProject newProject )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, newProject ) )
@@ -186,14 +175,11 @@ public class Product
         }
     }
 
-    /**
-     * Entfernt ein {@link Project} aus der {@link List}
-     * 
-     * @param removeProject {@link Project} welches entfernt wird
-     * @return <code>ture</code> wenn das übergebene {@link Project} aus der {@link List} entfernt
-     *         wurde
-     */
-    public boolean removeProject( Project removeProject )
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#removeProject(com.github.jgility.core.project.Project)
+	 */
+    @Override
+	public boolean removeProject( IProject removeProject )
     {
         if ( ObjectUtils.notEqual( null, removeProject ) )
         {
@@ -202,33 +188,29 @@ public class Product
         return false;
     }
 
-    /**
-     * Entfernt alle in der {@link List} befindlichen {@link Project}s
-     */
-    public void clearProject()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#clearProject()
+	 */
+    @Override
+	public void clearProject()
     {
         projects.clear();
     }
 
-    /**
-     * Gibt den ProductOwner in Form einer {@link Person}-Referenz zurück
-     * 
-     * @return the productOwner
-     */
-    public Person getProductOwner()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#getProductOwner()
+	 */
+    @Override
+	public IPerson getProductOwner()
     {
         return productOwner;
     }
 
-    /**
-     * Setzt den ProductOwner als {@link Person}
-     * 
-     * @param productOwner ProductOwner des {@link Product} als {@link Person}
-     * @throws IllegalArgumentException wird geworfen, wenn der ProductOwner bereits initialisiert
-     *             wurde oder der übergebende ProductOwner den Wert <code>null</code> beinhaltet
-     * @see #removeProductOwner()
-     */
-    public void setProductOwner( Person productOwner )
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#setProductOwner(com.github.jgility.core.project.Person)
+	 */
+    @Override
+	public void setProductOwner( IPerson productOwner )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, this.productOwner ) )
@@ -246,33 +228,29 @@ public class Product
         }
     }
 
-    /**
-     * Entfernt den ProductOwner
-     */
-    public void removeProductOwner()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#removeProductOwner()
+	 */
+    @Override
+	public void removeProductOwner()
     {
         productOwner = null;
     }
 
-    /**
-     * Gibt den ProductBacklog in Form einer {@link Backlog}-Referenz zurück
-     * 
-     * @return der ProductBacklog als {@link Backlog}
-     */
-    public Backlog<IProductRequirement> getProductBacklog()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#getProductBacklog()
+	 */
+    @Override
+	public IBacklog<IProductRequirement> getProductBacklog()
     {
         return productBacklog;
     }
 
-    /**
-     * Setzt den ProductBacklog
-     * 
-     * @param productBacklog zu setzenden {@link Backlog}
-     * @throws IllegalArgumentException wird geworfen, wenn der productBacklog bereits initialisiert
-     *             wurde oder das übergebende {@link Backlog} <code>null</code> beinhaltet
-     * @see #removeProductBacklog()
-     */
-    public void setProductBacklog( Backlog<IProductRequirement> productBacklog )
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#setProductBacklog(com.github.jgility.core.planning.Backlog)
+	 */
+    @Override
+	public void setProductBacklog( IBacklog<IProductRequirement> productBacklog )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, this.productBacklog ) )
@@ -289,10 +267,11 @@ public class Product
         }
     }
 
-    /**
-     * Entfernt den ProductBacklog
-     */
-    public void removeProductBacklog()
+    /* (non-Javadoc)
+	 * @see com.github.jgility.core.project.IProduct#removeProductBacklog()
+	 */
+    @Override
+	public void removeProductBacklog()
     {
         productBacklog = null;
     }

@@ -40,7 +40,7 @@ public class Iteration
     implements IIteration
 {
     @XmlElement
-    private final Backlog<IIterationRequirement> iterationBacklog;
+    private final IBacklog<IIterationRequirement> iterationBacklog;
 
     /**
      * Instanziiert ein Objekt der Klasse {@link Iteration} und delegiert es an
@@ -72,7 +72,7 @@ public class Iteration
      * @see com.github.jgility.core.planning.IIteration#getIterationBacklog()
      */
     @Override
-    public Backlog<IIterationRequirement> getIterationBacklog()
+    public IBacklog<IIterationRequirement> getIterationBacklog()
     {
         return iterationBacklog;
     }
