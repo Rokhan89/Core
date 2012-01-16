@@ -47,7 +47,7 @@
 		<copy todir="${jar.class.path.dir}">
 			<fileset dir="${lib.dir}" />
 		</copy>
-		<copy file="${licensetext}" todir="${jar.dir}"></copy>
+		<copy file="${license}" todir="${jar.dir}"></copy>
 		<!-- ManifestClassPath Ant Task -->
 	    <manifest file="META-INF/MANIFEST.MF" mode="update">
 	        <attribute name="Built-By" value="${authortext}"/>
@@ -57,8 +57,13 @@
 	    </manifest>
 		<jar destfile="${jar.dir}/${ant.project.name}-${app.version}.jar" 
 			basedir="${classes.dir}"
-			manifest="META-INF/MANIFEST.MF"
-		/>
+			manifest="META-INF/MANIFEST.MF">
+			<fileset dir="${lib.dir}">
+			    <filename name="**/*.jar"/>
+			    <filename name="**/*sources.jar" negate="true"/>
+			    <filename name="**/*javadoc.jar" negate="true"/>
+			</fileset>
+		</jar>
 		<echo message="========== Done Building (JAR) ==========" />
 	</target>
 
