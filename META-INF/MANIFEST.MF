@@ -6,6 +6,7 @@ Bundle-Name: Jgility-Core
 Bundle-SymbolicName: com.github.jgility.core
 Bundle-Version: 0.1
 Bundle-RequiredExecutionEnvironment: 1.7.0_147-icedtea-b147
+Class-Path: .
 Export-Package: com.github.jgility.core.planning,   com.github.jgility
  .core.project,   com.github.jgility.core.requirement
 Built-By: Karsten Schulz
