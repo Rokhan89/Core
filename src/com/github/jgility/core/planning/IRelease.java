@@ -17,7 +17,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.github.jgility.core.xml.AbstractXmlRelease;
+import com.github.jgility.core.xml.AbstractXmlPlan;
 
 /**
  * Interface zur Generalisierung der Planungsstruktur für eine hierachischen Abbildung mit
@@ -25,7 +25,7 @@ import com.github.jgility.core.xml.AbstractXmlRelease;
  * 
  * @author Karsten Schulz (lennylinux.ks@googlemail.com)
  */
-@XmlJavaTypeAdapter( AbstractXmlRelease.Adapter.class )
+@XmlJavaTypeAdapter( AbstractXmlPlan.Adapter.class )
 public interface IRelease
     extends IPlan
 {
