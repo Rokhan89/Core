@@ -20,6 +20,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -48,10 +49,13 @@ import com.github.jgility.core.xml.AbstractXmlProject;
 public class Project
     extends AbstractXmlProject
 {
+    @XmlElement
     private String name;
 
+    @XmlElement
     private String description;
 
+    @XmlElement
     private ITeam team;
 
     @XmlElementWrapper

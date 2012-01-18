@@ -14,6 +14,7 @@ package com.github.jgility.core.project;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.StringUtils;
@@ -37,10 +38,13 @@ import com.github.jgility.core.xml.AbstractXmlPerson;
 public class Person
     extends AbstractXmlPerson
 {
+    @XmlElement
     private String firstname;
 
+    @XmlElement
     private String surname;
 
+    @XmlElement
     private String eMail;
 
     /**

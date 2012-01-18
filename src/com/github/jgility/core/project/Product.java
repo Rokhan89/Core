@@ -20,6 +20,7 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -45,14 +46,19 @@ import com.github.jgility.core.xml.AbstractXmlProduct;
 public class Product
     extends AbstractXmlProduct
 {
+    @XmlElement
     private String name;
 
+    @XmlElement
     private String description;
 
+    @XmlElement
     private final Set<IProject> projects;
 
+    @XmlElement
     private IPerson productOwner;
 
+    @XmlElement
     private IBacklog<IProductRequirement> productBacklog;
 
     /**
