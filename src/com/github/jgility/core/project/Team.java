@@ -19,11 +19,14 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import com.github.jgility.core.xml.AbstractXmlTeam;
 
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
@@ -32,9 +35,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Team implements ITeam
+public class Team
+    extends AbstractXmlTeam
 {
 
+    @XmlElement
     private String name;
 
     @XmlElementWrapper
@@ -61,7 +66,8 @@ public class Team implements ITeam
         members = new ArrayList<>();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.ITeam#getName()
      */
     @Override
@@ -70,7 +76,8 @@ public class Team implements ITeam
         return this.name;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.ITeam#setName(java.lang.String)
      */
     @Override
@@ -86,7 +93,8 @@ public class Team implements ITeam
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.ITeam#addMember(com.github.jgility.core.project.Person)
      */
     @Override
@@ -103,8 +111,10 @@ public class Team implements ITeam
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.github.jgility.core.project.ITeam#removeMember(com.github.jgility.core.project.IPerson)
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.ITeam#removeMember(com.github.jgility.core.project.IPerson)
      */
     @Override
     public boolean removeMember( IPerson person )
@@ -116,7 +126,8 @@ public class Team implements ITeam
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.ITeam#getMembers()
      */
     @Override
@@ -125,7 +136,8 @@ public class Team implements ITeam
         return Collections.unmodifiableList( new ArrayList<>( members ) );
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.ITeam#clearMembers()
      */
     @Override

@@ -16,6 +16,7 @@ import java.util.Calendar;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -23,6 +24,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import com.github.jgility.core.xml.AbstractXmlProductStroy;
 
 /**
  * Konkrete Klasse für grobe Erfassung einer Anforderung. Implementiert das Marker-Interface
@@ -35,23 +38,30 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
     "requester", "requirementKind" } )
 @XmlAccessorType( XmlAccessType.FIELD )
 public class ProductStory
-    implements IProductRequirement
+    extends AbstractXmlProductStroy
 {
-
+    @XmlElement
     private int id;
 
+    @XmlElement
     private String title;
 
+    @XmlElement
     private String description;
 
+    @XmlElement
     private final Calendar createDate;
 
+    @XmlElement
     private float estimated;
 
+    @XmlElement
     private Priority priority;
 
+    @XmlElement
     private String requester;
 
+    @XmlElement
     private RequirementKind requirementKind;
 
     /**

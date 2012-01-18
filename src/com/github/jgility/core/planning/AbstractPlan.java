@@ -17,6 +17,7 @@ import java.util.GregorianCalendar;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,6 +26,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.util.CalendarUtils;
+import com.github.jgility.core.xml.AbstractXmlPlan;
 
 /**
  * Abstrakte Klasse und implementiert die Grundfunktionalitäten einer planbaren Datenstruktur.
@@ -35,11 +37,12 @@ import com.github.jgility.core.util.CalendarUtils;
 @XmlType( propOrder = { "start", "end" } )
 @XmlAccessorType( XmlAccessType.FIELD )
 public abstract class AbstractPlan
-    implements IPlan
+    extends AbstractXmlPlan
 {
-
+    @XmlElement
     private Calendar start;
 
+    @XmlElement
     private Calendar end;
 
     /**

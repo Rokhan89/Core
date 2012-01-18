@@ -14,11 +14,16 @@ package com.github.jgility.core.project;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.github.jgility.core.xml.AbstractXmlTeam;
+
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlJavaTypeAdapter( AbstractXmlTeam.Adapter.class )
 public interface ITeam
 {
 

@@ -12,11 +12,16 @@
  */
 package com.github.jgility.core.requirement;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.github.jgility.core.xml.AbstractXmlProductStroy;
+
 /**
  * Marker-Interface für {@link IProductRequirement}
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlJavaTypeAdapter( AbstractXmlProductStroy.Adapter.class )
 public interface IProductRequirement
     extends IRequirement
 {

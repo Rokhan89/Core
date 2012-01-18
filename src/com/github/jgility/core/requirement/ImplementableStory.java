@@ -14,6 +14,7 @@ package com.github.jgility.core.requirement;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -35,8 +36,10 @@ public class ImplementableStory
     implements IImplementableRequirement
 {
 
+    @XmlElement
     private ImplementState implementState;
 
+    @XmlElement
     private ITeam team;
 
     /**

@@ -27,6 +27,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.xml.AbstractXmlBacklog;
+
 /**
  * Abstrakte Klasse zum erstellen von Backlogs im Sinne der agilen Softwareentwicklung
  * 
@@ -36,7 +38,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Backlog<T> implements IBacklog<T>
+public class Backlog<T>
+    extends AbstractXmlBacklog<T>
 {
 
     @XmlElementWrapper
@@ -51,7 +54,8 @@ public class Backlog<T> implements IBacklog<T>
         requirements = new ArrayList<>();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.planning.IBacklog#addRequirement(T)
      */
     @Override
@@ -66,7 +70,8 @@ public class Backlog<T> implements IBacklog<T>
         requirements.add( requirement );
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.planning.IBacklog#removeRequirement(T)
      */
     @Override
@@ -81,7 +86,8 @@ public class Backlog<T> implements IBacklog<T>
         return requirements.remove( requirement );
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.planning.IBacklog#getRequirementList()
      */
     @Override
@@ -90,7 +96,8 @@ public class Backlog<T> implements IBacklog<T>
         return Collections.unmodifiableList( requirements );
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.planning.IBacklog#addAllRequirement(java.util.List)
      */
     @Override

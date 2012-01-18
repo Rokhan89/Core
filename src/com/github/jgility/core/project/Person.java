@@ -14,12 +14,15 @@ package com.github.jgility.core.project;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.validator.EmailValidator;
+
+import com.github.jgility.core.xml.AbstractXmlPerson;
 
 /**
  * Klasse, welche ein Nutzer bzw. eine Person im Sinne der agilen Softwareentwicklung repräsentiert.
@@ -32,12 +35,16 @@ import org.apache.commons.validator.EmailValidator;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Person implements IPerson
+public class Person
+    extends AbstractXmlPerson
 {
+    @XmlElement
     private String firstname;
 
+    @XmlElement
     private String surname;
 
+    @XmlElement
     private String eMail;
 
     /**
@@ -68,7 +75,8 @@ public class Person implements IPerson
         setEMail( eMail );
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IPerson#setFirstname(java.lang.String)
      */
     @Override
@@ -86,7 +94,8 @@ public class Person implements IPerson
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IPerson#setSurname(java.lang.String)
      */
     @Override
@@ -112,7 +121,8 @@ public class Person implements IPerson
         return StringUtils.isNotBlank( string ) && Character.isUpperCase( string.charAt( 0 ) );
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IPerson#setEMail(java.lang.String)
      */
     @Override
@@ -130,7 +140,8 @@ public class Person implements IPerson
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IPerson#getFirstname()
      */
     @Override
@@ -139,7 +150,8 @@ public class Person implements IPerson
         return firstname;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IPerson#getSurname()
      */
     @Override
@@ -148,7 +160,8 @@ public class Person implements IPerson
         return surname;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IPerson#getEMail()
      */
     @Override
