@@ -8,14 +8,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.jgility.core.project.IPerson;
+import com.github.jgility.core.project.IProject;
+import com.github.jgility.core.project.ITeam;
 import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Project;
-import com.github.jgility.core.project.Team;
 
 public class ProjectTest
 {
 
-    private Project project;
+    private IProject project;
 
     @Before
     public void initProject()
@@ -104,9 +106,9 @@ public class ProjectTest
         {
         }
 
-        List<Person> members = project.getTeam().getMembers();
+        List<IPerson> members = project.getTeam().getMembers();
         Assert.assertEquals( 3, members.size() );
-        for ( Person member : members )
+        for ( IPerson member : members )
         {
             Assert.assertNotNull( member );
             Assert.assertTrue( project.removeMember( member ) );
@@ -118,7 +120,7 @@ public class ProjectTest
     @Test
     public void testSetMembers()
     {
-        List<Person> personList = new ArrayList<>();
+        List<IPerson> personList = new ArrayList<>();
         Person person = new Person( "Max", "Mustermann", "max@mustermann.de" );
         personList.add( person );
         person = new Person( "Test", "Tester", "test@tester.de" );
@@ -128,10 +130,10 @@ public class ProjectTest
 
         project.setMembers( personList );
 
-        Team members = project.getTeam();
+        ITeam members = project.getTeam();
         Assert.assertNotSame( personList, members );
         Assert.assertEquals( 6, members.getMembers().size() );
-        for ( Person member : members.getMembers() )
+        for ( IPerson member : members.getMembers() )
         {
             Assert.assertNotNull( member );
         }
@@ -140,9 +142,9 @@ public class ProjectTest
     @Test
     public void testGetMembers()
     {
-        List<Person> members = project.getTeam().getMembers();
+        List<IPerson> members = project.getTeam().getMembers();
         Assert.assertEquals( 3, members.size() );
-        for ( Person member : members )
+        for ( IPerson member : members )
         {
             Assert.assertNotNull( member );
             Assert.assertTrue( project.removeMember( member ) );
@@ -154,7 +156,7 @@ public class ProjectTest
     @Test
     public void testSetMembersFailsException()
     {
-        List<Person> personList = new ArrayList<>();
+        List<IPerson> personList = new ArrayList<>();
 
         try
         {

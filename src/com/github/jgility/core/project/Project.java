@@ -44,13 +44,13 @@ import com.github.jgility.core.planning.Release;
 @XmlRootElement
 @XmlSeeAlso( Release.class )
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Project
+public class Project implements IProject
 {
     private String name;
 
     private String description;
 
-    private Team team;
+    private ITeam team;
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
@@ -84,23 +84,19 @@ public class Project
         releasePlan = new ArrayList<>();
     }
 
-    /**
-     * Gibt den Namen des {@link Project} zurück
-     * 
-     * @return der Name des {@link Project}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#getName()
      */
+    @Override
     public String getName()
     {
         return name;
     }
 
-    /**
-     * Setzt den Namen des {@link Project}
-     * 
-     * @param Name des {@link Project}
-     * @throws IllegalArgumentException wird geworfen, wenn der Übergabeparameter leer oder
-     *             <code>null</code> ist
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#setName(java.lang.String)
      */
+    @Override
     public void setName( String name )
         throws IllegalArgumentException
     {
@@ -114,44 +110,38 @@ public class Project
         }
     }
 
-    /**
-     * Gibt die Beschreibung des {@link Project} zurück
-     * 
-     * @return Beschreibung des {@link Project}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#getDescription()
      */
+    @Override
     public String getDescription()
     {
         return description;
     }
 
-    /**
-     * Setzt die Beschreibung des {@link Project}
-     * 
-     * @param description die Beschreibung des {@link Project}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#setDescription(java.lang.String)
      */
+    @Override
     public void setDescription( String description )
     {
         this.description = description;
     }
 
-    /**
-     * Gibt eine unmodifizierbare {@link List} der Projektbeteiligten zurück
-     * 
-     * @return {@link List} von {@link Person}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#getTeam()
      */
-    public Team getTeam()
+    @Override
+    public ITeam getTeam()
     {
         return this.team;
     }
 
-    /**
-     * Bestimmt das Team des Projekts. Prüft ob das Team nicht <code>null</code> ist und
-     * Mitgliederzahl größer als 0
-     * 
-     * @param team als zu bearbeitenden Projektgruppe
-     * @throws IllegalArgumentException wenn der Übergabeparameter nicht den Vorgaben entspricht
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#setTeam(com.github.jgility.core.project.Team)
      */
-    public void setTeam( Team team )
+    @Override
+    public void setTeam( ITeam team )
     {
         if ( null != team && 0 < team.getMembers().size() )
         {
@@ -163,19 +153,16 @@ public class Project
         }
     }
 
-    /**
-     * Fügt eine {@link List} mit Projektbeteiligten der bestehenden {@link List} hinzu
-     * 
-     * @param members {@link List} mit allen Projektbeteiligten
-     * @throws IllegalArgumentException wird geworfen, wenn eine leere {@link List} mit
-     *             {@link Person} übergeben wird
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#setMembers(java.util.List)
      */
-    public void setMembers( List<Person> members )
+    @Override
+    public void setMembers( List<IPerson> members )
         throws IllegalArgumentException
     {
         if ( CollectionUtils.isNotEmpty( members ) )
         {
-            for ( Person member : members )
+            for ( IPerson member : members )
             {
                 this.team.addMember( member );
             }
@@ -186,14 +173,11 @@ public class Project
         }
     }
 
-    /**
-     * Fügt einen neue {@link Person} der Mitglieder hinzu
-     * 
-     * @param newMember neue {@link Person} zum Hinzufügen
-     * @throws IllegalArgumentException wird geworfen, wenn die neue {@link Person}
-     *             <code>null</code> ist
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#addMember(com.github.jgility.core.project.Person)
      */
-    public void addMember( Person newMember )
+    @Override
+    public void addMember( IPerson newMember )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, newMember ) )
@@ -206,14 +190,11 @@ public class Project
         }
     }
 
-    /**
-     * Entfernt auf Basis des Parameters eine {@link Person} aus der {@link List}
-     * 
-     * @param removeMember zu entfernende {@link Person}
-     * @return <code>true</code> wenn die übergebene {@link Person} erfolgreich aus der Liste
-     *         entfernt wurde
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#removeMember(com.github.jgility.core.project.IPerson)
      */
-    public boolean removeMember( Person removeMember )
+    @Override
+    public boolean removeMember( IPerson removeMember )
     {
         if ( ObjectUtils.notEqual( null, removeMember ) )
         {
@@ -222,31 +203,28 @@ public class Project
         return false;
     }
 
-    /**
-     * Entfernt alle Projektbeteiligten aus der {@link List}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#clearMembers()
      */
+    @Override
     public void clearMembers()
     {
         team.clearMembers();
     }
 
-    /**
-     * Gibt eine {@link List} des Projektplans zurück
-     * 
-     * @return {@link List} von {@link IRelease}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#getReleasePlan()
      */
+    @Override
     public List<IRelease> getReleasePlan()
     {
         return Collections.unmodifiableList( releasePlan );
     }
 
-    /**
-     * Setzt die {@link List} des Projektplans
-     * 
-     * @param projectPlan {@link List} von {@link IRelease}
-     * @throws IllegalArgumentException wird geworfen, wenn die {@link List} von {@link IRelease}
-     *             leer oder <code>null</code>
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#setReleasePlan(java.util.List)
      */
+    @Override
     public void setReleasePlan( List<IRelease> projectPlan )
         throws IllegalArgumentException
     {
@@ -260,13 +238,10 @@ public class Project
         }
     }
 
-    /**
-     * Fügt ein neuen {@link IPlan} der {@link List} hinzu
-     * 
-     * @param newPlan neuer {@link IPlan} zum hinzufügen
-     * @throws IllegalArgumentException wird geworfen, wenn der {@link IPlan} den Wert
-     *             <code>null</code> beinhaltet
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#addReleasePlan(com.github.jgility.core.planning.IRelease)
      */
+    @Override
     public void addReleasePlan( IRelease newPlan )
         throws IllegalArgumentException
     {
@@ -280,13 +255,10 @@ public class Project
         }
     }
 
-    /**
-     * Entfernt auf Basis des Parameters einen {@link IPlan} aus der {@link List}
-     * 
-     * @param removePlan zu entfernender {@link IPlan}
-     * @return <code>true</code> wenn der übergebende {@link IPlan} erfolgreich aus der {@link List}
-     *         entfernt wurde
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#removeReleasePlan(com.github.jgility.core.planning.IRelease)
      */
+    @Override
     public boolean removeReleasePlan( IRelease removePlan )
     {
         if ( ObjectUtils.notEqual( null, removePlan ) )
@@ -296,9 +268,10 @@ public class Project
         return false;
     }
 
-    /**
-     * Entfernt alle geplanten {@link IPlan}-Referenzen aus dem {@link Project}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IProject#clearReleasePlan()
      */
+    @Override
     public void clearReleasePlan()
     {
         releasePlan.clear();
@@ -320,7 +293,7 @@ public class Project
     {
         if ( obj instanceof Project )
         {
-            Project project = (Project) obj;
+            IProject project = (IProject) obj;
             EqualsBuilder builder = new EqualsBuilder();
             builder.append( name, project.getName() );
             builder.append( description, project.getDescription() );

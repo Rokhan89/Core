@@ -12,7 +12,7 @@
  */
 package com.github.jgility.core.requirement;
 
-import com.github.jgility.core.project.Team;
+import com.github.jgility.core.project.ITeam;
 
 /**
  * Interface für eine Anforderung, welche Implementiert werden kann
@@ -45,7 +45,7 @@ public interface IImplementableRequirement
      * 
      * @return
      */
-    Team getAssignee();
+    ITeam getAssignee();
 
     /**
      * Setzt das bearbeitende Team
@@ -53,6 +53,6 @@ public interface IImplementableRequirement
      * @param assignee
      * @throws IllegalArgumentException wird geworfen, wenn das Team leer ist
      */
-    void setAssignee( Team assignee )
+    void setAssignee( ITeam assignee )
         throws IllegalArgumentException;
 }

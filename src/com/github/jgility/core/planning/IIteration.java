@@ -29,6 +29,6 @@ public interface IIteration
      * 
      * @return Referenz auf das {@link Backlog} um dies zu ändern
      */
-    Backlog<IIterationRequirement> getIterationBacklog();
+    IBacklog<IIterationRequirement> getIterationBacklog();
 
 }

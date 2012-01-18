@@ -32,7 +32,7 @@ import org.apache.commons.validator.EmailValidator;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Person
+public class Person implements IPerson
 {
     private String firstname;
 
@@ -68,14 +68,10 @@ public class Person
         setEMail( eMail );
     }
 
-    /**
-     * Setzt den Vornamen der Person und überprüft dessen Wert
-     * 
-     * @param firstname Vorname der Person.<br>
-     *            Es wird überprüft ob der erste Buchstabe ein Großbuchstabe ist.<br>
-     *            Leere Eingaben oder <code>null</code> ist nicht erlaubt
-     * @throws IllegalArgumentException wird geworfen, wenn einer der Bedingungen nicht zutrifft
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IPerson#setFirstname(java.lang.String)
      */
+    @Override
     public void setFirstname( String firstname )
         throws IllegalArgumentException
     {
@@ -90,14 +86,10 @@ public class Person
         }
     }
 
-    /**
-     * Setzt den Nachnamen und überprüft dessen Wert
-     * 
-     * @param surname Nachname der Person.<br>
-     *            Identische Prüfung wie für <code>firstname</code>
-     * @see #setFirstname(String)
-     * @throws IllegalArgumentException wird geworfen, wenn einer der Bedingungen nicht zutrifft
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IPerson#setSurname(java.lang.String)
      */
+    @Override
     public void setSurname( String surname )
         throws IllegalArgumentException
     {
@@ -120,14 +112,10 @@ public class Person
         return StringUtils.isNotBlank( string ) && Character.isUpperCase( string.charAt( 0 ) );
     }
 
-    /**
-     * Setzt die E-Mail-Adresse und überprüft dessen Wert
-     * 
-     * @param eMail E-Mail-Adresse <br>
-     *            muss dem Standard entsprechen. Zum Beispiel: <code>example@mail.com</code>
-     * @throws IllegalArgumentException wird geworfen, wenn Parameter keine valide E-Mail-Adresse
-     *             ist
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IPerson#setEMail(java.lang.String)
      */
+    @Override
     public void setEMail( String eMail )
         throws IllegalArgumentException
     {
@@ -142,31 +130,28 @@ public class Person
         }
     }
 
-    /**
-     * Gibt den Vornamen zurück
-     * 
-     * @return firstname
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IPerson#getFirstname()
      */
+    @Override
     public String getFirstname()
     {
         return firstname;
     }
 
-    /**
-     * Gibt den Nachnamen zurück
-     * 
-     * @return surname
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IPerson#getSurname()
      */
+    @Override
     public String getSurname()
     {
         return surname;
     }
 
-    /**
-     * Gibt die E-Mail-Adresse zurück
-     * 
-     * @return eMail
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.IPerson#getEMail()
      */
+    @Override
     public String getEMail()
     {
         return eMail;

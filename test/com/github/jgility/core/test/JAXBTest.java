@@ -19,9 +19,11 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.jgility.core.planning.Backlog;
+import com.github.jgility.core.planning.IBacklog;
 import com.github.jgility.core.planning.Iteration;
 import com.github.jgility.core.planning.Release;
+import com.github.jgility.core.project.IPerson;
+import com.github.jgility.core.project.IProduct;
 import com.github.jgility.core.project.Person;
 import com.github.jgility.core.project.Product;
 import com.github.jgility.core.project.Project;
@@ -35,9 +37,9 @@ import com.github.jgility.core.requirement.RequirementKind;
 public class JAXBTest
 {
 
-    private Person person;
+    private IPerson person;
 
-    private Product product;
+    private IProduct product;
 
     @Before
     public void setUp()
@@ -56,12 +58,12 @@ public class JAXBTest
         Iteration iteration = new Iteration( start, end );
         release.addIteration( iteration );
 
-        Backlog<IProductRequirement> productBacklog = product.getProductBacklog();
+        IBacklog<IProductRequirement> productBacklog = product.getProductBacklog();
         productBacklog.addRequirement( new ProductStory( 2, "Test", "Beschreibung", 3.0f,
                                                          Priority.BLOCKER, "Requester",
                                                          RequirementKind.BUG ) );
 
-        Backlog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
+        IBacklog<IIterationRequirement> iterationBacklog = iteration.getIterationBacklog();
         iterationBacklog.addRequirement( new IterationStory() );
     }
 

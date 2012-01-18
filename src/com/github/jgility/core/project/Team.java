@@ -32,14 +32,14 @@ import org.apache.commons.lang3.StringUtils;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Team
+public class Team implements ITeam
 {
 
     private String name;
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
-    private final List<Person> members;
+    private final List<IPerson> members;
 
     /**
      * Instanziiert ein Objekt der Klasse {@link Team} mit Standardwerten<br>
@@ -61,22 +61,19 @@ public class Team
         members = new ArrayList<>();
     }
 
-    /**
-     * Gibt den Namen des Teams zurück
-     * 
-     * @return name als {@link String}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.ITeam#getName()
      */
+    @Override
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * Setzt den Namen des Teams<br>
-     * Parameter <code>name</code> darf nicht <code>null</code> oder <code>""</code> beinhalten
-     * 
-     * @param name als {@link String}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.ITeam#setName(java.lang.String)
      */
+    @Override
     public void setName( String name )
     {
         if ( StringUtils.isNotBlank( name ) )
@@ -89,14 +86,11 @@ public class Team
         }
     }
 
-    /**
-     * Fügt eine neues Teammitglied als {@link Person} dem bestehendem Team hinzu
-     * 
-     * @param person neues Mitglied des Teams als {@link Person}
-     * @throws IllegalArgumentException wird geworfen, wenn die Person den Wert <code>null</code>
-     *             beinhaltet
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.ITeam#addMember(com.github.jgility.core.project.Person)
      */
-    public void addMember( Person person )
+    @Override
+    public void addMember( IPerson person )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, person ) )
@@ -109,13 +103,11 @@ public class Team
         }
     }
 
-    /**
-     * Entfernt auf Basis der {@link Person}-Referenz ein Mitglied aus dem {@link Team}
-     * 
-     * @param person zu entfernende {@link Person}
-     * @return <code>true</code> wenn {@link Person} in der {@link List} enthalten ist
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.ITeam#removeMember(com.github.jgility.core.project.IPerson)
      */
-    public boolean removeMember( Person person )
+    @Override
+    public boolean removeMember( IPerson person )
     {
         if ( ObjectUtils.notEqual( null, person ) )
         {
@@ -124,20 +116,19 @@ public class Team
         return false;
     }
 
-    /**
-     * Gibt eine unveränderliche {@link List} mit {@link Person}, welche die Mitglieder des
-     * {@link Team} repräsentiert
-     * 
-     * @return unveränderliche {@link List} mit {@link Person}
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.ITeam#getMembers()
      */
-    public List<Person> getMembers()
+    @Override
+    public List<IPerson> getMembers()
     {
         return Collections.unmodifiableList( new ArrayList<>( members ) );
     }
 
-    /**
-     * Entfernt alle Elemente (<code>Person</code>) aus dem Team
+    /* (non-Javadoc)
+     * @see com.github.jgility.core.project.ITeam#clearMembers()
      */
+    @Override
     public void clearMembers()
     {
         members.clear();

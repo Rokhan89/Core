@@ -20,6 +20,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.project.ITeam;
 import com.github.jgility.core.project.Team;
 
 /**
@@ -36,7 +37,7 @@ public class ImplementableStory
 
     private ImplementState implementState;
 
-    private Team team;
+    private ITeam team;
 
     /**
      * Instanziiert ein Objekt der Klasse {@link ImplementableStory} und erstellt auf Basis von
@@ -107,13 +108,13 @@ public class ImplementableStory
     }
 
     @Override
-    public Team getAssignee()
+    public ITeam getAssignee()
     {
         return team;
     }
 
     @Override
-    public void setAssignee( Team assignee )
+    public void setAssignee( ITeam assignee )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, assignee ) )
