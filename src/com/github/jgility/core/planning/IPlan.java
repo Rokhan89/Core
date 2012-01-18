@@ -14,12 +14,17 @@ package com.github.jgility.core.planning;
 
 import java.util.Calendar;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.github.jgility.core.xml.AbstractXmlPlan;
+
 /**
  * Interface für die Vorschrift einer Plannungs-Klasse. Dient als Schnittstelle zwischen dem Package
  * <code>com.github.jgility.core.planning</code> und <code>com.github.jgility.core.project</code>
  * 
  * @author Karsten Schulz
  */
+@XmlJavaTypeAdapter( AbstractXmlPlan.Adapter.class )
 public interface IPlan
 {
 

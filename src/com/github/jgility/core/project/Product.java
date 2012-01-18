@@ -31,6 +31,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.planning.IBacklog;
 import com.github.jgility.core.requirement.IProductRequirement;
+import com.github.jgility.core.xml.AbstractXmlProduct;
 
 /**
  * Klasse, welche das Produkt im Sinne der agilen Softwareentwicklung repräsentiert. Beinhaltet
@@ -41,7 +42,8 @@ import com.github.jgility.core.requirement.IProductRequirement;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Product implements IProduct
+public class Product
+    extends AbstractXmlProduct
 {
     private String name;
 
@@ -87,20 +89,22 @@ public class Product implements IProduct
         projects = new HashSet<>();
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#getName()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#getName()
+     */
     @Override
-	public String getName()
+    public String getName()
     {
         return name;
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#setName(java.lang.String)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#setName(java.lang.String)
+     */
     @Override
-	public void setName( String name )
+    public void setName( String name )
         throws IllegalArgumentException
     {
         if ( StringUtils.isNotBlank( name ) )
@@ -113,39 +117,43 @@ public class Product implements IProduct
         }
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#getDescription()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#getDescription()
+     */
     @Override
-	public String getDescription()
+    public String getDescription()
     {
         return description;
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#setDescription(java.lang.String)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#setDescription(java.lang.String)
+     */
     @Override
-	public void setDescription( String description )
+    public void setDescription( String description )
     {
         this.description = description;
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#getProjects()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#getProjects()
+     */
     @Override
-	public List<IProject> getProjects()
+    public List<IProject> getProjects()
     {
         final List<IProject> projectList = new ArrayList<>( projects );
         return Collections.unmodifiableList( projectList );
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#setProjects(java.util.List)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#setProjects(java.util.List)
+     */
     @Override
-	public void setProjects( List<IProject> projects )
+    public void setProjects( List<IProject> projects )
         throws IllegalArgumentException
     {
         if ( CollectionUtils.isNotEmpty( projects ) )
@@ -158,11 +166,13 @@ public class Product implements IProduct
         }
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#addProject(com.github.jgility.core.project.Project)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProduct#addProject(com.github.jgility.core.project.Project)
+     */
     @Override
-	public void addProject( IProject newProject )
+    public void addProject( IProject newProject )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, newProject ) )
@@ -175,11 +185,14 @@ public class Product implements IProduct
         }
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#removeProject(com.github.jgility.core.project.Project)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProduct#removeProject(com.github.jgility.core.project.Project
+     * )
+     */
     @Override
-	public boolean removeProject( IProject removeProject )
+    public boolean removeProject( IProject removeProject )
     {
         if ( ObjectUtils.notEqual( null, removeProject ) )
         {
@@ -188,29 +201,34 @@ public class Product implements IProduct
         return false;
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#clearProject()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#clearProject()
+     */
     @Override
-	public void clearProject()
+    public void clearProject()
     {
         projects.clear();
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#getProductOwner()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#getProductOwner()
+     */
     @Override
-	public IPerson getProductOwner()
+    public IPerson getProductOwner()
     {
         return productOwner;
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#setProductOwner(com.github.jgility.core.project.Person)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProduct#setProductOwner(com.github.jgility.core.project.
+     * Person)
+     */
     @Override
-	public void setProductOwner( IPerson productOwner )
+    public void setProductOwner( IPerson productOwner )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, this.productOwner ) )
@@ -228,29 +246,34 @@ public class Product implements IProduct
         }
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#removeProductOwner()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#removeProductOwner()
+     */
     @Override
-	public void removeProductOwner()
+    public void removeProductOwner()
     {
         productOwner = null;
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#getProductBacklog()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#getProductBacklog()
+     */
     @Override
-	public IBacklog<IProductRequirement> getProductBacklog()
+    public IBacklog<IProductRequirement> getProductBacklog()
     {
         return productBacklog;
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#setProductBacklog(com.github.jgility.core.planning.Backlog)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProduct#setProductBacklog(com.github.jgility.core.planning
+     * .Backlog)
+     */
     @Override
-	public void setProductBacklog( IBacklog<IProductRequirement> productBacklog )
+    public void setProductBacklog( IBacklog<IProductRequirement> productBacklog )
         throws IllegalArgumentException
     {
         if ( ObjectUtils.notEqual( null, this.productBacklog ) )
@@ -267,11 +290,12 @@ public class Product implements IProduct
         }
     }
 
-    /* (non-Javadoc)
-	 * @see com.github.jgility.core.project.IProduct#removeProductBacklog()
-	 */
+    /*
+     * (non-Javadoc)
+     * @see com.github.jgility.core.project.IProduct#removeProductBacklog()
+     */
     @Override
-	public void removeProductBacklog()
+    public void removeProductBacklog()
     {
         productBacklog = null;
     }

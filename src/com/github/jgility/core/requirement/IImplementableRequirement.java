@@ -12,13 +12,17 @@
  */
 package com.github.jgility.core.requirement;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.github.jgility.core.project.ITeam;
+import com.github.jgility.core.xml.AbstractXmlImplementableStory;
 
 /**
  * Interface für eine Anforderung, welche Implementiert werden kann
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlJavaTypeAdapter( AbstractXmlImplementableStory.Adapter.class )
 public interface IImplementableRequirement
     extends IRequirement
 {

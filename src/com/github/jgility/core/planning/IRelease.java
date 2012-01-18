@@ -15,12 +15,17 @@ package com.github.jgility.core.planning;
 import java.util.Collection;
 import java.util.List;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.github.jgility.core.xml.AbstractXmlRelease;
+
 /**
  * Interface zur Generalisierung der Planungsstruktur für eine hierachischen Abbildung mit
  * Unterebenen.
  * 
  * @author Karsten Schulz (lennylinux.ks@googlemail.com)
  */
+@XmlJavaTypeAdapter( AbstractXmlRelease.Adapter.class )
 public interface IRelease
     extends IPlan
 {

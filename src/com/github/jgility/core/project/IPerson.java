@@ -12,14 +12,19 @@
  */
 package com.github.jgility.core.project;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.github.jgility.core.xml.AbstractXmlPlan;
+
 /**
- * Schnittstelle, welche ein Nutzer bzw. eine Person im Sinne der agilen Softwareentwicklung repräsentiert.
- * Findet Verwendung als Teammitglied des {@link Project} oder ProductOwner als Besitzer des
- * {@link Product}.
+ * Schnittstelle, welche ein Nutzer bzw. eine Person im Sinne der agilen Softwareentwicklung
+ * repräsentiert. Findet Verwendung als Teammitglied des {@link Project} oder ProductOwner als
+ * Besitzer des {@link Product}.
  * 
  * @author Karsten Schulz
  * @version 1.0
  */
+@XmlJavaTypeAdapter( AbstractXmlPlan.Adapter.class )
 public interface IPerson
 {
 

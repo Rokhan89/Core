@@ -15,16 +15,20 @@ package com.github.jgility.core.project;
 import java.util.Collection;
 import java.util.List;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.IRelease;
+import com.github.jgility.core.xml.AbstractXmlProject;
 
 /**
- * Schnittstelle, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
- * {@link Collection} von {@link Person} als Projektmitglieder, bzw. Bearbeiter und eine
+ * Schnittstelle, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt
+ * eine {@link Collection} von {@link Person} als Projektmitglieder, bzw. Bearbeiter und eine
  * {@link Collection} von {@link IPlan} um die Plannungsstruktur abbilden zu können.
  * 
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
+@XmlJavaTypeAdapter( AbstractXmlProject.Adapter.class )
 public interface IProject
 {
 

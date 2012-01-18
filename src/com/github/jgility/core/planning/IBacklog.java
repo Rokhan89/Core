@@ -14,12 +14,17 @@ package com.github.jgility.core.planning;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.github.jgility.core.xml.AbstractXmlBacklog;
+
 /**
  * Schnittstelle für Backlogs im Sinne der agilen Softwareentwicklung
  * 
  * @author Karsten Schulz
  * @version 1.0
  */
+@XmlJavaTypeAdapter( AbstractXmlBacklog.Adapter.class )
 public interface IBacklog<T>
 {
 

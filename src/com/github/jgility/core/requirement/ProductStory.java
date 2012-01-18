@@ -24,6 +24,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.xml.AbstractXmlProductStroy;
+
 /**
  * Konkrete Klasse für grobe Erfassung einer Anforderung. Implementiert das Marker-Interface
  * {@link IProductRequirement}
@@ -35,7 +37,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
     "requester", "requirementKind" } )
 @XmlAccessorType( XmlAccessType.FIELD )
 public class ProductStory
-    implements IProductRequirement
+    extends AbstractXmlProductStroy
 {
 
     private int id;

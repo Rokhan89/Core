@@ -12,7 +12,10 @@
  */
 package com.github.jgility.core.planning;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.github.jgility.core.requirement.IIterationRequirement;
+import com.github.jgility.core.xml.AbstractXmlIteration;
 
 /**
  * Interface zur Generalisierung der Iterationsplanung. Stellt ein Backlog zur Verfügung, um
@@ -20,6 +23,7 @@ import com.github.jgility.core.requirement.IIterationRequirement;
  * 
  * @author Karsten Schulz (lennylinux.ks@googlemail.com)
  */
+@XmlJavaTypeAdapter( AbstractXmlIteration.Adapter.class )
 public interface IIteration
     extends IPlan
 {

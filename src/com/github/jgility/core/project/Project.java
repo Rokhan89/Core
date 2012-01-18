@@ -33,6 +33,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.IRelease;
 import com.github.jgility.core.planning.Release;
+import com.github.jgility.core.xml.AbstractXmlProject;
 
 /**
  * Klasse, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
@@ -44,7 +45,8 @@ import com.github.jgility.core.planning.Release;
 @XmlRootElement
 @XmlSeeAlso( Release.class )
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Project implements IProject
+public class Project
+    extends AbstractXmlProject
 {
     private String name;
 
@@ -84,7 +86,8 @@ public class Project implements IProject
         releasePlan = new ArrayList<>();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#getName()
      */
     @Override
@@ -93,7 +96,8 @@ public class Project implements IProject
         return name;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#setName(java.lang.String)
      */
     @Override
@@ -110,7 +114,8 @@ public class Project implements IProject
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#getDescription()
      */
     @Override
@@ -119,7 +124,8 @@ public class Project implements IProject
         return description;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#setDescription(java.lang.String)
      */
     @Override
@@ -128,7 +134,8 @@ public class Project implements IProject
         this.description = description;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#getTeam()
      */
     @Override
@@ -137,7 +144,8 @@ public class Project implements IProject
         return this.team;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#setTeam(com.github.jgility.core.project.Team)
      */
     @Override
@@ -153,7 +161,8 @@ public class Project implements IProject
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#setMembers(java.util.List)
      */
     @Override
@@ -173,8 +182,10 @@ public class Project implements IProject
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.github.jgility.core.project.IProject#addMember(com.github.jgility.core.project.Person)
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProject#addMember(com.github.jgility.core.project.Person)
      */
     @Override
     public void addMember( IPerson newMember )
@@ -190,8 +201,11 @@ public class Project implements IProject
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.github.jgility.core.project.IProject#removeMember(com.github.jgility.core.project.IPerson)
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProject#removeMember(com.github.jgility.core.project.IPerson
+     * )
      */
     @Override
     public boolean removeMember( IPerson removeMember )
@@ -203,7 +217,8 @@ public class Project implements IProject
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#clearMembers()
      */
     @Override
@@ -212,7 +227,8 @@ public class Project implements IProject
         team.clearMembers();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#getReleasePlan()
      */
     @Override
@@ -221,7 +237,8 @@ public class Project implements IProject
         return Collections.unmodifiableList( releasePlan );
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#setReleasePlan(java.util.List)
      */
     @Override
@@ -238,8 +255,11 @@ public class Project implements IProject
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.github.jgility.core.project.IProject#addReleasePlan(com.github.jgility.core.planning.IRelease)
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProject#addReleasePlan(com.github.jgility.core.planning.
+     * IRelease)
      */
     @Override
     public void addReleasePlan( IRelease newPlan )
@@ -255,8 +275,11 @@ public class Project implements IProject
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.github.jgility.core.project.IProject#removeReleasePlan(com.github.jgility.core.planning.IRelease)
+    /*
+     * (non-Javadoc)
+     * @see
+     * com.github.jgility.core.project.IProject#removeReleasePlan(com.github.jgility.core.planning
+     * .IRelease)
      */
     @Override
     public boolean removeReleasePlan( IRelease removePlan )
@@ -268,7 +291,8 @@ public class Project implements IProject
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see com.github.jgility.core.project.IProject#clearReleasePlan()
      */
     @Override

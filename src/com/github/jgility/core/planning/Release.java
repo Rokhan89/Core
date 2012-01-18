@@ -24,7 +24,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -39,7 +38,6 @@ import com.github.jgility.core.util.CalendarUtils;
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
 @XmlRootElement
-@XmlSeeAlso( Iteration.class )
 @XmlAccessorType( XmlAccessType.FIELD )
 public class Release
     extends AbstractPlan

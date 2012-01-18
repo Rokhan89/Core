@@ -25,6 +25,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.github.jgility.core.util.CalendarUtils;
+import com.github.jgility.core.xml.AbstractXmlPlan;
 
 /**
  * Abstrakte Klasse und implementiert die Grundfunktionalitäten einer planbaren Datenstruktur.
@@ -35,7 +36,7 @@ import com.github.jgility.core.util.CalendarUtils;
 @XmlType( propOrder = { "start", "end" } )
 @XmlAccessorType( XmlAccessType.FIELD )
 public abstract class AbstractPlan
-    implements IPlan
+    extends AbstractXmlPlan
 {
 
     private Calendar start;
