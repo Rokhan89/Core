@@ -38,12 +38,12 @@ public class ImplementableStory
 {
 
     /**
-     *  Bezeichner der Eigenschaft {@link #assignee}
+     * Bezeichner der Eigenschaft {@link #assignee}
      */
     public static final String ASSIGNEE_PROPERTY = "assignee";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #implementState}
+     * Bezeichner der Eigenschaft {@link #implementState}
      */
     public static final String IMPLEMENT_STATE_PROPERTY = "implementState";
 
@@ -115,7 +115,8 @@ public class ImplementableStory
         {
             ImplementState formerImplementstate = this.implementState;
             this.implementState = implementState;
-            changes.firePropertyChange( ImplementableStory.IMPLEMENT_STATE_PROPERTY, formerImplementstate, this.implementState );
+            changes.firePropertyChange( ImplementableStory.IMPLEMENT_STATE_PROPERTY,
+                                        formerImplementstate, this.implementState );
         }
         else
         {
@@ -137,7 +138,8 @@ public class ImplementableStory
         {
             ITeam formerAssignee = this.assignee;
             this.assignee = assignee;
-            changes.firePropertyChange( ImplementableStory.ASSIGNEE_PROPERTY, formerAssignee, this.assignee );
+            changes.firePropertyChange( ImplementableStory.ASSIGNEE_PROPERTY, formerAssignee,
+                                        this.assignee );
         }
         else
         {

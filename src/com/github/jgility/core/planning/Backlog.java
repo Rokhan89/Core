@@ -28,7 +28,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.github.jgility.core.ModelObject;
+import com.github.jgility.core.xml.AbstractXmlBacklog;
 
 /**
  * Abstrakte Klasse zum erstellen von Backlogs im Sinne der agilen Softwareentwicklung
@@ -40,15 +40,14 @@ import com.github.jgility.core.ModelObject;
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
 public class Backlog<T>
-    extends ModelObject
-    implements IBacklog<T>
+    extends AbstractXmlBacklog<T>
 {
 
     /**
-     *  Bezeichner der Eigenschaft {@link #requirements}
+     * Bezeichner der Eigenschaft {@link #requirements}
      */
     private static final String REQUIREMENTS_PROPERTY = "requirements";
-    
+
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
     private final List<T> requirements;

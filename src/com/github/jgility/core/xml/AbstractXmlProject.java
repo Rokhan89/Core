@@ -14,6 +14,7 @@ package com.github.jgility.core.xml;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import com.github.jgility.core.ModelObject;
 import com.github.jgility.core.project.IProject;
 
 /**
@@ -23,6 +24,7 @@ import com.github.jgility.core.project.IProject;
  * @author Karsten Schulz (lennylinux.ks@googlemail.com)
  */
 public abstract class AbstractXmlProject
+    extends ModelObject
     implements IProject
 {
 

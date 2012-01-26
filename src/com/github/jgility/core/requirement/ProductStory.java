@@ -26,7 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.github.jgility.core.ModelObject;
+import com.github.jgility.core.xml.AbstractXmlProductStroy;
 
 /**
  * Konkrete Klasse für grobe Erfassung einer Anforderung. Implementiert das Marker-Interface
@@ -39,42 +39,41 @@ import com.github.jgility.core.ModelObject;
     "requester", "requirementKind" } )
 @XmlAccessorType( XmlAccessType.FIELD )
 public class ProductStory
-    extends ModelObject
-    implements IProductRequirement
+    extends AbstractXmlProductStroy
 {
 
     /**
-     *  Bezeichner der Eigenschaft {@link #id}
+     * Bezeichner der Eigenschaft {@link #id}
      */
     public static final String ID_PROPERTY = "id";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #title}
+     * Bezeichner der Eigenschaft {@link #title}
      */
     public static final String TITLE_PROPERTY = "title";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #description}
+     * Bezeichner der Eigenschaft {@link #description}
      */
     public static final String DESCRIPTION_PROPERTY = "description";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #priority}
+     * Bezeichner der Eigenschaft {@link #priority}
      */
     public static final String PRIORITY_PROPERTY = "priority";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #requester}
+     * Bezeichner der Eigenschaft {@link #requester}
      */
     public static final String REQUESTER_PROPERTY = "requester";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #requirementKind}
+     * Bezeichner der Eigenschaft {@link #requirementKind}
      */
     public static final String REQUIREMENT_KIND_PROPERTY = "requirementKind";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #estimated}
+     * Bezeichner der Eigenschaft {@link #estimated}
      */
     public static final String ESTIMATED_PROPERTY = "estimated";
 
@@ -235,7 +234,8 @@ public class ProductStory
         {
             String formerDescription = this.description;
             this.description = description;
-            changes.firePropertyChange( ProductStory.DESCRIPTION_PROPERTY, formerDescription, this.description );
+            changes.firePropertyChange( ProductStory.DESCRIPTION_PROPERTY, formerDescription,
+                                        this.description );
         }
         else
         {
@@ -278,7 +278,8 @@ public class ProductStory
         {
             Priority formerPriority = this.priority;
             this.priority = priority;
-            changes.firePropertyChange( ProductStory.PRIORITY_PROPERTY, formerPriority, this.priority );
+            changes.firePropertyChange( ProductStory.PRIORITY_PROPERTY, formerPriority,
+                                        this.priority );
         }
         else
         {
@@ -308,7 +309,8 @@ public class ProductStory
         {
             String formerRequester = this.requester;
             this.requester = requester;
-            changes.firePropertyChange( ProductStory.REQUESTER_PROPERTY, formerRequester, this.requester );
+            changes.firePropertyChange( ProductStory.REQUESTER_PROPERTY, formerRequester,
+                                        this.requester );
         }
         else
         {
@@ -340,7 +342,8 @@ public class ProductStory
         {
             RequirementKind formerRequirementKind = this.requirementKind;
             this.requirementKind = requirementKind;
-            changes.firePropertyChange( ProductStory.REQUIREMENT_KIND_PROPERTY, formerRequirementKind, this.requirementKind );
+            changes.firePropertyChange( ProductStory.REQUIREMENT_KIND_PROPERTY,
+                                        formerRequirementKind, this.requirementKind );
         }
         else
         {
@@ -380,7 +383,8 @@ public class ProductStory
         {
             float formerEstimated = this.estimated;
             this.estimated = estimated;
-            changes.firePropertyChange( ProductStory.ESTIMATED_PROPERTY, (Float) formerEstimated, (Float) this.estimated );
+            changes.firePropertyChange( ProductStory.ESTIMATED_PROPERTY, formerEstimated,
+                                        this.estimated );
         }
         else
         {

@@ -30,10 +30,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.github.jgility.core.ModelObject;
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.planning.IBacklog;
 import com.github.jgility.core.requirement.IProductRequirement;
+import com.github.jgility.core.xml.AbstractXmlProduct;
 
 /**
  * Klasse, welche das Produkt im Sinne der agilen Softwareentwicklung repräsentiert. Beinhaltet
@@ -44,33 +44,32 @@ import com.github.jgility.core.requirement.IProductRequirement;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Product 
-    extends ModelObject
-    implements IProduct
+public class Product
+    extends AbstractXmlProduct
 {
 
     /**
-     *  Bezeichner der Eigenschaft {@link #name}
+     * Bezeichner der Eigenschaft {@link #name}
      */
     public static final String NAME_PROPERTY = "name";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #projects}
+     * Bezeichner der Eigenschaft {@link #projects}
      */
     public static final String PROJECTS_PROPERTY = "projects";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #description}
+     * Bezeichner der Eigenschaft {@link #description}
      */
     public static final String DESCRIPTION_PROPERTY = "description";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #productOwner}
+     * Bezeichner der Eigenschaft {@link #productOwner}
      */
     public static final String PRODUCT_OWNER_PROPERTY = "productOwner";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #productBacklog}
+     * Bezeichner der Eigenschaft {@link #productBacklog}
      */
     public static final String PRODUCT_BACKLOG_PROPERTY = "productBacklog";
 
@@ -172,7 +171,8 @@ public class Product
     {
         String formerDescription = this.description;
         this.description = description;
-        changes.firePropertyChange( Product.DESCRIPTION_PROPERTY, formerDescription, this.description );
+        changes.firePropertyChange( Product.DESCRIPTION_PROPERTY, formerDescription,
+                                    this.description );
     }
 
     /*
@@ -199,7 +199,7 @@ public class Product
             Set<IProject> formerProjects = this.projects;
             this.projects.addAll( projects );
             changes.firePropertyChange( Product.PROJECTS_PROPERTY, formerProjects, this.projects );
-            
+
         }
         else
         {
@@ -289,7 +289,8 @@ public class Product
         {
             IPerson formerProductOwner = this.productOwner;
             this.productOwner = productOwner;
-            changes.firePropertyChange( Product.PRODUCT_OWNER_PROPERTY, formerProductOwner, this.productOwner );
+            changes.firePropertyChange( Product.PRODUCT_OWNER_PROPERTY, formerProductOwner,
+                                        this.productOwner );
         }
         else
         {
@@ -306,7 +307,8 @@ public class Product
     {
         IPerson formerProductOwner = this.productOwner;
         productOwner = null;
-        changes.firePropertyChange( Product.PRODUCT_OWNER_PROPERTY, formerProductOwner, this.productOwner );
+        changes.firePropertyChange( Product.PRODUCT_OWNER_PROPERTY, formerProductOwner,
+                                    this.productOwner );
     }
 
     /*
@@ -337,7 +339,8 @@ public class Product
         {
             IBacklog<IProductRequirement> formerProductBacklog = this.productBacklog;
             this.productBacklog = productBacklog;
-            changes.firePropertyChange( Product.PRODUCT_BACKLOG_PROPERTY, formerProductBacklog, this.productBacklog );
+            changes.firePropertyChange( Product.PRODUCT_BACKLOG_PROPERTY, formerProductBacklog,
+                                        this.productBacklog );
         }
         else
         {
@@ -354,7 +357,8 @@ public class Product
     {
         IBacklog<IProductRequirement> formerProductbacklog = this.productBacklog;
         productBacklog = null;
-        changes.firePropertyChange( Product.PRODUCT_BACKLOG_PROPERTY, formerProductbacklog, this.productBacklog );
+        changes.firePropertyChange( Product.PRODUCT_BACKLOG_PROPERTY, formerProductbacklog,
+                                    this.productBacklog );
     }
 
     /*

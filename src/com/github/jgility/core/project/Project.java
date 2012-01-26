@@ -32,10 +32,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.github.jgility.core.ModelObject;
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.IRelease;
 import com.github.jgility.core.planning.Release;
+import com.github.jgility.core.xml.AbstractXmlProject;
 
 /**
  * Klasse, welche das Project im Sinne der agilen Softwareentwicklung repräsentiert. Besitzt eine
@@ -47,28 +47,27 @@ import com.github.jgility.core.planning.Release;
 @XmlRootElement
 @XmlSeeAlso( Release.class )
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Project 
-    extends ModelObject
-    implements IProject
+public class Project
+    extends AbstractXmlProject
 {
-    
+
     /**
-     *  Bezeichner der Eigenschaft {@link #name}
+     * Bezeichner der Eigenschaft {@link #name}
      */
     public static final String NAME_PROPERTY = "name";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #description}
+     * Bezeichner der Eigenschaft {@link #description}
      */
     public static final String DESCRIPTION_PROPERTY = "description";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #team}
+     * Bezeichner der Eigenschaft {@link #team}
      */
     public static final String TEAM_PROPERTY = "team";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #releasePlan}
+     * Bezeichner der Eigenschaft {@link #releasePlan}
      */
     public static final String RELEASE_PLAN_PROPERTY = "releasePlan";
 
@@ -162,7 +161,8 @@ public class Project
     {
         String formerDescription = this.description;
         this.description = description;
-        changes.firePropertyChange( Project.DESCRIPTION_PROPERTY, formerDescription, this.description );
+        changes.firePropertyChange( Project.DESCRIPTION_PROPERTY, formerDescription,
+                                    this.description );
     }
 
     /*
@@ -293,7 +293,8 @@ public class Project
         {
             List<IRelease> formerReleasePlan = this.releasePlan;
             this.releasePlan.addAll( projectPlan );
-            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
+            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
+                                        this.releasePlan );
         }
         else
         {
@@ -315,7 +316,8 @@ public class Project
         {
             List<IRelease> formerReleasePlan = this.releasePlan;
             this.releasePlan.add( newPlan );
-            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
+            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
+                                        this.releasePlan );
         }
         else
         {
@@ -337,7 +339,8 @@ public class Project
             boolean result;
             List<IRelease> formerReleasePlan = this.releasePlan;
             result = releasePlan.remove( removePlan );
-            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
+            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
+                                        this.releasePlan );
             return result;
         }
         return false;
@@ -352,7 +355,8 @@ public class Project
     {
         List<IRelease> formerReleasePlan = this.releasePlan;
         releasePlan.clear();
-        changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
+        changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
+                                    this.releasePlan );
     }
 
     @Override

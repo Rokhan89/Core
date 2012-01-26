@@ -14,6 +14,7 @@ package com.github.jgility.core.xml;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import com.github.jgility.core.ModelObject;
 import com.github.jgility.core.project.ITeam;
 
 /**
@@ -23,6 +24,7 @@ import com.github.jgility.core.project.ITeam;
  * @author Karsten Schulz (lennylinux.ks@googlemail.com)
  */
 public abstract class AbstractXmlTeam
+    extends ModelObject
     implements ITeam
 {
 

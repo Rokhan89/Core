@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.github.jgility.core.ModelObject;
+import com.github.jgility.core.xml.AbstractXmlTeam;
 
 /**
  * Repräsentiert ein Zusammenschluss aus mehreren {@link Person} als Team
@@ -36,18 +36,17 @@ import com.github.jgility.core.ModelObject;
  */
 @XmlRootElement
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Team 
-    extends ModelObject
-    implements ITeam
+public class Team
+    extends AbstractXmlTeam
 {
 
     /**
-     *  Bezeichner der Eigenschaft {@link #name}
+     * Bezeichner der Eigenschaft {@link #name}
      */
     public static final String NAME_PROPERTY = "name";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #members}
+     * Bezeichner der Eigenschaft {@link #members}
      */
     public static final String MEMBERS_PROPERTY = "members";
 
