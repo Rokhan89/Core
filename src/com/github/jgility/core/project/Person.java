@@ -40,6 +40,22 @@ public class Person
     extends ModelObject
     implements IPerson
 {
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #firstname}
+     */
+    public static final String FIRSTNAME_PROPERTY = "firstname";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #surname}
+     */
+    public static final String SURNAME_PROPERTY = "surname";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #eMail}
+     */
+    public static final String E_MAIL_PROPERTY = "eMail";
+    
     @XmlElement
     private String firstname;
 
@@ -89,7 +105,7 @@ public class Person
         {
             String formerFirstname = this.firstname;
             this.firstname = firstname;
-            changes.firePropertyChange( "firstname", formerFirstname, this.firstname);
+            changes.firePropertyChange( Person.FIRSTNAME_PROPERTY, formerFirstname, this.firstname);
         }
         else
         {
@@ -110,7 +126,7 @@ public class Person
         {
             String formerSurname = this.surname;
             this.surname = surname;
-            changes.firePropertyChange( "surname", formerSurname, this.surname );
+            changes.firePropertyChange( Person.SURNAME_PROPERTY, formerSurname, this.surname );
         }
         else
         {
@@ -140,7 +156,7 @@ public class Person
         {
             String formerEMail = this.eMail;
             this.eMail = eMail;
-            changes.firePropertyChange( "eMail", formerEMail, this.eMail);
+            changes.firePropertyChange( Person.E_MAIL_PROPERTY, formerEMail, this.eMail);
         }
         else
         {

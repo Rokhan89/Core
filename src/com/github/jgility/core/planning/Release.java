@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.planning;
@@ -43,6 +44,11 @@ public class Release
     extends AbstractPlan
     implements IRelease
 {
+    
+    /**
+     *  Bezeichner der Eigenschaft {@link #iterationList}
+     */
+    public static final String ITERATION_LIST = "iterationList";
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
@@ -88,7 +94,7 @@ public class Release
         {
             List<IIteration> formerIterationList = iterationList;
             iterationList.add( iteration );
-            changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
+            changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
         }
         else if ( checkPlanRange( iteration ) )
         {
@@ -96,7 +102,7 @@ public class Release
             {
                 List<IIteration> formerIterationList = iterationList;
                 iterationList.add( iteration );
-                changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
+                changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
             }
             else
             {
@@ -135,7 +141,7 @@ public class Release
         boolean result;
         List<IIteration> formerIterationList = iterationList;
         result = iterationList.remove( iteration );
-        changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
+        changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
         return result;
     }
 
@@ -147,7 +153,7 @@ public class Release
         {
             List<IIteration> formerIterationList = iterationList;
             this.iterationList.addAll( iterationCollection );
-            changes.firePropertyChange( "iterationList", formerIterationList, iterationList );
+            changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
         }
         else
         {

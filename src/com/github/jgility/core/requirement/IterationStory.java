@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.requirement;
@@ -35,6 +36,16 @@ public class IterationStory
     extends ImplementableStory
     implements IIterationRequirement
 {
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #dependencies}
+     */
+    public static final String DEPENDENCIES_PROPERTY = "dependencies";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #tasks}
+     */
+    public static final String TASKS_PROPERTY = "tasks";
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
@@ -103,7 +114,7 @@ public class IterationStory
         {
             List<IRequirement> formerDependencies = this.dependencies;
             dependencies.add( requirement );
-            changes.firePropertyChange( "dependencies", formerDependencies, this.dependencies );
+            changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies, this.dependencies );
         }
         else
         {
@@ -125,7 +136,7 @@ public class IterationStory
             boolean result;
             List<IRequirement> formerDependencies = this.dependencies;
             result = dependencies.remove( requirement );
-            changes.firePropertyChange( "dependencies", formerDependencies, this.dependencies );
+            changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies, this.dependencies );
             return result;
         }
         return false;
@@ -157,7 +168,7 @@ public class IterationStory
             {
                 List<IImplementableRequirement> formerTasks = this.tasks;
                 tasks.add( task );
-                changes.firePropertyChange( "tasks", formerTasks, this.tasks );
+                changes.firePropertyChange( IterationStory.TASKS_PROPERTY, formerTasks, this.tasks );
             }
             else
             {
@@ -185,7 +196,7 @@ public class IterationStory
             boolean result;
             List<IImplementableRequirement> formerTasks = this.tasks;
             result = tasks.remove( task );
-            changes.firePropertyChange( "tasks", formerTasks, this.tasks );
+            changes.firePropertyChange( IterationStory.TASKS_PROPERTY, formerTasks, this.tasks );
             return result;
         }
         return false;

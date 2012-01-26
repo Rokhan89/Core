@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.requirement;
@@ -36,11 +37,21 @@ public class ImplementableStory
     implements IImplementableRequirement
 {
 
+    /**
+     *  Bezeichner der Eigenschaft {@link #assignee}
+     */
+    public static final String ASSIGNEE_PROPERTY = "assignee";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #implementState}
+     */
+    public static final String IMPLEMENT_STATE_PROPERTY = "implementState";
+
     @XmlElement
     private ImplementState implementState;
 
     @XmlElement
-    private ITeam team;
+    private ITeam assignee;
 
     /**
      * Instanziiert ein Objekt der Klasse {@link ImplementableStory} und erstellt auf Basis von
@@ -83,7 +94,7 @@ public class ImplementableStory
     {
         super( id, title, description, estimated, priority, requester, requirementKind );
         setImplementState( implementState );
-        team = new Team( String.valueOf( id ) + "-" + title );
+        assignee = new Team( String.valueOf( id ) + "-" + title );
     }
 
     /*
@@ -102,7 +113,9 @@ public class ImplementableStory
     {
         if ( ObjectUtils.notEqual( null, implementState ) )
         {
+            ImplementState formerImplementstate = this.implementState;
             this.implementState = implementState;
+            changes.firePropertyChange( ImplementableStory.IMPLEMENT_STATE_PROPERTY, formerImplementstate, this.implementState );
         }
         else
         {
@@ -113,7 +126,7 @@ public class ImplementableStory
     @Override
     public ITeam getAssignee()
     {
-        return team;
+        return assignee;
     }
 
     @Override
@@ -122,11 +135,13 @@ public class ImplementableStory
     {
         if ( ObjectUtils.notEqual( null, assignee ) )
         {
-            team = assignee;
+            ITeam formerAssignee = this.assignee;
+            this.assignee = assignee;
+            changes.firePropertyChange( ImplementableStory.ASSIGNEE_PROPERTY, formerAssignee, this.assignee );
         }
         else
         {
-            throw new IllegalArgumentException( "team has to be not null!" );
+            throw new IllegalArgumentException( "assignee has to be not null!" );
         }
     }
 
@@ -137,7 +152,7 @@ public class ImplementableStory
     @Override
     public String toString()
     {
-        return "ImplementableStory [implementState=" + implementState + ", team=" + team
+        return "ImplementableStory [implementState=" + implementState + ", team=" + assignee
             + ", getID()=" + getID() + ", getTitle()=" + getTitle() + ", getDescription()="
             + getDescription() + ", getCreateDate()=" + getCreateDate() + ", getPriority()="
             + getPriority() + ", getRequester()=" + getRequester() + ", getRequirementKind()="
@@ -151,7 +166,7 @@ public class ImplementableStory
         HashCodeBuilder builder = new HashCodeBuilder();
         builder.append( super.hashCode() );
         builder.append( implementState );
-        builder.append( team );
+        builder.append( assignee );
         return builder.toHashCode();
     }
 
@@ -163,7 +178,7 @@ public class ImplementableStory
             ImplementableStory story = (ImplementableStory) obj;
             EqualsBuilder builder = new EqualsBuilder();
             builder.append( implementState, story.implementState );
-            builder.append( team, story.team );
+            builder.append( assignee, story.assignee );
             return builder.isEquals() && super.equals( obj );
         }
 

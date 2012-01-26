@@ -47,9 +47,31 @@ import com.github.jgility.core.planning.Release;
 @XmlRootElement
 @XmlSeeAlso( Release.class )
 @XmlAccessorType( XmlAccessType.FIELD )
-public class Project
-    extends AbstractXmlProject
+public class Project 
+    extends ModelObject
+    implements IProject
 {
+    
+    /**
+     *  Bezeichner der Eigenschaft {@link #name}
+     */
+    public static final String NAME_PROPERTY = "name";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #description}
+     */
+    public static final String DESCRIPTION_PROPERTY = "description";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #team}
+     */
+    public static final String TEAM_PROPERTY = "team";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #releasePlan}
+     */
+    public static final String RELEASE_PLAN_PROPERTY = "releasePlan";
+
     @XmlElement
     private String name;
 
@@ -113,7 +135,7 @@ public class Project
         {
             String formerName = this.name;
             this.name = name;
-            changes.firePropertyChange( "name", formerName, this.name );
+            changes.firePropertyChange( Project.NAME_PROPERTY, formerName, this.name );
         }
         else
         {
@@ -140,7 +162,7 @@ public class Project
     {
         String formerDescription = this.description;
         this.description = description;
-        changes.firePropertyChange( "description", formerDescription, this.description );
+        changes.firePropertyChange( Project.DESCRIPTION_PROPERTY, formerDescription, this.description );
     }
 
     /*
@@ -164,7 +186,7 @@ public class Project
         {
             ITeam formerTeam = this.team;
             this.team = team;
-            changes.firePropertyChange( "team", formerTeam, this.team );
+            changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
         }
         else
         {
@@ -186,7 +208,7 @@ public class Project
             {
                 ITeam formerTeam = this.team;
                 this.team.addMember( member );
-                changes.firePropertyChange( "team", formerTeam, this.team );
+                changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
             }
         }
         else
@@ -208,7 +230,7 @@ public class Project
         {
             ITeam formerTeam = this.team;
             team.addMember( newMember );
-            changes.firePropertyChange( "team", formerTeam, this.team );
+            changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
         }
         else
         {
@@ -230,7 +252,7 @@ public class Project
             boolean result;
             ITeam formerTeam = this.team;
             result = team.removeMember( removeMember );
-            changes.firePropertyChange( "team", formerTeam, this.team );
+            changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
             return result;
         }
         return false;
@@ -245,7 +267,7 @@ public class Project
     {
         ITeam formerTeam = this.team;
         team.clearMembers();
-        changes.firePropertyChange( "team", formerTeam, this.team );
+        changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
     }
 
     /*
@@ -271,7 +293,7 @@ public class Project
         {
             List<IRelease> formerReleasePlan = this.releasePlan;
             this.releasePlan.addAll( projectPlan );
-            changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
+            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
         }
         else
         {
@@ -293,7 +315,7 @@ public class Project
         {
             List<IRelease> formerReleasePlan = this.releasePlan;
             this.releasePlan.add( newPlan );
-            changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
+            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
         }
         else
         {
@@ -315,7 +337,7 @@ public class Project
             boolean result;
             List<IRelease> formerReleasePlan = this.releasePlan;
             result = releasePlan.remove( removePlan );
-            changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
+            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
             return result;
         }
         return false;
@@ -330,7 +352,7 @@ public class Project
     {
         List<IRelease> formerReleasePlan = this.releasePlan;
         releasePlan.clear();
-        changes.firePropertyChange( "releasePlan", formerReleasePlan, this.releasePlan );
+        changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan, this.releasePlan );
     }
 
     @Override

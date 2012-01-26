@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.planning;
@@ -40,6 +41,17 @@ public abstract class AbstractPlan
     extends ModelObject
     implements IPlan
 {
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #start}
+     */
+    public static final String START_PROPERTY = "start";
+    
+    /**
+     *  Bezeichner der Eigenschaft {@link #end}
+     */
+    public static final String END_PROPERTY = "end";
+
     @XmlElement
     private Calendar start;
 
@@ -91,7 +103,7 @@ public abstract class AbstractPlan
         {
             Calendar formerStart = this.start;
             this.start = (Calendar) start.clone();
-            changes.firePropertyChange( "start", formerStart, this.start );
+            changes.firePropertyChange( AbstractPlan.START_PROPERTY, formerStart, this.start );
         }
         else
         {
@@ -126,7 +138,7 @@ public abstract class AbstractPlan
         {
             Calendar formerEnd = this.end;
             this.end = (Calendar) end.clone();
-            changes.firePropertyChange( "end", formerEnd, this.end );
+            changes.firePropertyChange( AbstractPlan.END_PROPERTY, formerEnd, this.end );
         }
         else
         {
@@ -157,11 +169,11 @@ public abstract class AbstractPlan
         {
             Calendar formerStart = this.start;
             this.start = newStart;
-            changes.firePropertyChange( "start", formerStart, this.start );
+            changes.firePropertyChange( AbstractPlan.START_PROPERTY, formerStart, this.start );
             
             Calendar formerEnd = this.end;
             this.end = newEnd;
-            changes.firePropertyChange( "end", formerEnd, this.start );
+            changes.firePropertyChange( AbstractPlan.END_PROPERTY, formerEnd, this.start );
         }
         else
         {

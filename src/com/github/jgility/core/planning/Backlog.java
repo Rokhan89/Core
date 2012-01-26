@@ -44,6 +44,11 @@ public class Backlog<T>
     implements IBacklog<T>
 {
 
+    /**
+     *  Bezeichner der Eigenschaft {@link #requirements}
+     */
+    private static final String REQUIREMENTS_PROPERTY = "requirements";
+    
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
     private final List<T> requirements;
@@ -71,7 +76,7 @@ public class Backlog<T>
 
         List<T> formerRequirements = this.requirements;
         requirements.add( requirement );
-        changes.firePropertyChange( "requirements", formerRequirements, this.requirements );
+        changes.firePropertyChange( REQUIREMENTS_PROPERTY, formerRequirements, this.requirements );
     }
 
     /*
@@ -90,7 +95,7 @@ public class Backlog<T>
         boolean result;
         List<T> formerRequirements = this.requirements;
         result = requirements.remove( requirement );
-        changes.firePropertyChange( "requirements", formerRequirements, this.requirements );
+        changes.firePropertyChange( REQUIREMENTS_PROPERTY, formerRequirements, this.requirements );
         return result;
     }
 
@@ -118,7 +123,7 @@ public class Backlog<T>
 
         List<T> formerRequirements = this.requirements;
         requirements.addAll( requirementList );
-        changes.firePropertyChange( "requirements", formerRequirements, this.requirements );
+        changes.firePropertyChange( REQUIREMENTS_PROPERTY, formerRequirements, this.requirements );
     }
 
     /*
