@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.planning;
@@ -42,6 +43,11 @@ public class Backlog<T>
     extends AbstractXmlBacklog<T>
 {
 
+    /**
+     * Bezeichner der Eigenschaft {@link #requirements}
+     */
+    private static final String REQUIREMENTS_PROPERTY = "requirements";
+
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
     private final List<T> requirements;
@@ -67,7 +73,9 @@ public class Backlog<T>
             throw new IllegalArgumentException( "null-object is not allowed to add" );
         }
 
+        List<T> formerRequirements = this.requirements;
         requirements.add( requirement );
+        changes.firePropertyChange( REQUIREMENTS_PROPERTY, formerRequirements, this.requirements );
     }
 
     /*
@@ -83,7 +91,11 @@ public class Backlog<T>
             throw new IllegalArgumentException( "null-object is not allowed to add" );
         }
 
-        return requirements.remove( requirement );
+        boolean result;
+        List<T> formerRequirements = this.requirements;
+        result = requirements.remove( requirement );
+        changes.firePropertyChange( REQUIREMENTS_PROPERTY, formerRequirements, this.requirements );
+        return result;
     }
 
     /*
@@ -108,7 +120,9 @@ public class Backlog<T>
             throw new IllegalArgumentException( "empty requirement list is not allowed" );
         }
 
+        List<T> formerRequirements = this.requirements;
         requirements.addAll( requirementList );
+        changes.firePropertyChange( REQUIREMENTS_PROPERTY, formerRequirements, this.requirements );
     }
 
     /*

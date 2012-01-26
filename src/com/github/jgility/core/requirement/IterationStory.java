@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.requirement;
@@ -35,6 +36,16 @@ public class IterationStory
     extends ImplementableStory
     implements IIterationRequirement
 {
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #dependencies}
+     */
+    public static final String DEPENDENCIES_PROPERTY = "dependencies";
+
+    /**
+     *  Bezeichner der Eigenschaft {@link #tasks}
+     */
+    public static final String TASKS_PROPERTY = "tasks";
 
     @XmlElementWrapper
     @XmlAnyElement( lax = true )
@@ -101,7 +112,9 @@ public class IterationStory
     {
         if ( ObjectUtils.notEqual( null, requirement ) )
         {
+            List<IRequirement> formerDependencies = this.dependencies;
             dependencies.add( requirement );
+            changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies, this.dependencies );
         }
         else
         {
@@ -120,7 +133,11 @@ public class IterationStory
     {
         if ( ObjectUtils.notEqual( null, requirement ) )
         {
-            return dependencies.remove( requirement );
+            boolean result;
+            List<IRequirement> formerDependencies = this.dependencies;
+            result = dependencies.remove( requirement );
+            changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies, this.dependencies );
+            return result;
         }
         return false;
     }
@@ -149,7 +166,9 @@ public class IterationStory
         {
             if ( task.getRequirementKind() == RequirementKind.TASK )
             {
+                List<IImplementableRequirement> formerTasks = this.tasks;
                 tasks.add( task );
+                changes.firePropertyChange( IterationStory.TASKS_PROPERTY, formerTasks, this.tasks );
             }
             else
             {
@@ -174,7 +193,11 @@ public class IterationStory
     {
         if ( ObjectUtils.notEqual( null, task ) )
         {
-            return tasks.remove( task );
+            boolean result;
+            List<IImplementableRequirement> formerTasks = this.tasks;
+            result = tasks.remove( task );
+            changes.firePropertyChange( IterationStory.TASKS_PROPERTY, formerTasks, this.tasks );
+            return result;
         }
         return false;
     }

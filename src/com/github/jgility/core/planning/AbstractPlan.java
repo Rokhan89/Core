@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.planning;
@@ -39,6 +40,17 @@ import com.github.jgility.core.xml.AbstractXmlPlan;
 public abstract class AbstractPlan
     extends AbstractXmlPlan
 {
+
+    /**
+     * Bezeichner der Eigenschaft {@link #start}
+     */
+    public static final String START_PROPERTY = "start";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #end}
+     */
+    public static final String END_PROPERTY = "end";
+
     @XmlElement
     private Calendar start;
 
@@ -88,7 +100,9 @@ public abstract class AbstractPlan
 
         if ( end.after( start ) )
         {
+            Calendar formerStart = this.start;
             this.start = (Calendar) start.clone();
+            changes.firePropertyChange( AbstractPlan.START_PROPERTY, formerStart, this.start );
         }
         else
         {
@@ -121,7 +135,9 @@ public abstract class AbstractPlan
 
         if ( start.before( end ) )
         {
+            Calendar formerEnd = this.end;
             this.end = (Calendar) end.clone();
+            changes.firePropertyChange( AbstractPlan.END_PROPERTY, formerEnd, this.end );
         }
         else
         {
@@ -150,8 +166,13 @@ public abstract class AbstractPlan
     {
         if ( CalendarUtils.checkDate( newStart, newEnd ) )
         {
+            Calendar formerStart = this.start;
             this.start = newStart;
+            changes.firePropertyChange( AbstractPlan.START_PROPERTY, formerStart, this.start );
+
+            Calendar formerEnd = this.end;
             this.end = newEnd;
+            changes.firePropertyChange( AbstractPlan.END_PROPERTY, formerEnd, this.start );
         }
         else
         {

@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.requirement;
@@ -40,6 +41,42 @@ import com.github.jgility.core.xml.AbstractXmlProductStroy;
 public class ProductStory
     extends AbstractXmlProductStroy
 {
+
+    /**
+     * Bezeichner der Eigenschaft {@link #id}
+     */
+    public static final String ID_PROPERTY = "id";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #title}
+     */
+    public static final String TITLE_PROPERTY = "title";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #description}
+     */
+    public static final String DESCRIPTION_PROPERTY = "description";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #priority}
+     */
+    public static final String PRIORITY_PROPERTY = "priority";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #requester}
+     */
+    public static final String REQUESTER_PROPERTY = "requester";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #requirementKind}
+     */
+    public static final String REQUIREMENT_KIND_PROPERTY = "requirementKind";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #estimated}
+     */
+    public static final String ESTIMATED_PROPERTY = "estimated";
+
     @XmlElement
     private int id;
 
@@ -128,7 +165,9 @@ public class ProductStory
         {
             if ( 0 <= id )
             {
+                int formerId = this.id;
                 this.id = id;
+                changes.firePropertyChange( ProductStory.ID_PROPERTY, formerId, this.id );
             }
             else
             {
@@ -162,7 +201,9 @@ public class ProductStory
     {
         if ( StringUtils.isNotBlank( title ) )
         {
+            String formerTitle = this.title;
             this.title = title;
+            changes.firePropertyChange( ProductStory.TITLE_PROPERTY, formerTitle, title );
         }
         else
         {
@@ -191,7 +232,10 @@ public class ProductStory
     {
         if ( ObjectUtils.notEqual( null, description ) )
         {
+            String formerDescription = this.description;
             this.description = description;
+            changes.firePropertyChange( ProductStory.DESCRIPTION_PROPERTY, formerDescription,
+                                        this.description );
         }
         else
         {
@@ -232,7 +276,10 @@ public class ProductStory
     {
         if ( ObjectUtils.notEqual( null, priority ) )
         {
+            Priority formerPriority = this.priority;
             this.priority = priority;
+            changes.firePropertyChange( ProductStory.PRIORITY_PROPERTY, formerPriority,
+                                        this.priority );
         }
         else
         {
@@ -260,7 +307,10 @@ public class ProductStory
     {
         if ( StringUtils.isNotBlank( requester ) )
         {
+            String formerRequester = this.requester;
             this.requester = requester;
+            changes.firePropertyChange( ProductStory.REQUESTER_PROPERTY, formerRequester,
+                                        this.requester );
         }
         else
         {
@@ -290,7 +340,10 @@ public class ProductStory
     {
         if ( ObjectUtils.notEqual( null, requirementKind ) )
         {
+            RequirementKind formerRequirementKind = this.requirementKind;
             this.requirementKind = requirementKind;
+            changes.firePropertyChange( ProductStory.REQUIREMENT_KIND_PROPERTY,
+                                        formerRequirementKind, this.requirementKind );
         }
         else
         {
@@ -328,7 +381,10 @@ public class ProductStory
     {
         if ( 0.0f <= estimated )
         {
+            float formerEstimated = this.estimated;
             this.estimated = estimated;
+            changes.firePropertyChange( ProductStory.ESTIMATED_PROPERTY, formerEstimated,
+                                        this.estimated );
         }
         else
         {

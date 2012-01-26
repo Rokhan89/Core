@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.project;
@@ -38,6 +39,16 @@ import com.github.jgility.core.xml.AbstractXmlTeam;
 public class Team
     extends AbstractXmlTeam
 {
+
+    /**
+     * Bezeichner der Eigenschaft {@link #name}
+     */
+    public static final String NAME_PROPERTY = "name";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #members}
+     */
+    public static final String MEMBERS_PROPERTY = "members";
 
     @XmlElement
     private String name;
@@ -85,7 +96,9 @@ public class Team
     {
         if ( StringUtils.isNotBlank( name ) )
         {
+            String formerName = this.name;
             this.name = name;
+            changes.firePropertyChange( Team.NAME_PROPERTY, formerName, this.name );
         }
         else
         {
@@ -103,7 +116,9 @@ public class Team
     {
         if ( ObjectUtils.notEqual( null, person ) )
         {
+            List<IPerson> formerMembers = this.members;
             members.add( person );
+            changes.firePropertyChange( Team.MEMBERS_PROPERTY, formerMembers, this.members );
         }
         else
         {
@@ -121,7 +136,11 @@ public class Team
     {
         if ( ObjectUtils.notEqual( null, person ) )
         {
-            return members.remove( person );
+            boolean result;
+            List<IPerson> formerMembers = this.members;
+            result = members.remove( person );
+            changes.firePropertyChange( Team.MEMBERS_PROPERTY, formerMembers, this.members );
+            return result;
         }
         return false;
     }
@@ -143,6 +162,8 @@ public class Team
     @Override
     public void clearMembers()
     {
+        List<IPerson> formerMembers = this.members;
         members.clear();
+        changes.firePropertyChange( Team.MEMBERS_PROPERTY, formerMembers, this.members );
     }
 }

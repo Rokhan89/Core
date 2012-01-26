@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.project;
@@ -46,6 +47,32 @@ import com.github.jgility.core.xml.AbstractXmlProduct;
 public class Product
     extends AbstractXmlProduct
 {
+
+    /**
+     * Bezeichner der Eigenschaft {@link #name}
+     */
+    public static final String NAME_PROPERTY = "name";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #projects}
+     */
+    public static final String PROJECTS_PROPERTY = "projects";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #description}
+     */
+    public static final String DESCRIPTION_PROPERTY = "description";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #productOwner}
+     */
+    public static final String PRODUCT_OWNER_PROPERTY = "productOwner";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #productBacklog}
+     */
+    public static final String PRODUCT_BACKLOG_PROPERTY = "productBacklog";
+
     @XmlElement
     private String name;
 
@@ -115,7 +142,9 @@ public class Product
     {
         if ( StringUtils.isNotBlank( name ) )
         {
+            String formerName = this.name;
             this.name = name;
+            changes.firePropertyChange( Product.NAME_PROPERTY, formerName, this.name );
         }
         else
         {
@@ -140,7 +169,10 @@ public class Product
     @Override
     public void setDescription( String description )
     {
+        String formerDescription = this.description;
         this.description = description;
+        changes.firePropertyChange( Product.DESCRIPTION_PROPERTY, formerDescription,
+                                    this.description );
     }
 
     /*
@@ -164,7 +196,10 @@ public class Product
     {
         if ( CollectionUtils.isNotEmpty( projects ) )
         {
+            Set<IProject> formerProjects = this.projects;
             this.projects.addAll( projects );
+            changes.firePropertyChange( Product.PROJECTS_PROPERTY, formerProjects, this.projects );
+
         }
         else
         {
@@ -183,7 +218,9 @@ public class Product
     {
         if ( ObjectUtils.notEqual( null, newProject ) )
         {
+            Set<IProject> formerProjects = this.projects;
             this.projects.add( newProject );
+            changes.firePropertyChange( Product.PROJECTS_PROPERTY, formerProjects, this.projects );
         }
         else
         {
@@ -202,7 +239,11 @@ public class Product
     {
         if ( ObjectUtils.notEqual( null, removeProject ) )
         {
-            return projects.remove( removeProject );
+            boolean result;
+            Set<IProject> formerProjects = this.projects;
+            result = this.projects.remove( removeProject );
+            changes.firePropertyChange( Product.PROJECTS_PROPERTY, formerProjects, this.projects );
+            return result;
         }
         return false;
     }
@@ -214,7 +255,9 @@ public class Product
     @Override
     public void clearProject()
     {
+        Set<IProject> formerProjects = projects;
         projects.clear();
+        changes.firePropertyChange( Product.PROJECTS_PROPERTY, formerProjects, projects );
     }
 
     /*
@@ -244,7 +287,10 @@ public class Product
         }
         if ( ObjectUtils.notEqual( null, productOwner ) )
         {
+            IPerson formerProductOwner = this.productOwner;
             this.productOwner = productOwner;
+            changes.firePropertyChange( Product.PRODUCT_OWNER_PROPERTY, formerProductOwner,
+                                        this.productOwner );
         }
         else
         {
@@ -259,7 +305,10 @@ public class Product
     @Override
     public void removeProductOwner()
     {
+        IPerson formerProductOwner = this.productOwner;
         productOwner = null;
+        changes.firePropertyChange( Product.PRODUCT_OWNER_PROPERTY, formerProductOwner,
+                                    this.productOwner );
     }
 
     /*
@@ -288,7 +337,10 @@ public class Product
         }
         else if ( ObjectUtils.notEqual( null, productBacklog ) )
         {
+            IBacklog<IProductRequirement> formerProductBacklog = this.productBacklog;
             this.productBacklog = productBacklog;
+            changes.firePropertyChange( Product.PRODUCT_BACKLOG_PROPERTY, formerProductBacklog,
+                                        this.productBacklog );
         }
         else
         {
@@ -303,7 +355,10 @@ public class Product
     @Override
     public void removeProductBacklog()
     {
+        IBacklog<IProductRequirement> formerProductbacklog = this.productBacklog;
         productBacklog = null;
+        changes.firePropertyChange( Product.PRODUCT_BACKLOG_PROPERTY, formerProductbacklog,
+                                    this.productBacklog );
     }
 
     /*

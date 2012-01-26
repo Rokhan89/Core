@@ -8,6 +8,7 @@
  *
  * Contributors:
  *     Karsten Schulz
+ *     Christoph Viebig
  *
  */
 package com.github.jgility.core.project;
@@ -38,6 +39,22 @@ import com.github.jgility.core.xml.AbstractXmlPerson;
 public class Person
     extends AbstractXmlPerson
 {
+
+    /**
+     * Bezeichner der Eigenschaft {@link #firstname}
+     */
+    public static final String FIRSTNAME_PROPERTY = "firstname";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #surname}
+     */
+    public static final String SURNAME_PROPERTY = "surname";
+
+    /**
+     * Bezeichner der Eigenschaft {@link #eMail}
+     */
+    public static final String E_MAIL_PROPERTY = "eMail";
+
     @XmlElement
     private String firstname;
 
@@ -85,7 +102,9 @@ public class Person
     {
         if ( checkCapitalFirstLetter( firstname ) )
         {
+            String formerFirstname = this.firstname;
             this.firstname = firstname;
+            changes.firePropertyChange( Person.FIRSTNAME_PROPERTY, formerFirstname, this.firstname );
         }
         else
         {
@@ -104,7 +123,9 @@ public class Person
     {
         if ( checkCapitalFirstLetter( surname ) )
         {
+            String formerSurname = this.surname;
             this.surname = surname;
+            changes.firePropertyChange( Person.SURNAME_PROPERTY, formerSurname, this.surname );
         }
         else
         {
@@ -132,7 +153,9 @@ public class Person
         EmailValidator emailValidator = EmailValidator.getInstance();
         if ( emailValidator.isValid( eMail ) )
         {
+            String formerEMail = this.eMail;
             this.eMail = eMail;
+            changes.firePropertyChange( Person.E_MAIL_PROPERTY, formerEMail, this.eMail );
         }
         else
         {
