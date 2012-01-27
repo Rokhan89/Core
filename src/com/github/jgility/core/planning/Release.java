@@ -13,7 +13,6 @@
  */
 package com.github.jgility.core.planning;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -27,10 +26,12 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.github.jgility.core.util.BeanCheckUtils;
 import com.github.jgility.core.util.CalendarUtils;
 
 /**
@@ -44,9 +45,9 @@ public class Release
     extends AbstractPlan
     implements IRelease
 {
-    
+
     /**
-     *  Bezeichner der Eigenschaft {@link #iterationList}
+     * Bezeichner der Eigenschaft {@link #iterationList}
      */
     public static final String ITERATION_LIST = "iterationList";
 
@@ -85,10 +86,8 @@ public class Release
     public void addIteration( IIteration iteration )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.equals( null, iteration ) || ObjectUtils.equals( this, iteration ) )
-        {
-            throw new IllegalArgumentException( "plan-object has a wrong reference: " + iteration );
-        }
+        BeanCheckUtils.checkObjectNotSame( this, iteration, "plan-object has a wrong reference: "
+            + iteration );
 
         if ( CollectionUtils.isEmpty( iterationList ) )
         {
@@ -102,7 +101,8 @@ public class Release
             {
                 List<IIteration> formerIterationList = iterationList;
                 iterationList.add( iteration );
-                changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
+                changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList,
+                                            iterationList );
             }
             else
             {
@@ -149,17 +149,13 @@ public class Release
     public void addAllIterations( Collection<? extends IIteration> iterationCollection )
         throws IllegalArgumentException
     {
-        if ( CollectionUtils.isNotEmpty( iterationCollection ) )
-        {
-            List<IIteration> formerIterationList = iterationList;
-            this.iterationList.addAll( iterationCollection );
-            changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "empty collection of iteration is not "
-                + "allowed to add" );
-        }
+        BeanCheckUtils.checkCollectionNotEmpty( iterationCollection,
+                                                "empty collection of iteration is not "
+                                                    + "allowed to add" );
+
+        List<IIteration> formerIterationList = iterationList;
+        this.iterationList.addAll( iterationCollection );
+        changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
     }
 
     @Override
@@ -211,8 +207,10 @@ public class Release
     @Override
     public String toString()
     {
-        SimpleDateFormat sfd = new SimpleDateFormat( "dd.MM.yyyy" );
-        return "Release [start=" + sfd.format( getStart().getTime() ) + " end="
-            + sfd.format( getEnd().getTime() ) + " subPlanSet=" + iterationList + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "start", CalendarUtils.calendarOutput( getStart() ) );
+        builder.append( "end", CalendarUtils.calendarOutput( getStart() ) );
+        builder.append( "iterationList", iterationList );
+        return builder.build();
     }
 }

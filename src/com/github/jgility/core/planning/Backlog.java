@@ -23,11 +23,12 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.github.jgility.core.util.BeanCheckUtils;
 import com.github.jgility.core.xml.AbstractXmlBacklog;
 
 /**
@@ -68,10 +69,7 @@ public class Backlog<T>
     public void addRequirement( T requirement )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.equals( null, requirement ) )
-        {
-            throw new IllegalArgumentException( "null-object is not allowed to add" );
-        }
+        BeanCheckUtils.checkObjectNotNull( requirement, "null-object is not allowed to add" );
 
         List<T> formerRequirements = this.requirements;
         requirements.add( requirement );
@@ -86,10 +84,7 @@ public class Backlog<T>
     public boolean removeRequirement( T requirement )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.equals( null, requirement ) )
-        {
-            throw new IllegalArgumentException( "null-object is not allowed to add" );
-        }
+        BeanCheckUtils.checkObjectNotNull( requirement, "null-object is not allowed to add" );
 
         boolean result;
         List<T> formerRequirements = this.requirements;
@@ -115,10 +110,8 @@ public class Backlog<T>
     @Override
     public void addAllRequirement( List<T> requirementList )
     {
-        if ( CollectionUtils.isEmpty( requirementList ) )
-        {
-            throw new IllegalArgumentException( "empty requirement list is not allowed" );
-        }
+        BeanCheckUtils.checkCollectionNotEmpty( requirementList,
+                                                "empty requirement list is not allowed" );
 
         List<T> formerRequirements = this.requirements;
         requirements.addAll( requirementList );
@@ -132,7 +125,9 @@ public class Backlog<T>
     @Override
     public String toString()
     {
-        return "Backlog [requirements=" + requirements + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "requirements", requirements );
+        return builder.build();
     }
 
     /*

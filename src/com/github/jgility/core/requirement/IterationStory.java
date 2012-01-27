@@ -27,6 +27,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.github.jgility.core.util.BeanCheckUtils;
+
 /**
  * @author Karsten Schulz <lennylinux.ks@googlemail.com>
  */
@@ -38,12 +40,12 @@ public class IterationStory
 {
 
     /**
-     *  Bezeichner der Eigenschaft {@link #dependencies}
+     * Bezeichner der Eigenschaft {@link #dependencies}
      */
     public static final String DEPENDENCIES_PROPERTY = "dependencies";
 
     /**
-     *  Bezeichner der Eigenschaft {@link #tasks}
+     * Bezeichner der Eigenschaft {@link #tasks}
      */
     public static final String TASKS_PROPERTY = "tasks";
 
@@ -110,16 +112,13 @@ public class IterationStory
     public void addDependency( IRequirement requirement )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, requirement ) )
-        {
-            List<IRequirement> formerDependencies = this.dependencies;
-            dependencies.add( requirement );
-            changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies, this.dependencies );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "null requirement as dependencie is not allowed!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( requirement,
+                                           "null requirement as dependencie is not allowed!" );
+
+        List<IRequirement> formerDependencies = this.dependencies;
+        dependencies.add( requirement );
+        changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies,
+                                    this.dependencies );
     }
 
     /*
@@ -136,7 +135,8 @@ public class IterationStory
             boolean result;
             List<IRequirement> formerDependencies = this.dependencies;
             result = dependencies.remove( requirement );
-            changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies, this.dependencies );
+            changes.firePropertyChange( IterationStory.DEPENDENCIES_PROPERTY, formerDependencies,
+                                        this.dependencies );
             return result;
         }
         return false;
@@ -162,23 +162,18 @@ public class IterationStory
     public void addTask( IImplementableRequirement task )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, task ) )
+        BeanCheckUtils.checkObjectNotNull( task, "null-object is not allowed!" );
+
+        if ( task.getRequirementKind() == RequirementKind.TASK )
         {
-            if ( task.getRequirementKind() == RequirementKind.TASK )
-            {
-                List<IImplementableRequirement> formerTasks = this.tasks;
-                tasks.add( task );
-                changes.firePropertyChange( IterationStory.TASKS_PROPERTY, formerTasks, this.tasks );
-            }
-            else
-            {
-                throw new IllegalArgumentException( "implementable requirement has to be TASK: "
-                    + task.getRequirementKind() );
-            }
+            List<IImplementableRequirement> formerTasks = this.tasks;
+            tasks.add( task );
+            changes.firePropertyChange( IterationStory.TASKS_PROPERTY, formerTasks, this.tasks );
         }
         else
         {
-            throw new IllegalArgumentException( "null-object is not allowed!" );
+            throw new IllegalArgumentException( "implementable requirement has to be TASK: "
+                + task.getRequirementKind() );
         }
     }
 

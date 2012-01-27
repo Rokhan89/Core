@@ -18,12 +18,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.project.ITeam;
 import com.github.jgility.core.project.Team;
+import com.github.jgility.core.util.BeanCheckUtils;
+import com.github.jgility.core.util.CalendarUtils;
 
 /**
  * Konkrete Klasse für {@link IImplementableRequirement}. Erbt Methoden von {@link ProductStory}
@@ -111,17 +114,12 @@ public class ImplementableStory
     public void setImplementState( ImplementState implementState )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, implementState ) )
-        {
-            ImplementState formerImplementstate = this.implementState;
-            this.implementState = implementState;
-            changes.firePropertyChange( ImplementableStory.IMPLEMENT_STATE_PROPERTY,
-                                        formerImplementstate, this.implementState );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "implementstate has to be not null!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( implementState, "implementstate has to be not null!" );
+
+        ImplementState formerImplementstate = this.implementState;
+        this.implementState = implementState;
+        changes.firePropertyChange( ImplementableStory.IMPLEMENT_STATE_PROPERTY,
+                                    formerImplementstate, this.implementState );
     }
 
     @Override
@@ -134,17 +132,12 @@ public class ImplementableStory
     public void setAssignee( ITeam assignee )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, assignee ) )
-        {
-            ITeam formerAssignee = this.assignee;
-            this.assignee = assignee;
-            changes.firePropertyChange( ImplementableStory.ASSIGNEE_PROPERTY, formerAssignee,
-                                        this.assignee );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "assignee has to be not null!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( assignee, "assignee has to be not null!" );
+
+        ITeam formerAssignee = this.assignee;
+        this.assignee = assignee;
+        changes.firePropertyChange( ImplementableStory.ASSIGNEE_PROPERTY, formerAssignee,
+                                    this.assignee );
     }
 
     /*
@@ -154,12 +147,18 @@ public class ImplementableStory
     @Override
     public String toString()
     {
-        return "ImplementableStory [implementState=" + implementState + ", team=" + assignee
-            + ", getID()=" + getID() + ", getTitle()=" + getTitle() + ", getDescription()="
-            + getDescription() + ", getCreateDate()=" + getCreateDate() + ", getPriority()="
-            + getPriority() + ", getRequester()=" + getRequester() + ", getRequirementKind()="
-            + getRequirementKind() + ", getEstimated()=" + getEstimated() + ", getEffective()="
-            + getEffective() + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "id", getID() );
+        builder.append( "title", getTitle() );
+        builder.append( "description", getDescription() );
+        builder.append( "createDate", CalendarUtils.calendarOutput( getCreateDate() ) );
+        builder.append( "estimated", getEstimated() );
+        builder.append( "priority", getPriority() );
+        builder.append( "requester", getRequester() );
+        builder.append( "requirementKind", getRequirementKind() );
+        builder.append( "assignee", assignee );
+        builder.append( "implementState", implementState );
+        return builder.build();
     }
 
     @Override

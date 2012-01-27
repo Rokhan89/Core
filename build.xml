@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="Jgility-Core" default="all" basedir=".">
+<project name="jgility-core" default="all" basedir=".">
 	<description>Agil software development framework for jgility-plugin</description>
 
 	<!-- Project properties -->
@@ -52,8 +52,9 @@
 	    <manifest file="META-INF/MANIFEST.MF" mode="update">
 	        <attribute name="Built-By" value="${authortext}"/>
 	    	<attribute name="Bundle-Name" value="${ant.project.name}"/>
-	    	<attribute name="Bundle-RequiredExecutionEnvironment" value="${java.runtime.version}"/>
+	    	<attribute name="Bundle-RequiredExecutionEnvironment" value="JavaSE-1.7"/>
 	    	<attribute name="Bundle-Version" value="${app.version}"/>
+	    	<attribute name="Bundle-Classpath" value="."/>
 	    </manifest>
 		<jar destfile="${jar.dir}/${ant.project.name}-${app.version}.jar" 
 			basedir="${classes.dir}"

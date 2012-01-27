@@ -21,11 +21,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.github.jgility.core.util.BeanCheckUtils;
+import com.github.jgility.core.util.CalendarUtils;
 import com.github.jgility.core.xml.AbstractXmlProductStroy;
 
 /**
@@ -199,17 +201,11 @@ public class ProductStory
     public void setTitle( String title )
         throws IllegalArgumentException
     {
-        if ( StringUtils.isNotBlank( title ) )
-        {
-            String formerTitle = this.title;
-            this.title = title;
-            changes.firePropertyChange( ProductStory.TITLE_PROPERTY, formerTitle, title );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "title has to be not blank!" );
-        }
+        BeanCheckUtils.checkStringNotBlank( title, "title has to be not blank!" );
 
+        String formerTitle = this.title;
+        this.title = title;
+        changes.firePropertyChange( ProductStory.TITLE_PROPERTY, formerTitle, title );
     }
 
     /*
@@ -230,18 +226,12 @@ public class ProductStory
     public void setDescription( String description )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, description ) )
-        {
-            String formerDescription = this.description;
-            this.description = description;
-            changes.firePropertyChange( ProductStory.DESCRIPTION_PROPERTY, formerDescription,
-                                        this.description );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "description has to be not null!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( description, "description has to be not null!" );
 
+        String formerDescription = this.description;
+        this.description = description;
+        changes.firePropertyChange( ProductStory.DESCRIPTION_PROPERTY, formerDescription,
+                                    this.description );
     }
 
     /*
@@ -274,17 +264,11 @@ public class ProductStory
     public void setPriority( Priority priority )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, priority ) )
-        {
-            Priority formerPriority = this.priority;
-            this.priority = priority;
-            changes.firePropertyChange( ProductStory.PRIORITY_PROPERTY, formerPriority,
-                                        this.priority );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "priority has to be not null!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( priority, "priority has to be not null!" );
+
+        Priority formerPriority = this.priority;
+        this.priority = priority;
+        changes.firePropertyChange( ProductStory.PRIORITY_PROPERTY, formerPriority, this.priority );
     }
 
     /*
@@ -305,17 +289,12 @@ public class ProductStory
     public void setRequester( String requester )
         throws IllegalArgumentException
     {
-        if ( StringUtils.isNotBlank( requester ) )
-        {
-            String formerRequester = this.requester;
-            this.requester = requester;
-            changes.firePropertyChange( ProductStory.REQUESTER_PROPERTY, formerRequester,
-                                        this.requester );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "requester has to be not blank!" );
-        }
+        BeanCheckUtils.checkStringNotBlank( requester, "requester has to be not blank!" );
+
+        String formerRequester = this.requester;
+        this.requester = requester;
+        changes.firePropertyChange( ProductStory.REQUESTER_PROPERTY, formerRequester,
+                                    this.requester );
     }
 
     /*
@@ -338,17 +317,13 @@ public class ProductStory
     public void setRequirementKind( RequirementKind requirementKind )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, requirementKind ) )
-        {
-            RequirementKind formerRequirementKind = this.requirementKind;
-            this.requirementKind = requirementKind;
-            changes.firePropertyChange( ProductStory.REQUIREMENT_KIND_PROPERTY,
-                                        formerRequirementKind, this.requirementKind );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "kind of requirement has to be not null!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( requirementKind,
+                                           "kind of requirement has to be not null!" );
+
+        RequirementKind formerRequirementKind = this.requirementKind;
+        this.requirementKind = requirementKind;
+        changes.firePropertyChange( ProductStory.REQUIREMENT_KIND_PROPERTY, formerRequirementKind,
+                                    this.requirementKind );
     }
 
     /*
@@ -383,8 +358,9 @@ public class ProductStory
         {
             float formerEstimated = this.estimated;
             this.estimated = estimated;
-            changes.firePropertyChange( ProductStory.ESTIMATED_PROPERTY, formerEstimated,
-                                        this.estimated );
+            changes.firePropertyChange( ProductStory.ESTIMATED_PROPERTY,
+                                        Float.valueOf( formerEstimated ),
+                                        Float.valueOf( this.estimated ) );
         }
         else
         {
@@ -399,9 +375,16 @@ public class ProductStory
     @Override
     public String toString()
     {
-        return "ProductStory [id=" + id + ", title=" + title + ", description=" + description
-            + ", createDate=" + createDate + ", estimated=" + estimated + ", priority=" + priority
-            + ", requester=" + requester + ", requirementKind=" + requirementKind + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "id", id );
+        builder.append( "title", title );
+        builder.append( "description", description );
+        builder.append( "createDate", CalendarUtils.calendarOutput( createDate ) );
+        builder.append( "estimated", estimated );
+        builder.append( "priority", priority );
+        builder.append( "requester", requester );
+        builder.append( "requirementKind", requirementKind );
+        return builder.build();
     }
 
     @Override
