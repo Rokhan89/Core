@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="Jgility-Core" default="all" basedir=".">
+<project name="jgility-core" default="all" basedir=".">
 	<description>Agil software development framework for jgility-plugin</description>
 
 	<!-- Project properties -->
