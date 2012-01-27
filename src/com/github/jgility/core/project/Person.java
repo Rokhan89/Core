@@ -21,6 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.validator.EmailValidator;
 
 import com.github.jgility.core.xml.AbstractXmlPerson;
@@ -221,7 +223,11 @@ public class Person
     @Override
     public String toString()
     {
-        return "Person [firstname=" + firstname + ", surname=" + surname + ", eMail=" + eMail + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "firstname", firstname );
+        builder.append( "surname", surname );
+        builder.append( "eMail", eMail );
+        return builder.build();
     }
 
 }

@@ -25,7 +25,10 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.github.jgility.core.util.CalendarUtils;
 import com.github.jgility.core.xml.AbstractXmlProductStroy;
 
 /**
@@ -383,8 +386,9 @@ public class ProductStory
         {
             float formerEstimated = this.estimated;
             this.estimated = estimated;
-            changes.firePropertyChange( ProductStory.ESTIMATED_PROPERTY, formerEstimated,
-                                        this.estimated );
+            changes.firePropertyChange( ProductStory.ESTIMATED_PROPERTY,
+                                        Float.valueOf( formerEstimated ),
+                                        Float.valueOf( this.estimated ) );
         }
         else
         {
@@ -399,9 +403,16 @@ public class ProductStory
     @Override
     public String toString()
     {
-        return "ProductStory [id=" + id + ", title=" + title + ", description=" + description
-            + ", createDate=" + createDate + ", estimated=" + estimated + ", priority=" + priority
-            + ", requester=" + requester + ", requirementKind=" + requirementKind + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "id", id );
+        builder.append( "title", title );
+        builder.append( "description", description );
+        builder.append( "createDate", CalendarUtils.calendarOutput( createDate ) );
+        builder.append( "estimated", estimated );
+        builder.append( "priority", priority );
+        builder.append( "requester", requester );
+        builder.append( "requirementKind", requirementKind );
+        return builder.build();
     }
 
     @Override

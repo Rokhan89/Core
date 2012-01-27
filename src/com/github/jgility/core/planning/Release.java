@@ -13,7 +13,6 @@
  */
 package com.github.jgility.core.planning;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -30,6 +29,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.util.CalendarUtils;
 
@@ -44,9 +45,9 @@ public class Release
     extends AbstractPlan
     implements IRelease
 {
-    
+
     /**
-     *  Bezeichner der Eigenschaft {@link #iterationList}
+     * Bezeichner der Eigenschaft {@link #iterationList}
      */
     public static final String ITERATION_LIST = "iterationList";
 
@@ -102,7 +103,8 @@ public class Release
             {
                 List<IIteration> formerIterationList = iterationList;
                 iterationList.add( iteration );
-                changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList, iterationList );
+                changes.firePropertyChange( Release.ITERATION_LIST, formerIterationList,
+                                            iterationList );
             }
             else
             {
@@ -211,8 +213,10 @@ public class Release
     @Override
     public String toString()
     {
-        SimpleDateFormat sfd = new SimpleDateFormat( "dd.MM.yyyy" );
-        return "Release [start=" + sfd.format( getStart().getTime() ) + " end="
-            + sfd.format( getEnd().getTime() ) + " subPlanSet=" + iterationList + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "start", CalendarUtils.calendarOutput( getStart() ) );
+        builder.append( "end", CalendarUtils.calendarOutput( getStart() ) );
+        builder.append( "iterationList", iterationList );
+        return builder.build();
     }
 }

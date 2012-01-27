@@ -27,6 +27,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.xml.AbstractXmlBacklog;
 
@@ -132,7 +134,9 @@ public class Backlog<T>
     @Override
     public String toString()
     {
-        return "Backlog [requirements=" + requirements + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "requirements", requirements );
+        return builder.build();
     }
 
     /*

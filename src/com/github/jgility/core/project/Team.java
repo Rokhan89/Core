@@ -26,6 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.xml.AbstractXmlTeam;
 
@@ -165,5 +169,37 @@ public class Team
         List<IPerson> formerMembers = this.members;
         members.clear();
         changes.firePropertyChange( Team.MEMBERS_PROPERTY, formerMembers, this.members );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append( name );
+        builder.append( members );
+        return builder.toHashCode();
+    }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj instanceof Team )
+        {
+            Team team = (Team) obj;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append( name, team.name );
+            builder.append( members, team.members );
+            return builder.isEquals();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString()
+    {
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "name", name );
+        builder.append( "members", members );
+        return builder.build();
     }
 }

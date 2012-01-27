@@ -29,6 +29,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.planning.Backlog;
 import com.github.jgility.core.planning.IBacklog;
@@ -406,8 +408,12 @@ public class Product
     @Override
     public String toString()
     {
-        return "Product [name=" + name + ", description=" + description + ", projects=" + projects
-            + ", productOwner=" + productOwner + ", productBacklog=" + productBacklog + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "name", name );
+        builder.append( "description", description );
+        builder.append( "projects", projects );
+        builder.append( "productOwner", productOwner );
+        builder.append( "productBacklog", productBacklog );
+        return builder.build();
     }
-
 }

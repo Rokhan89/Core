@@ -31,6 +31,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.IRelease;
@@ -389,8 +391,12 @@ public class Project
     @Override
     public String toString()
     {
-        return "Project [name=" + name + ", description=" + description + ", members=" + team
-            + ", projectPlan=" + releasePlan + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "name", name );
+        builder.append( "description", description );
+        builder.append( "team", team );
+        builder.append( "releasePlan", releasePlan );
+        return builder.build();
     }
 
 }

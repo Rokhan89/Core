@@ -21,9 +21,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.project.ITeam;
 import com.github.jgility.core.project.Team;
+import com.github.jgility.core.util.CalendarUtils;
 
 /**
  * Konkrete Klasse für {@link IImplementableRequirement}. Erbt Methoden von {@link ProductStory}
@@ -154,12 +157,18 @@ public class ImplementableStory
     @Override
     public String toString()
     {
-        return "ImplementableStory [implementState=" + implementState + ", team=" + assignee
-            + ", getID()=" + getID() + ", getTitle()=" + getTitle() + ", getDescription()="
-            + getDescription() + ", getCreateDate()=" + getCreateDate() + ", getPriority()="
-            + getPriority() + ", getRequester()=" + getRequester() + ", getRequirementKind()="
-            + getRequirementKind() + ", getEstimated()=" + getEstimated() + ", getEffective()="
-            + getEffective() + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "id", getID() );
+        builder.append( "title", getTitle() );
+        builder.append( "description", getDescription() );
+        builder.append( "createDate", CalendarUtils.calendarOutput( getCreateDate() ) );
+        builder.append( "estimated", getEstimated() );
+        builder.append( "priority", getPriority() );
+        builder.append( "requester", getRequester() );
+        builder.append( "requirementKind", getRequirementKind() );
+        builder.append( "assignee", assignee );
+        builder.append( "implementState", implementState );
+        return builder.build();
     }
 
     @Override

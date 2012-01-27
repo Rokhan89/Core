@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.util.CalendarUtils;
 import com.github.jgility.core.xml.AbstractXmlPlan;
@@ -251,7 +253,10 @@ public abstract class AbstractPlan
     @Override
     public String toString()
     {
-        return "AbstractPlan [start=" + start + ", end=" + end + "]";
+        ToStringBuilder builder = new ToStringBuilder( this, ToStringStyle.SHORT_PREFIX_STYLE );
+        builder.append( "start", CalendarUtils.calendarOutput( start ) );
+        builder.append( "end", CalendarUtils.calendarOutput( end ) );
+        return builder.build();
     }
 
 }
