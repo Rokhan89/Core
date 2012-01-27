@@ -25,12 +25,12 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.github.jgility.core.util.BeanCheckUtils;
 import com.github.jgility.core.xml.AbstractXmlTeam;
 
 /**
@@ -98,16 +98,11 @@ public class Team
     @Override
     public void setName( String name )
     {
-        if ( StringUtils.isNotBlank( name ) )
-        {
-            String formerName = this.name;
-            this.name = name;
-            changes.firePropertyChange( Team.NAME_PROPERTY, formerName, this.name );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "an empty-String is not allowed" );
-        }
+        BeanCheckUtils.checkStringNotBlank( name, "an empty-String is not allowed" );
+
+        String formerName = this.name;
+        this.name = name;
+        changes.firePropertyChange( Team.NAME_PROPERTY, formerName, this.name );
     }
 
     /*
@@ -118,16 +113,11 @@ public class Team
     public void addMember( IPerson person )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, person ) )
-        {
-            List<IPerson> formerMembers = this.members;
-            members.add( person );
-            changes.firePropertyChange( Team.MEMBERS_PROPERTY, formerMembers, this.members );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "null-person is not allowed!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( person, "null-person is not allowed!" );
+
+        List<IPerson> formerMembers = this.members;
+        members.add( person );
+        changes.firePropertyChange( Team.MEMBERS_PROPERTY, formerMembers, this.members );
     }
 
     /*

@@ -22,12 +22,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.github.jgility.core.util.BeanCheckUtils;
 import com.github.jgility.core.util.CalendarUtils;
 import com.github.jgility.core.xml.AbstractXmlPlan;
 
@@ -95,10 +95,7 @@ public abstract class AbstractPlan
     public void setStart( Calendar start )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.equals( null, start ) )
-        {
-            throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
-        }
+        BeanCheckUtils.checkObjectNotNull( start, "null-Object as start-time is not allowed" );
 
         if ( end.after( start ) )
         {
@@ -130,10 +127,7 @@ public abstract class AbstractPlan
     public void setEnd( Calendar end )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.equals( null, end ) )
-        {
-            throw new IllegalArgumentException( "null-Object as start-time is not allowed" );
-        }
+        BeanCheckUtils.checkObjectNotNull( end, "null-Object as end-time is not allowed" );
 
         if ( start.before( end ) )
         {

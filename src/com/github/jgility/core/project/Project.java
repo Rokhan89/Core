@@ -26,9 +26,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -37,6 +35,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.github.jgility.core.planning.IPlan;
 import com.github.jgility.core.planning.IRelease;
 import com.github.jgility.core.planning.Release;
+import com.github.jgility.core.util.BeanCheckUtils;
 import com.github.jgility.core.xml.AbstractXmlProject;
 
 /**
@@ -132,16 +131,11 @@ public class Project
     public void setName( String name )
         throws IllegalArgumentException
     {
-        if ( StringUtils.isNotBlank( name ) )
-        {
-            String formerName = this.name;
-            this.name = name;
-            changes.firePropertyChange( Project.NAME_PROPERTY, formerName, this.name );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "empty name for projects is not allowed" );
-        }
+        BeanCheckUtils.checkStringNotBlank( name, "empty name for projects is not allowed" );
+
+        String formerName = this.name;
+        this.name = name;
+        changes.firePropertyChange( Project.NAME_PROPERTY, formerName, this.name );
     }
 
     /*
@@ -184,16 +178,11 @@ public class Project
     @Override
     public void setTeam( ITeam team )
     {
-        if ( null != team && 0 < team.getMembers().size() )
-        {
-            ITeam formerTeam = this.team;
-            this.team = team;
-            changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "empty team is not allowed to set" );
-        }
+        BeanCheckUtils.checkCollectionNotEmpty( team.getMembers(),
+                                                "empty team is not allowed to set" );
+        ITeam formerTeam = this.team;
+        this.team = team;
+        changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
     }
 
     /*
@@ -204,18 +193,14 @@ public class Project
     public void setMembers( List<IPerson> members )
         throws IllegalArgumentException
     {
-        if ( CollectionUtils.isNotEmpty( members ) )
+        BeanCheckUtils.checkCollectionNotEmpty( members,
+                                                "empty list of person is not allowed to add" );
+
+        for ( IPerson member : members )
         {
-            for ( IPerson member : members )
-            {
-                ITeam formerTeam = this.team;
-                this.team.addMember( member );
-                changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
-            }
-        }
-        else
-        {
-            throw new IllegalArgumentException( "empty list of person is not allowed to add" );
+            ITeam formerTeam = this.team;
+            this.team.addMember( member );
+            changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
         }
     }
 
@@ -228,16 +213,11 @@ public class Project
     public void addMember( IPerson newMember )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, newMember ) )
-        {
-            ITeam formerTeam = this.team;
-            team.addMember( newMember );
-            changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "empty person is not allowed to add" );
-        }
+        BeanCheckUtils.checkObjectNotNull( newMember, "empty person is not allowed to add" );
+
+        ITeam formerTeam = this.team;
+        team.addMember( newMember );
+        changes.firePropertyChange( Project.TEAM_PROPERTY, formerTeam, this.team );
     }
 
     /*
@@ -287,21 +267,15 @@ public class Project
      * @see com.github.jgility.core.project.IProject#setReleasePlan(java.util.List)
      */
     @Override
-    public void setReleasePlan( List<IRelease> projectPlan )
+    public void setReleasePlan( List<IRelease> releasePlan )
         throws IllegalArgumentException
     {
-        // TODO warum heißt die Variable projectPlan?
-        if ( CollectionUtils.isNotEmpty( projectPlan ) )
-        {
-            List<IRelease> formerReleasePlan = this.releasePlan;
-            this.releasePlan.addAll( projectPlan );
-            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
-                                        this.releasePlan );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "empty list of IPlan is not allowed" );
-        }
+        BeanCheckUtils.checkCollectionNotEmpty( releasePlan, "empty list of IPlan is not allowed" );
+
+        List<IRelease> formerReleasePlan = this.releasePlan;
+        this.releasePlan.addAll( releasePlan );
+        changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
+                                    this.releasePlan );
     }
 
     /*
@@ -314,17 +288,12 @@ public class Project
     public void addReleasePlan( IRelease newPlan )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, newPlan ) )
-        {
-            List<IRelease> formerReleasePlan = this.releasePlan;
-            this.releasePlan.add( newPlan );
-            changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
-                                        this.releasePlan );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "empty new IPlan is not allowed" );
-        }
+        BeanCheckUtils.checkObjectNotNull( newPlan, "empty new IPlan is not allowed" );
+
+        List<IRelease> formerReleasePlan = this.releasePlan;
+        this.releasePlan.add( newPlan );
+        changes.firePropertyChange( Project.RELEASE_PLAN_PROPERTY, formerReleasePlan,
+                                    this.releasePlan );
     }
 
     /*

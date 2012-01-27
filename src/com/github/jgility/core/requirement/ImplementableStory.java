@@ -18,7 +18,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -26,6 +25,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.jgility.core.project.ITeam;
 import com.github.jgility.core.project.Team;
+import com.github.jgility.core.util.BeanCheckUtils;
 import com.github.jgility.core.util.CalendarUtils;
 
 /**
@@ -114,17 +114,12 @@ public class ImplementableStory
     public void setImplementState( ImplementState implementState )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, implementState ) )
-        {
-            ImplementState formerImplementstate = this.implementState;
-            this.implementState = implementState;
-            changes.firePropertyChange( ImplementableStory.IMPLEMENT_STATE_PROPERTY,
-                                        formerImplementstate, this.implementState );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "implementstate has to be not null!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( implementState, "implementstate has to be not null!" );
+
+        ImplementState formerImplementstate = this.implementState;
+        this.implementState = implementState;
+        changes.firePropertyChange( ImplementableStory.IMPLEMENT_STATE_PROPERTY,
+                                    formerImplementstate, this.implementState );
     }
 
     @Override
@@ -137,17 +132,12 @@ public class ImplementableStory
     public void setAssignee( ITeam assignee )
         throws IllegalArgumentException
     {
-        if ( ObjectUtils.notEqual( null, assignee ) )
-        {
-            ITeam formerAssignee = this.assignee;
-            this.assignee = assignee;
-            changes.firePropertyChange( ImplementableStory.ASSIGNEE_PROPERTY, formerAssignee,
-                                        this.assignee );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "assignee has to be not null!" );
-        }
+        BeanCheckUtils.checkObjectNotNull( assignee, "assignee has to be not null!" );
+
+        ITeam formerAssignee = this.assignee;
+        this.assignee = assignee;
+        changes.firePropertyChange( ImplementableStory.ASSIGNEE_PROPERTY, formerAssignee,
+                                    this.assignee );
     }
 
     /*

@@ -123,11 +123,11 @@ public interface IProject
     /**
      * Setzt die {@link List} des Projektplans
      * 
-     * @param projectPlan {@link List} von {@link IRelease}
+     * @param releasePlan {@link List} von {@link IRelease}
      * @throws IllegalArgumentException wird geworfen, wenn die {@link List} von {@link IRelease}
      *             leer oder <code>null</code>
      */
-    public abstract void setReleasePlan( List<IRelease> projectPlan )
+    public abstract void setReleasePlan( List<IRelease> releasePlan )
         throws IllegalArgumentException;
 
     /**
